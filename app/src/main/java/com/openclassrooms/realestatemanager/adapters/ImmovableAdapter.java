@@ -35,12 +35,21 @@ public class ImmovableAdapter extends RecyclerView.Adapter<ImmovableViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImmovableViewHolder holder, int position) {
-        holder.updateWithImmovable(this.immovableList.get(position), this.glide);
+    public void onBindViewHolder(@NonNull ImmovableViewHolder viewHolder, int position) {
+        viewHolder.updateWithImmovable(this.immovableList.get(position), this.glide);
     }
 
     @Override
     public int getItemCount() {
         return immovableList.size();
+    }
+
+    public Immovable getImmovable(int position) {
+        return this.immovableList.get(position);
+    }
+
+    public void updateData(List<Immovable> immovables) {
+        this.immovableList = immovables;
+        this.notifyDataSetChanged();
     }
 }

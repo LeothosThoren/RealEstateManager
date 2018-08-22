@@ -32,8 +32,8 @@ public class ImmovableViewHolder extends RecyclerView.ViewHolder {
     public void updateWithImmovable(Immovable immovable, RequestManager glide) {
 
         if (immovable != null) {
-            this.mTextViewName.setText(immovable.getName());
-            this.mTextViewLocation.setText(immovable.getLocation());
+            this.mTextViewName.setText(immovable.getType());
+            this.mTextViewLocation.setText(immovable.getArea());
             this.mTextViewPrice.setText(immovable.getPrice());
             if (immovable.getPictureUrl() != null) {
                 glide.load(immovable.getPictureUrl())
