@@ -43,4 +43,7 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
     //VIEW MODEL & LIVE DATA
     implementation "android.arch.lifecycle:extensions:1.1.1"
+
+    // TESTING
+    androidTestImplementation "android.arch.core:core-testing:1.1.1"
 }

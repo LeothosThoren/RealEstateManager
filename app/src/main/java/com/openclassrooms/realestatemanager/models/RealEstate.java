@@ -6,9 +6,8 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.Nullable;
 
-import java.sql.Date;
 
-@Entity(foreignKeys =  @ForeignKey(entity = User.class,
+@Entity(foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "id",
         childColumns = "userId"))
 public class RealEstate {
@@ -29,8 +28,8 @@ public class RealEstate {
     @Embedded
     private Address address;
     private boolean status;
-    private Date entryDate;
-    private Date soldDate;
+    private String entryDate;
+    private String soldDate;
     private long userId;
     // Miss point of interest maybe a list of String
     //Miss carousel of picture and description maybe a list of Nested object
@@ -52,6 +51,9 @@ public class RealEstate {
         PictureUrl = pictureUrl;
         this.address = address;
         this.userId = userId;
+        this.status = false;
+        this.entryDate = null;
+        this.soldDate = null;
     }
 
     public RealEstate(String type, String area, String price, long userId) {
@@ -112,11 +114,11 @@ public class RealEstate {
         return status;
     }
 
-    public Date getEntryDate() {
+    public String getEntryDate() {
         return entryDate;
     }
 
-    public Date getSoldDate() {
+    public String getSoldDate() {
         return soldDate;
     }
 
@@ -176,11 +178,11 @@ public class RealEstate {
         this.status = status;
     }
 
-    public void setEntryDate(Date entryDate) {
+    public void setEntryDate(String entryDate) {
         this.entryDate = entryDate;
     }
 
-    public void setSoldDate(Date soldDate) {
+    public void setSoldDate(String soldDate) {
         this.soldDate = soldDate;
     }
 
