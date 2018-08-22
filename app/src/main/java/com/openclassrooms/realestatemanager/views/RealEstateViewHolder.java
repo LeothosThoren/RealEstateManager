@@ -8,12 +8,12 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.models.Immovable;
+import com.openclassrooms.realestatemanager.models.RealEstate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ImmovableViewHolder extends RecyclerView.ViewHolder {
+public class RealEstateViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.item_picture)
     ImageView mImageViewPicture;
@@ -24,19 +24,19 @@ public class ImmovableViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.item_price)
     TextView mTextViewPrice;
 
-    public ImmovableViewHolder(View itemView) {
+    public RealEstateViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithImmovable(Immovable immovable, RequestManager glide) {
+    public void updateWithImmovable(RealEstate realEstate, RequestManager glide) {
 
-        if (immovable != null) {
-            this.mTextViewName.setText(immovable.getType());
-            this.mTextViewLocation.setText(immovable.getArea());
-            this.mTextViewPrice.setText(immovable.getPrice());
-            if (immovable.getPictureUrl() != null) {
-                glide.load(immovable.getPictureUrl())
+        if (realEstate != null) {
+            this.mTextViewName.setText(realEstate.getType());
+            this.mTextViewLocation.setText(realEstate.getArea());
+            this.mTextViewPrice.setText(realEstate.getPrice());
+            if (realEstate.getPictureUrl() != null) {
+                glide.load(realEstate.getPictureUrl())
                         .apply(RequestOptions.centerCropTransform())
                         .into(this.mImageViewPicture);
             }

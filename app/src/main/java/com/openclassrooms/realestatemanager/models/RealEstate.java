@@ -11,7 +11,7 @@ import java.sql.Date;
 @Entity(foreignKeys =  @ForeignKey(entity = User.class,
         parentColumns = "id",
         childColumns = "userId"))
-public class Immovable {
+public class RealEstate {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -36,11 +36,11 @@ public class Immovable {
     //Miss carousel of picture and description maybe a list of Nested object
 
 
-    public Immovable() {
+    public RealEstate() {
     }
 
-    public Immovable(String type, String area, String description, String price, int surface, int room,
-                     int bathroom, int bedroom, @Nullable String pictureUrl, Address address, long userId) {
+    public RealEstate(String type, String area, String description, String price, int surface, int room,
+                      int bathroom, int bedroom, @Nullable String pictureUrl, Address address, long userId) {
         this.type = type;
         this.area = area;
         this.description = description;
@@ -54,7 +54,7 @@ public class Immovable {
         this.userId = userId;
     }
 
-    public Immovable(String type, String area, String price, long userId) {
+    public RealEstate(String type, String area, String price, long userId) {
         this.type = type;
         this.area = area;
         this.price = price;

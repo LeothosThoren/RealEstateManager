@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.adapters.ImmovableAdapter;
-import com.openclassrooms.realestatemanager.models.Immovable;
+import com.openclassrooms.realestatemanager.adapters.RealEstateAdapter;
+import com.openclassrooms.realestatemanager.models.RealEstate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +31,9 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     //DATA
-    private List<Immovable> mImmovableList;
+    private List<RealEstate> mRealEstateList;
     //VAR
-    private ImmovableAdapter mAdapter;
+    private RealEstateAdapter mAdapter;
 
     // Declare callback
     private OnButtonClickedListener mCallback;
@@ -67,8 +67,8 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
 
     // RecyclerView
     private void configureRecyclerView() {
-        this.mImmovableList = new ArrayList<>();
-        this.mAdapter = new ImmovableAdapter(this.mImmovableList, Glide.with(this));
+        this.mRealEstateList = new ArrayList<>();
+        this.mAdapter = new RealEstateAdapter(this.mRealEstateList, Glide.with(this));
         this.mRecyclerView.setAdapter(this.mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
