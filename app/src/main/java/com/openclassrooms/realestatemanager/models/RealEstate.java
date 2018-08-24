@@ -61,6 +61,9 @@ public class RealEstate {
         this.area = area;
         this.price = price;
         this.userId = userId;
+        this.status = false;
+        this.entryDate = null;
+        this.soldDate = null;
     }
 
     // --- GETTER ---

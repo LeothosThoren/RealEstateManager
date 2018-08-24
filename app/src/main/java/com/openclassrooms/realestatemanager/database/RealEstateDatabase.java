@@ -26,7 +26,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
     // --- INSTANCE ---
-    public static RealEstateDatabase getINSTANCE(Context context) {
+    public static RealEstateDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (RealEstateDatabase.class) {
                 if (INSTANCE == null) {
