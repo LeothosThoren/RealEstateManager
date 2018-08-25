@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapters.RealEstateAdapter;
-import com.openclassrooms.realestatemanager.models.RealEstate;
-import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
+import com.openclassrooms.realestatemanager.entities.RealEstate;
 
 import java.util.ArrayList;
 import java.util.List;

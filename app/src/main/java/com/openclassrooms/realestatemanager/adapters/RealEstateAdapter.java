@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.RequestManager;
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.views.RealEstateViewHolder;
 
 import java.util.List;

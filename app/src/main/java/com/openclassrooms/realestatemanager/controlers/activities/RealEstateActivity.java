@@ -21,6 +21,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // WIDGET
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
+
     // VAR
     private RealEstateFragment mRealEstateFragment;
     private DetailFragment mDetailFragment;
@@ -73,6 +74,13 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // --------------
+    // MENU DRAWER
+    // --------------
+
+
+
 
     // --------------
     // FRAGMENTS

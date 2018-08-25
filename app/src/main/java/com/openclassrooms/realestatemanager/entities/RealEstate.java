@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.models;
+package com.openclassrooms.realestatemanager.entities;
 
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;

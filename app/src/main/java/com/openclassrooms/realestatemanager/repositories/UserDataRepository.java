@@ -3,7 +3,7 @@ package com.openclassrooms.realestatemanager.repositories;
 import android.arch.lifecycle.LiveData;
 
 import com.openclassrooms.realestatemanager.database.dao.UserDao;
-import com.openclassrooms.realestatemanager.models.User;
+import com.openclassrooms.realestatemanager.entities.User;
 
 public class UserDataRepository {
 

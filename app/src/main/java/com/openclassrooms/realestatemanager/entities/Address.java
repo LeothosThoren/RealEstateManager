@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.models;
+package com.openclassrooms.realestatemanager.entities;
 
 /**
  * @author Sofiane M alias Leothos

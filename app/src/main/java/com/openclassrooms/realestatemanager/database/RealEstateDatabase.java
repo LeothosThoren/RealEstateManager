@@ -11,8 +11,8 @@ import android.support.annotation.NonNull;
 
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao;
 import com.openclassrooms.realestatemanager.database.dao.UserDao;
-import com.openclassrooms.realestatemanager.models.RealEstate;
-import com.openclassrooms.realestatemanager.models.User;
+import com.openclassrooms.realestatemanager.entities.RealEstate;
+import com.openclassrooms.realestatemanager.entities.User;
 
 @Database(entities = {RealEstate.class, User.class}, version = 1, exportSchema = false)
 public abstract class RealEstateDatabase extends RoomDatabase {

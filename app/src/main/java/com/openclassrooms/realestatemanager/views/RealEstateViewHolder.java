@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.entities.RealEstate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
