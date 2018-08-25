@@ -29,14 +29,14 @@ import butterknife.ButterKnife;
 public class RealEstateFragment extends Fragment implements View.OnClickListener {
 
     //CONSTANT
-    public static int USER_ID = 1; // ASk
+//    public static int USER_ID = 1; // ASk
     //WIDGET
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     //DATA
     private List<RealEstate> mRealEstateList;
     private RealEstateAdapter mAdapter;
-    private RealEstateViewModel mRealEstateViewModel; //ask
+//    private RealEstateViewModel mRealEstateViewModel; //ask
 
     // Declare callback
     private OnButtonClickedListener mCallback;

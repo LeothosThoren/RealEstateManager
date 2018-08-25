@@ -1,14 +1,14 @@
 package com.openclassrooms.realestatemanager.controlers;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.controlers.activities.RealEstateActivity;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         buttonGoToActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(RealEstate.class);
+                startActivity(RealEstateActivity.class);
             }
         });
     }
@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void configureTextViewMain(){
+    private void configureTextViewMain() {
         this.textViewMain.setTextSize(15);
         this.textViewMain.setText("Le premier bien immobilier enregistré vaut ");
     }
 
-    private void configureTextViewQuantity(){
+    private void configureTextViewQuantity() {
         int quantity = Utils.convertDollarToEuro(100);
         this.textViewQuantity.setTextSize(20);
         this.textViewQuantity.setText(String.format("%d", quantity));
