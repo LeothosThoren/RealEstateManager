@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="item_name">name</string>
-    <string name="item_location">location</string>
-    <string name="item_price">price</string>
+    <!-- real estate fragment -->
+    <string name="item_name">Name</string>
+    <string name="item_location">Location</string>
+    <string name="item_price">Price</string>
+    <!-- detail fragment-->
     <string name="detail_media">Media</string>
+    <!-- menu toolbar -->
+    <string name="add_button">Add</string>
+    <string name="search_button">Search</string>
+    <string name="update_button">Update</string>
+
+
     <!-- BUG EXPLANATION
     - Bug résolu ligne 17 :  this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);
         le textView pointait sur un widget de la seconde activité
