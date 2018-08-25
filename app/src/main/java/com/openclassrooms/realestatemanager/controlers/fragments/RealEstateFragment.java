@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapters.RealEstateAdapter;
 import com.openclassrooms.realestatemanager.models.RealEstate;
+import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +28,15 @@ import butterknife.ButterKnife;
  */
 public class RealEstateFragment extends Fragment implements View.OnClickListener {
 
-    // WIDGET
+    //CONSTANT
+    public static int USER_ID = 1; // ASk
+    //WIDGET
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     //DATA
     private List<RealEstate> mRealEstateList;
-    //VAR
     private RealEstateAdapter mAdapter;
+    private RealEstateViewModel mRealEstateViewModel; //ask
 
     // Declare callback
     private OnButtonClickedListener mCallback;

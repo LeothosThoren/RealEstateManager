@@ -29,7 +29,7 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithImmovable(RealEstate realEstate, RequestManager glide) {
+    public void updateWithRealEstate(RealEstate realEstate, RequestManager glide) {
 
         if (realEstate != null) {
             this.mTextViewName.setText(realEstate.getType());
@@ -37,7 +37,7 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
             this.mTextViewPrice.setText(realEstate.getPrice());
             if (realEstate.getPictureUrl() != null) {
                 glide.load(realEstate.getPictureUrl())
-                        .apply(RequestOptions.centerCropTransform())
+                        .apply(RequestOptions.circleCropTransform())
                         .into(this.mImageViewPicture);
             }
         }
