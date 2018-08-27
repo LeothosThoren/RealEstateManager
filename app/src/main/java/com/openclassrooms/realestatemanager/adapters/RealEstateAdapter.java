@@ -12,6 +12,7 @@ import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.views.RealEstateViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder> {
@@ -20,8 +21,8 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
     private List<RealEstate> realEstateList;
     private RequestManager glide;
 
-    public RealEstateAdapter(List<RealEstate> realEstateList, RequestManager glide) {
-        this.realEstateList = realEstateList;
+    public RealEstateAdapter(RequestManager glide) {
+        this.realEstateList = new ArrayList<>();
         this.glide = glide;
     }
 

@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,11 +12,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapters.RealEstateAdapter;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.utils.ItemClickSupport;
+import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +35,14 @@ import butterknife.ButterKnife;
 public class RealEstateFragment extends Fragment implements View.OnClickListener {
 
     //CONSTANT
-//    public static int USER_ID = 1; // ASk
+    public static int USER_ID = 1; // ASk
     //WIDGET
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     //DATA
     private List<RealEstate> mRealEstateList;
     private RealEstateAdapter mAdapter;
-//    private RealEstateViewModel mRealEstateViewModel; //ask
+    private RealEstateViewModel mRealEstateViewModel; //ask
 
     // Declare callback
     private OnButtonClickedListener mCallback;
@@ -60,6 +67,7 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         view.findViewById(R.id.fragment_main_button).setOnClickListener(this);
         // Call for new methods
         this.configureRecyclerView();
+        this.configureViewModel();
         return view;
     }
 
@@ -67,13 +75,6 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     //                                    CONFIGURATION                                           //
     // -------------------------------------------------------------------------------------------//
 
-    // RecyclerView
-    private void configureRecyclerView() {
-        this.mRealEstateList = new ArrayList<>();
-        this.mAdapter = new RealEstateAdapter(this.mRealEstateList, Glide.with(this));
-        this.mRecyclerView.setAdapter(this.mAdapter);
-        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
 
     // Create callback to parent activity
     private void createCallbackToParentActivity() {
@@ -84,6 +85,21 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
             throw new ClassCastException(e.toString() + " must implement OnButtonClickedListener");
         }
     }
+
+    // -------------------------------------------------------------------------------------------//
+    //                                         DATA                                               //
+    // -------------------------------------------------------------------------------------------//
+
+
+    // Configure ViewModel
+    private void configureViewModel() {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
+        this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
+        this.mRealEstateViewModel.init(USER_ID);
+    }
+
+
+
 
     // -------------------------------------------------------------------------------------------//
     //                                       ACTION                                               //
@@ -106,7 +122,17 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         this.createCallbackToParentActivity();
     }
 
-
+    // RecyclerView
+    private void configureRecyclerView() {
+        this.mAdapter = new RealEstateAdapter(Glide.with(this));
+        this.mRecyclerView.setAdapter(this.mAdapter);
+        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ItemClickSupport.addTo(mRecyclerView, R.layout.recycler_view_item_layout)
+                .setOnItemClickListener((recyclerView1, position, v) -> {
+                    // Action to do here
+                    Toast.makeText(getContext(), "Click on position :"+ position, Toast.LENGTH_SHORT).show();
+                });
+    }
 
 
 }

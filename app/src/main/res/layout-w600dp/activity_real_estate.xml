@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/menu_drawer_layout"
+<?xml version="1.0" encoding="utf-8"?><!--<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:id="@+id/menu_drawer_layout"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:fitsSystemWindows="true"--><!--tools:context=".controlers.activities.RealEstateActivity"--><!--tools:openDrawer="start">-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".controlers.activities.RealEstateActivity"
-    tools:openDrawer="start">
+    android:orientation="vertical">
+
+    <!-- TOOLBAR -->
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,17 +13,14 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <include
-            layout="@layout/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+        <!--MAIN FRAGMENT-->
         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/frame_layout_real_estate_activity"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="30" />
 
+        <!-- DETAIL FRAGMENT -->
         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/frame_layout_detail_activity"
             android:layout_width="0px"
@@ -34,18 +29,7 @@
 
     </LinearLayout>
 
-    <!-- MENU DRAWER NAVIGATION VIEW -->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:background="@color/colorPrimary"
-        app:headerLayout="@layout/menu_drawer_header"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
-        app:menu="@menu/menu_drawer_items" />
+</LinearLayout>
 
-</android.support.v4.widget.DrawerLayout>
+    <!----><!--&lt;!&ndash; MENU DRAWER NAVIGATION VIEW &ndash;&gt;--><!--<android.support.design.widget.NavigationView--><!--android:id="@+id/navigation_view"--><!--android:layout_width="wrap_content"--><!--android:layout_height="match_parent"--><!--android:layout_gravity="start"--><!--android:fitsSystemWindows="true"--><!--android:background="@color/colorPrimary"--><!--app:headerLayout="@layout/menu_drawer_header"--><!--app:itemIconTint="@android:color/white"--><!--app:itemTextColor="@android:color/white"--><!--app:menu="@menu/menu_drawer_items" />--><!--</android.support.v4.widget.DrawerLayout>-->
 

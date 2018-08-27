@@ -45,7 +45,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // TOOLBAR
     // --------------
 
-    // Configure toolbar
+    //Configure toolbar
     public void configureToolbar() {
         setSupportActionBar(this.mToolbar);
     }
