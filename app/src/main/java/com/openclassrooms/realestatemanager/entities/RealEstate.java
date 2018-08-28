@@ -3,8 +3,11 @@ package com.openclassrooms.realestatemanager.entities;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.Nullable;
+
+import java.util.Date;
 
 
 @Entity(foreignKeys = @ForeignKey(entity = User.class,
@@ -18,7 +21,7 @@ public class RealEstate {
     private String type;
     private String area;
     private String description;
-    private String price;
+    private long price;
     private int surface;
     private int room;
     private int bathroom;
@@ -28,8 +31,8 @@ public class RealEstate {
     @Embedded
     private Address address;
     private boolean status;
-    private String entryDate;
-    private String soldDate;
+    private Date entryDate;
+    private Date soldDate;
     private long userId;
     // Miss point of interest maybe a list of String
     //Miss carousel of picture and description maybe a list of Nested object
@@ -38,7 +41,7 @@ public class RealEstate {
     public RealEstate() {
     }
 
-    public RealEstate(String type, String area, String description, String price, int surface, int room,
+    public RealEstate(String type, String area, String description, long price, int surface, int room,
                       int bathroom, int bedroom, @Nullable String pictureUrl, Address address, long userId) {
         this.type = type;
         this.area = area;
@@ -56,7 +59,8 @@ public class RealEstate {
         this.soldDate = null;
     }
 
-    public RealEstate(String type, String area, String price, long userId) {
+    @Ignore
+    public RealEstate(String type, String area, long price, long userId) {
         this.type = type;
         this.area = area;
         this.price = price;
@@ -84,7 +88,7 @@ public class RealEstate {
         return description;
     }
 
-    public String getPrice() {
+    public long getPrice() {
         return price;
     }
 
@@ -117,11 +121,11 @@ public class RealEstate {
         return status;
     }
 
-    public String getEntryDate() {
+    public Date getEntryDate() {
         return entryDate;
     }
 
-    public String getSoldDate() {
+    public Date getSoldDate() {
         return soldDate;
     }
 
@@ -149,7 +153,7 @@ public class RealEstate {
         this.description = description;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
@@ -181,11 +185,11 @@ public class RealEstate {
         this.status = status;
     }
 
-    public void setEntryDate(String entryDate) {
+    public void setEntryDate(Date entryDate) {
         this.entryDate = entryDate;
     }
 
-    public void setSoldDate(String soldDate) {
+    public void setSoldDate(Date soldDate) {
         this.soldDate = soldDate;
     }
 

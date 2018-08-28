@@ -27,9 +27,9 @@ public class RealEstateDaoTest {
     // DATA SET FOR TEST
     private static long USER_ID = 1;
     private static User USER_DEMO = new User(USER_ID, "Titou", "https://www.google.fr, ");
-    private static RealEstate NEW_REAL_ESTATE_FROM_MANHATTAN = new RealEstate("Flat", "Manhattan", "17,870,000", USER_ID);
-    private static RealEstate NEW_REAL_ESTATE_FROM_BROOKLYN = new RealEstate("Duplex", "Brooklyn", "13,990,000", USER_ID);
-    private static RealEstate NEW_REAL_ESTATE_FROM_SOUTHAMPTON = new RealEstate("House", "Southampton", "41,480,000", USER_ID);
+    private static RealEstate NEW_REAL_ESTATE_FROM_MANHATTAN = new RealEstate("Flat", "Manhattan", 17870000,USER_ID);
+    private static RealEstate NEW_REAL_ESTATE_FROM_BROOKLYN = new RealEstate("Duplex", "Brooklyn", 13990000, USER_ID);
+    private static RealEstate NEW_REAL_ESTATE_FROM_SOUTHAMPTON = new RealEstate("House", "Southampton", 41480000, USER_ID);
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();

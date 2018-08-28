@@ -5,16 +5,19 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.openclassrooms.realestatemanager.database.converter.DateConverter;
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao;
 import com.openclassrooms.realestatemanager.database.dao.UserDao;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.entities.User;
 
 @Database(entities = {RealEstate.class, User.class}, version = 1, exportSchema = false)
+@TypeConverters(DateConverter.class)
 public abstract class RealEstateDatabase extends RoomDatabase {
 
     // --- SINGLETON ---

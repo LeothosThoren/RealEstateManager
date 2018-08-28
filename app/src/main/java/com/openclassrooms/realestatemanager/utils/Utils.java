@@ -85,4 +85,8 @@ public class Utils {
 
         return isNetworkAvailable;
     }
+
+    public static String convertPriceToString(long price) {
+        return String.valueOf(price);
+    }
 }
