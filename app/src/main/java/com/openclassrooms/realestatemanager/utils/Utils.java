@@ -86,7 +86,14 @@ public class Utils {
         return isNetworkAvailable;
     }
 
+    //Todo
     public static String convertPriceToString(long price) {
         return String.valueOf(price);
+    }
+
+    // To comment
+    public static String getDateTime(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(date);
     }
 }

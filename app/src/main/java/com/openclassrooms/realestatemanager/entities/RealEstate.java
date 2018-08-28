@@ -5,9 +5,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.content.ContentValues;
 import android.support.annotation.Nullable;
 
+import com.openclassrooms.realestatemanager.utils.Utils;
+
 import java.util.Date;
+import java.util.List;
 
 
 @Entity(foreignKeys = @ForeignKey(entity = User.class,
@@ -42,7 +46,8 @@ public class RealEstate {
     }
 
     public RealEstate(String type, String area, String description, long price, int surface, int room,
-                      int bathroom, int bedroom, @Nullable String pictureUrl, Address address, long userId) {
+                      int bathroom, int bedroom, @Nullable String pictureUrl, Address address,
+                      Date entryDate, long userId) {
         this.type = type;
         this.area = area;
         this.description = description;
@@ -55,11 +60,11 @@ public class RealEstate {
         this.address = address;
         this.userId = userId;
         this.status = false;
-        this.entryDate = null;
+        this.entryDate = entryDate;
         this.soldDate = null;
     }
 
-    @Ignore
+
     public RealEstate(String type, String area, long price, long userId) {
         this.type = type;
         this.area = area;
@@ -195,5 +200,27 @@ public class RealEstate {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+
+    // --- Utils ---
+
+    public static RealEstate fromContentValues(ContentValues contentValues) {
+        final RealEstate realEstate = new RealEstate();
+        if (contentValues.containsKey("type")) realEstate.setType(contentValues.getAsString("type"));
+        if (contentValues.containsKey("area")) realEstate.setArea(contentValues.getAsString("area"));
+        if (contentValues.containsKey("description")) realEstate.setDescription(contentValues.getAsString("description"));
+        if (contentValues.containsKey("price")) realEstate.setPrice(contentValues.getAsLong("price"));
+        if (contentValues.containsKey("surface")) realEstate.setSurface(contentValues.getAsInteger("surface"));
+        if (contentValues.containsKey("room")) realEstate.setRoom(contentValues.getAsInteger("room"));
+        if (contentValues.containsKey("bathroom")) realEstate.setBathroom(contentValues.getAsInteger("bathroom"));
+        if (contentValues.containsKey("bedroom")) realEstate.setBedroom(contentValues.getAsInteger("bedroom"));
+        if (contentValues.containsKey("pictureUrl")) realEstate.setPictureUrl(contentValues.getAsString("pictureUrl"));
+        if (contentValues.containsKey("address")) realEstate.setAddress((Address) contentValues.get("address")); //Risk
+        if (contentValues.containsKey("status")) realEstate.setStatus(contentValues.getAsBoolean("status"));
+        if (contentValues.containsKey("entryDate")) realEstate.setEntryDate((Date) contentValues.get("entryDate"));//Risk
+        if (contentValues.containsKey("soldDate")) realEstate.setSoldDate((Date) contentValues.get("soldDate"));//Risk
+        if (contentValues.containsKey("userId")) realEstate.setUserId(contentValues.getAsLong("userId"));
+        return realEstate;
     }
 }

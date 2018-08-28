@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewQuantity;
     private Button buttonGoToActivity;
     private TextView headerUserName;
-    private ImageView headerPictureProfil;
+    private ImageView headerPictureProfile;
 
     private RealEstateViewModel mRealEstateViewModel;
     private static int USER_ID = 1;
@@ -39,18 +39,18 @@ public class MainActivity extends AppCompatActivity {
         this.textViewQuantity = findViewById(R.id.activity_main_activity_text_view_quantity);
         this.buttonGoToActivity = findViewById(R.id.simple_button);
         this.headerUserName = findViewById(R.id.main_activity_header_profile_text);
-        this.headerPictureProfil = findViewById(R.id.main_activity_header_profile_image);
+        this.headerPictureProfile = findViewById(R.id.main_activity_header_profile_image);
 
         this.configureTextViewMain();
         this.configureTextViewQuantity();
         this.clickToGoToActivity();
         this.configureViewModel();
-        getCurrentUser(USER_ID);
+        this.getCurrentUser(USER_ID);
 
         Utils.isInternetAvailable(this, TAG);
     }
 
-    // DATA
+//    // DATA
 
     // 2 - Configuring ViewModel
     private void configureViewModel(){
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     // 5 - Update header (username & picture)
     private void updateHeader(User user){
         this.headerUserName.setText(user.getUsername());
-        Glide.with(this).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(this.headerPictureProfil);
+        Glide.with(this).load(user.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(this.headerPictureProfile);
     }
 
     // UTILITY

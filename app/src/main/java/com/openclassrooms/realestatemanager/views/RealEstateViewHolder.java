@@ -13,8 +13,10 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Optional;
 
 public class RealEstateViewHolder extends RecyclerView.ViewHolder {
+
 
     @BindView(R.id.item_picture)
     ImageView mImageViewPicture;
@@ -30,6 +32,7 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    @Optional
     public void updateWithRealEstate(RealEstate realEstate, RequestManager glide) {
 
         if (realEstate != null) {
@@ -40,6 +43,7 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
                 glide.load(realEstate.getPictureUrl())
                         .apply(RequestOptions.circleCropTransform())
                         .into(this.mImageViewPicture);
+
             }
         }
 

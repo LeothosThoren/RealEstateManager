@@ -23,6 +23,12 @@
         <activity android:name=".controlers.OldSecondActivity" />
         <activity android:name=".controlers.activities.RealEstateActivity" />
         <activity android:name=".controlers.activities.DetailActivity" />
+
+        <provider
+            android:authorities="com.openclassrooms.realestatemanager.provider"
+            android:name=".provider.RealEstateContentProvider"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
