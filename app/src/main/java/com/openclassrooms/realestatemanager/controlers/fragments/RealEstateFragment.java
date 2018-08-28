@@ -68,6 +68,7 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         // Call for new methods
         this.configureRecyclerView();
         this.configureViewModel();
+        this.getRealEstateItems(USER_ID);
         return view;
     }
 
@@ -98,7 +99,14 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         this.mRealEstateViewModel.init(USER_ID);
     }
 
+//    private void getCurrentUser(int userId){
+//        this.mRealEstateViewModel.getUser(userId).observe(this, this::updateHeader);
+//    }
 
+    // 3 - Get all items for a user
+    private void getRealEstateItems(int userId){
+        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
+    }
 
 
     // -------------------------------------------------------------------------------------------//
@@ -134,5 +142,9 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
                 });
     }
 
+    // 6 - Update the list of Real Estate item
+    private void updateRealEstateItemsList(List<RealEstate> realEstates){
+        this.mAdapter.updateData(realEstates);
+    }
 
 }

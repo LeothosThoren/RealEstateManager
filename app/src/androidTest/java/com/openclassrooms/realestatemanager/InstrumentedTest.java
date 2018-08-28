@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager;
 
+import android.arch.persistence.room.Embedded;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.openclassrooms.realestatemanager.utils.Utils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,5 +25,11 @@ public class InstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.openclassrooms.realestatemanager", appContext.getPackageName());
+    }
+
+    @Test
+    public void useOfInternet() throws Exception {
+        Context context = InstrumentationRegistry.getTargetContext();
+        assertTrue(Utils.isInternetAvailable(context, "TAG"));
     }
 }

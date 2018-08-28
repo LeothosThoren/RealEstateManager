@@ -1,7 +1,12 @@
 package com.openclassrooms.realestatemanager.utils;
 
 import android.content.Context;
-import android.net.wifi.WifiManager;
+import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+
+import com.openclassrooms.realestatemanager.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -51,11 +56,33 @@ public class Utils {
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
      *
      * @param context
+     * @param TAG
      * @return
      */
-    public static Boolean isInternetAvailable(Context context) {
-        WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        assert wifi != null;
-        return wifi.isWifiEnabled();
+    public static Boolean isInternetAvailable(Context context, String TAG) {
+        // Instead of WifiManager only we check both wifi and mobile connectivity with connectivity manager
+        ConnectivityManager connMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeInfo = null;
+        boolean wifiConnected = false;
+        boolean mobileConnected = false;
+        boolean isNetworkAvailable = false;
+        if (connMgr != null) {
+            activeInfo = connMgr.getActiveNetworkInfo();
+        }
+
+        if (activeInfo != null && activeInfo.isConnected()) {
+            wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+            if (wifiConnected) {
+                Log.i(TAG, "Wifi connection");
+            } else if (mobileConnected) {
+                Log.i(TAG, "Mobile connection");
+            }
+        } else {
+            Log.i(TAG, "No wifi or mobile connection");
+        }
+        isNetworkAvailable = (wifiConnected || mobileConnected);
+
+        return isNetworkAvailable;
     }
 }

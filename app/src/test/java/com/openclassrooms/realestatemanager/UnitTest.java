@@ -34,6 +34,6 @@ public class UnitTest {
     @Test
     public void dateConverter()throws Exception {
         //Don't forget to switch the current day date in the test
-        assertEquals("15/08/2018", Utils.getTodayDate());
+        assertEquals("28/08/2018", Utils.getTodayDate());
     }
 }
