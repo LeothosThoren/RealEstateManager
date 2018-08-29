@@ -40,7 +40,6 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     //DATA
-    private List<RealEstate> mRealEstateList;
     private RealEstateAdapter mAdapter;
     private RealEstateViewModel mRealEstateViewModel; //ask
 
