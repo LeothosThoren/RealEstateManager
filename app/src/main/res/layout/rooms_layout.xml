@@ -30,18 +30,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Surface"
+            android:text="@string/surface"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/surface_image_view"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/surface_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text="750 sq m"
+            android:text="@string/surface_size"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/surface_image_view"
             app:layout_constraintTop_toBottomOf="@+id/surface_text_view" />
@@ -72,18 +73,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Number of rooms"
+            android:text="@string/number_of_rooms"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/room_image_view"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/rooms_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text="8"
+            android:text=""
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/room_image_view"
             app:layout_constraintTop_toBottomOf="@+id/room_text_view" />
@@ -114,18 +116,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Number of bathrooms"
+            android:text="@string/number_of_bathrooms"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/bathroom_image_view"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/bathrooms_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text="2"
+            android:text=""
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/bathroom_image_view"
             app:layout_constraintTop_toBottomOf="@+id/bathroom_text_view" />
@@ -156,18 +159,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Number of bedrooms"
+            android:text="@string/number_of_bedrooms"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/bedroom_image_view"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/bedroom_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text="4"
+            android:text=""
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/bedroom_image_view"
             app:layout_constraintTop_toBottomOf="@+id/bedroom_text_view" />

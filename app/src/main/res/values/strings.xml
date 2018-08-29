@@ -19,8 +19,19 @@
     <string name="mobile_connection">Mobile connection</string>
     <string name="no_wifi_or_mobile">No wifi or mobile connection</string>
     <string name="description">Description</string>
-    <string name="loremipsum">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</string>
+    <string name="loremipsum">"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae."</string>
     <string name="map_view">Map view</string>
+    <string name="address">Address</string>
+    <string name="line2">Line2</string>
+    <string name="city">City</string>
+    <string name="zip_code">Zip code</string>
+    <string name="country">Country</string>
+    <string name="number_of_rooms">Number of rooms</string>
+    <string name="location">Location</string>
+    <string name="surface">Surface</string>
+    <string name="surface_size">1$% sq m</string>
+    <string name="number_of_bathrooms">Number of bathrooms</string>
+    <string name="number_of_bedrooms">Number of bedrooms</string>
 
 
     <!-- BUG EXPLANATION
