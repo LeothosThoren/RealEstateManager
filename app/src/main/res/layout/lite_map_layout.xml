@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     app:cardCornerRadius="4dp"
-    app:cardElevation="2dp">
+    android:layout_margin="10dp"
+    app:cardElevation="3dp">
 
     <ImageView
         android:id="@+id/map_view"
