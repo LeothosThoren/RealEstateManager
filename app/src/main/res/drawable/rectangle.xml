@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_background_shape">
     <stroke
-        android:width="2dp"
+        android:width="1dp"
         android:color="@android:color/darker_gray" />
     <solid android:color="@android:color/transparent" />
 </shape>
