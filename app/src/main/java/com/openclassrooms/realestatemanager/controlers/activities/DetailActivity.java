@@ -8,6 +8,8 @@ import com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment;
 
 public class DetailActivity extends AppCompatActivity {
 
+    //Constant
+    public static final String EXTRA_POSITION = "com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment.EXTRA_POSITION";
     // 1 - Declare detail fragment
     private DetailFragment mDetailFragment;
 
@@ -17,6 +19,13 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         this.configureAndShowDetailFragment();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        this.updateDataFromDetailFragment();
     }
 
     // --------------
@@ -35,5 +44,14 @@ public class DetailActivity extends AppCompatActivity {
                     .add(R.id.frame_layout_detail_activity, mDetailFragment)
                     .commit();
         }
+    }
+
+    // --------------
+    // UPDATE UI
+    // --------------
+
+    private void updateDataFromDetailFragment() {
+        int position = getIntent().getIntExtra(EXTRA_POSITION, 0);
+        mDetailFragment.updateTextTest(position);
     }
 }

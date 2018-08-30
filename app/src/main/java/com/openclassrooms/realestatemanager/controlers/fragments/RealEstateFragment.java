@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -43,6 +44,7 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
 
     // Declare callback
     private OnButtonClickedListener mCallback;
+    private OnItemClickListenerCustom mCallback2;
 
     public RealEstateFragment() {
         // Required empty public constructor
@@ -68,8 +70,9 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         try {
             //Parent activity will automatically subscribe to callback
             mCallback = (OnButtonClickedListener) getActivity();
+            mCallback2 = (OnItemClickListenerCustom) getActivity();
         } catch (ClassCastException e) {
-            throw new ClassCastException(e.toString() + " must implement OnButtonClickedListener");
+            throw new ClassCastException(e.toString() + " must implement OnButtonClickedListener or OnItemClickListenerCustom");
         }
     }
 
@@ -114,6 +117,17 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         this.createCallbackToParentActivity();
     }
 
+    private void configureClickWithRecyclerView() {
+        ItemClickSupport.addTo(mRecyclerView, R.layout.recycler_view_item_real_estate_layout)
+                .setOnItemClickListener((recyclerView1, position, v) -> {
+                    // Action to do here
+                    Toast.makeText(getContext(), "Click on position :" + position, Toast.LENGTH_SHORT).show();
+                    mCallback2.onItemClickListenerCustom(v, position);
+                });
+
+    }
+
+
     // -------------------------------------------------------------------------------------------//
     //                                         UI                                                 //
     // -------------------------------------------------------------------------------------------//
@@ -123,11 +137,8 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         this.mAdapter = new RealEstateAdapter(Glide.with(this));
         this.mRecyclerView.setAdapter(this.mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ItemClickSupport.addTo(mRecyclerView, R.layout.recycler_view_item_real_estate_layout)
-                .setOnItemClickListener((recyclerView1, position, v) -> {
-                    // Action to do here
-                    Toast.makeText(getContext(), "Click on position :" + position, Toast.LENGTH_SHORT).show();
-                });
+        this.configureClickWithRecyclerView();
+
     }
 
     // 6 - Update the list of Real Estate item
@@ -135,9 +146,16 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         this.mAdapter.updateData(realEstates);
     }
 
+
+
     // Declare our interface that will be implemented by any container activity
     public interface OnButtonClickedListener {
         public void onButtonClicked(View view);
     }
+
+    public interface OnItemClickListenerCustom {
+        public void onItemClickListenerCustom(View view, int position);
+    }
+
 
 }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapters.DetailAdapter;
+import com.openclassrooms.realestatemanager.adapters.RealEstateAdapter;
 import com.openclassrooms.realestatemanager.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -62,4 +63,8 @@ public class DetailFragment extends Fragment {
     }
 
 
+    //Test
+    public void updateTextTest(int position) {
+        // find a way to get datas (see in the data base ?)
+    }
 }
