@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_background_shape">
+    <solid
+        android:color="@android:drawable/screen_background_dark_transparent" />
+</shape>

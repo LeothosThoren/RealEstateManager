@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.utils.ItemClickSupport;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,20 +44,14 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     // Declare callback
     private OnButtonClickedListener mCallback;
 
-    // Declare our interface that will be implemented by any container activity
-    public interface OnButtonClickedListener {
-        public void onButtonClicked(View view);
-    }
-
     public RealEstateFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the recycler_view_item_layout for this fragment
+        // Inflate the recycler_view_item_real_estate_layout for this fragment
         View view = inflater.inflate(R.layout.fragment_real_estate, container, false);
         ButterKnife.bind(this, view);
         //Handle click
@@ -70,11 +62,6 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         this.getRealEstateItems(USER_ID);
         return view;
     }
-
-    // -------------------------------------------------------------------------------------------//
-    //                                    CONFIGURATION                                           //
-    // -------------------------------------------------------------------------------------------//
-
 
     // Create callback to parent activity
     private void createCallbackToParentActivity() {
@@ -87,9 +74,8 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     }
 
     // -------------------------------------------------------------------------------------------//
-    //                                         DATA                                               //
+    //                                    CONFIGURATION                                           //
     // -------------------------------------------------------------------------------------------//
-
 
     // Configure ViewModel
     private void configureViewModel() {
@@ -98,13 +84,22 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         this.mRealEstateViewModel.init(USER_ID);
     }
 
+    // -------------------------------------------------------------------------------------------//
+    //                                         DATA                                               //
+    // -------------------------------------------------------------------------------------------//
+
+    // 3 - Get all items for a user
+    private void getRealEstateItems(int userId) {
+        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
+    }
+
 //    private void getCurrentUser(int userId){
 //        this.mRealEstateViewModel.getUser(userId).observe(this, this::updateHeader);
 //    }
 
-    // 3 - Get all items for a user
-    private void getRealEstateItems(int userId){
-        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
+    @Override
+    public void onClick(View view) {
+        mCallback.onButtonClicked(view);
     }
 
 
@@ -113,37 +108,36 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     // -------------------------------------------------------------------------------------------//
 
     @Override
-    public void onClick(View view) {
-        mCallback.onButtonClicked(view);
-    }
-
-    // -------------------------------------------------------------------------------------------//
-    //                                         UI                                                 //
-    // -------------------------------------------------------------------------------------------//
-
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         // Call the method that creating callback after being attached to parent activity
         this.createCallbackToParentActivity();
     }
 
+    // -------------------------------------------------------------------------------------------//
+    //                                         UI                                                 //
+    // -------------------------------------------------------------------------------------------//
+
     // RecyclerView
     private void configureRecyclerView() {
         this.mAdapter = new RealEstateAdapter(Glide.with(this));
         this.mRecyclerView.setAdapter(this.mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ItemClickSupport.addTo(mRecyclerView, R.layout.recycler_view_item_layout)
+        ItemClickSupport.addTo(mRecyclerView, R.layout.recycler_view_item_real_estate_layout)
                 .setOnItemClickListener((recyclerView1, position, v) -> {
                     // Action to do here
-                    Toast.makeText(getContext(), "Click on position :"+ position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Click on position :" + position, Toast.LENGTH_SHORT).show();
                 });
     }
 
     // 6 - Update the list of Real Estate item
-    private void updateRealEstateItemsList(List<RealEstate> realEstates){
+    private void updateRealEstateItemsList(List<RealEstate> realEstates) {
         this.mAdapter.updateData(realEstates);
+    }
+
+    // Declare our interface that will be implemented by any container activity
+    public interface OnButtonClickedListener {
+        public void onButtonClicked(View view);
     }
 
 }
