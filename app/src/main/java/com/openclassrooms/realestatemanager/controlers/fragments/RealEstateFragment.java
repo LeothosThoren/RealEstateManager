@@ -8,10 +8,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +24,7 @@ import com.openclassrooms.realestatemanager.utils.ItemClickSupport;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,20 +32,20 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RealEstateFragment extends Fragment implements View.OnClickListener {
+public class RealEstateFragment extends Fragment {
 
+    private static final String TAG = "RealEstateFragment";
     //CONSTANT
-    public static int USER_ID = 1; // ASk
+    public static int USER_ID = 1;
     //WIDGET
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     //DATA
     private RealEstateAdapter mAdapter;
-    private RealEstateViewModel mRealEstateViewModel; //ask
+    private RealEstateViewModel mRealEstateViewModel;
 
     // Declare callback
-    private OnButtonClickedListener mCallback;
-    private OnItemClickListenerCustom mCallback2;
+    private OnItemClickListenerCustom mCallback;
 
     public RealEstateFragment() {
         // Required empty public constructor
@@ -56,8 +57,6 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
         // Inflate the recycler_view_item_real_estate_layout for this fragment
         View view = inflater.inflate(R.layout.fragment_real_estate, container, false);
         ButterKnife.bind(this, view);
-        //Handle click
-        view.findViewById(R.id.fragment_main_button).setOnClickListener(this);
         // Call for new methods
         this.configureRecyclerView();
         this.configureViewModel();
@@ -69,10 +68,9 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     private void createCallbackToParentActivity() {
         try {
             //Parent activity will automatically subscribe to callback
-            mCallback = (OnButtonClickedListener) getActivity();
-            mCallback2 = (OnItemClickListenerCustom) getActivity();
+            mCallback = (OnItemClickListenerCustom) getActivity();
         } catch (ClassCastException e) {
-            throw new ClassCastException(e.toString() + " must implement OnButtonClickedListener or OnItemClickListenerCustom");
+            throw new ClassCastException(e.toString() + " must implement OnItemClickListenerCustom");
         }
     }
 
@@ -84,7 +82,7 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
         this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
-        this.mRealEstateViewModel.init(USER_ID);
+//        this.mRealEstateViewModel.init(USER_ID);
     }
 
     // -------------------------------------------------------------------------------------------//
@@ -94,15 +92,6 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
     // 3 - Get all items for a user
     private void getRealEstateItems(int userId) {
         this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
-    }
-
-//    private void getCurrentUser(int userId){
-//        this.mRealEstateViewModel.getUser(userId).observe(this, this::updateHeader);
-//    }
-
-    @Override
-    public void onClick(View view) {
-        mCallback.onButtonClicked(view);
     }
 
 
@@ -122,9 +111,11 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
                 .setOnItemClickListener((recyclerView1, position, v) -> {
                     // Action to do here
                     Toast.makeText(getContext(), "Click on position :" + position, Toast.LENGTH_SHORT).show();
-                    mCallback2.onItemClickListenerCustom(v, position);
-                });
+                    Log.d(TAG, "configureClickWithRecyclerView: "+ mAdapter.getRealEstate(position).getArea());
+                    RealEstate realEstate = mAdapter.getRealEstate(position);
+                    mCallback.onItemClickListenerCustom(v, position, realEstate);
 
+                });
     }
 
 
@@ -141,20 +132,14 @@ public class RealEstateFragment extends Fragment implements View.OnClickListener
 
     }
 
-    // 6 - Update the list of Real Estate item
+    // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
         this.mAdapter.updateData(realEstates);
     }
 
-
-
     // Declare our interface that will be implemented by any container activity
-    public interface OnButtonClickedListener {
-        public void onButtonClicked(View view);
-    }
-
     public interface OnItemClickListenerCustom {
-        public void onItemClickListenerCustom(View view, int position);
+        public void onItemClickListenerCustom(View view, int position, RealEstate realEstate);
     }
 
 

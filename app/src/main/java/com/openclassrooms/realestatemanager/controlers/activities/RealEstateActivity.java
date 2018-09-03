@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.controlers.activities;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,23 +19,20 @@ import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
+import java.io.Serializable;
+
 import butterknife.BindView;
 
-public class RealEstateActivity extends BaseActivity implements RealEstateFragment.OnButtonClickedListener, RealEstateFragment.OnItemClickListenerCustom {
+public class RealEstateActivity extends BaseActivity implements RealEstateFragment.OnItemClickListenerCustom {
 
 
     private static final String TAG = RealEstateActivity.class.getSimpleName();
     // WIDGET
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
-
     // VAR
     private RealEstateFragment mRealEstateFragment;
     private DetailFragment mDetailFragment;
-
-    private RealEstateViewModel mRealEstateViewModel; //ask
-    public static int USER_ID = 1; // ASk
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,6 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         this.configureToolbar();
         this.configureAndShowRealEstateFragment();
         this.configureAndShowDetailFragment();
-        this.configureViewModel();
     }
 
     @Override
@@ -74,7 +71,6 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_add:
-                createRealEstateItem();
                 Toast.makeText(this, "Test add", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_update:
@@ -90,8 +86,6 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // --------------
     // MENU DRAWER
     // --------------
-
-
 
 
     // --------------
@@ -130,40 +124,15 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // --------------
 
     @Override
-    public void onButtonClicked(View view) {
-        Log.e(TAG, "Button clicked !");
-        if (mDetailFragment == null || !mDetailFragment.isVisible()) {
-            startActivity(new Intent(this, DetailActivity.class));
-        }
-    }
-
-    @Override
-    public void onItemClickListenerCustom(View view, int position) {
-        Log.e(TAG, "onItemClickListenerCustom: ok & position : "+ position );
+    public void onItemClickListenerCustom(View view, int position, RealEstate realEstate) {
+        Log.d(TAG, "onItemClickListenerCustom: ok & position : " + position);
         if (mDetailFragment != null && mDetailFragment.isVisible()) {
-            mDetailFragment.updateTextTest(position);
+            mDetailFragment.updateViewOnTablet(realEstate);
         } else {
             Intent i = new Intent(this, DetailActivity.class);
             i.putExtra(DetailActivity.EXTRA_POSITION, position);
             startActivity(i);
         }
     }
-
-    // --------------
-    // TEST DB
-    // --------------
-
-    // Configure ViewModel
-    private void configureViewModel() {
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
-        this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
-        this.mRealEstateViewModel.init(USER_ID);
-    }
-
-    private void createRealEstateItem() {
-        RealEstate realEstate = new RealEstate("Flat", "Brooklyn", 1206532, USER_ID);
-        this.mRealEstateViewModel.createRealEstate(realEstate);
-    }
-
 
 }

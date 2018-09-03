@@ -1,10 +1,15 @@
 package com.openclassrooms.realestatemanager.controlers.activities;
 
-import android.support.v7.app.AppCompatActivity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
+
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -19,12 +24,12 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         this.configureAndShowDetailFragment();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         this.updateDataFromDetailFragment();
     }
 
@@ -32,7 +37,7 @@ public class DetailActivity extends AppCompatActivity {
     // FRAGMENTS
     // --------------
 
-    private void configureAndShowDetailFragment(){
+    private void configureAndShowDetailFragment() {
         // A - Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
         mDetailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_detail_activity);
 
@@ -51,7 +56,8 @@ public class DetailActivity extends AppCompatActivity {
     // --------------
 
     private void updateDataFromDetailFragment() {
-        int position = getIntent().getIntExtra(EXTRA_POSITION, 0);
-        mDetailFragment.updateTextTest(position);
+        mDetailFragment.position = getIntent().getIntExtra(EXTRA_POSITION, 0);
     }
+
+
 }
