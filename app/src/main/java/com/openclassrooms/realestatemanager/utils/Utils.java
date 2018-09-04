@@ -5,11 +5,14 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.openclassrooms.realestatemanager.R;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -75,8 +78,10 @@ public class Utils {
             mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
             if (wifiConnected) {
                 Log.i(TAG, "Wifi connection");
+                Toast.makeText(context, "Wifi connection is available", Toast.LENGTH_SHORT).show();
             } else if (mobileConnected) {
                 Log.i(TAG, "Mobile connection");
+                Toast.makeText(context, "Mobile connection is available", Toast.LENGTH_SHORT).show();
             }
         } else {
             Log.i(TAG, "No wifi or mobile connection");
@@ -92,8 +97,16 @@ public class Utils {
     }
 
     // To comment
-    public static String getDateTime(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        return dateFormat.format(date);
+    public static Date getDateFromDatePicker(int day, int month, int year) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String formatedDate = sdf.format(calendar.getTime());
+        return sdf.parse(formatedDate);
+    }
+
+    public static String checkDigit(int number)
+    {
+        return number<=9?"0"+number:String.valueOf(number);
     }
 }

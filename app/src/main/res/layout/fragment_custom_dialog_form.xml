@@ -1,183 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/custom_dialog_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".controlers.fragments.CustomDialogForm">
 
-    <ScrollView
-        android:id="@+id/custom_dialog_scrollview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <!--Type-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_type"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Type"
+            android:padding="10dp" />
 
-            <!--Type-->
+        <!--Area-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_type"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Area"
+            android:padding="10dp" />
+
+        <!--Price-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_area"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Price"
+            android:inputType="number"
+            android:padding="10dp" />
+
+        <!--Surface-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_surface"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_price"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Surface"
+            android:inputType="numberDecimal"
+            android:padding="10dp" />
+
+        <!--Numbers of each rooms-->
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_surface"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <!--Rooms-->
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edit_text_type"
-                android:layout_width="match_parent"
+                android:id="@+id/edit_text_nb_rooms"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:layout_weight="33"
                 android:background="@drawable/custom_edit_text"
-                android:hint="Type"
-                android:padding="10dp" />
-
-            <!--Area-->
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edit_text_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edit_text_type"
-                android:layout_margin="8dp"
-                android:background="@drawable/custom_edit_text"
-                android:hint="Area"
-                android:padding="10dp" />
-
-            <!--Price-->
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edit_text_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edit_text_area"
-                android:layout_margin="8dp"
-                android:background="@drawable/custom_edit_text"
-                android:hint="Price"
-                android:inputType="number"
-                android:padding="10dp" />
-
-            <!--Surface-->
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edit_text_surface"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edit_text_price"
-                android:layout_margin="8dp"
-                android:background="@drawable/custom_edit_text"
-                android:hint="Surface"
+                android:hint="Rooms"
                 android:inputType="numberDecimal"
                 android:padding="10dp" />
 
-            <!--Numbers of each rooms-->
-            <LinearLayout
-                android:id="@+id/linearLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edit_text_surface"
-                android:orientation="horizontal"
-                android:weightSum="100">
 
-                <!--Rooms-->
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/edit_text_nb_rooms"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="33"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="Nb of rooms"
-                    android:inputType="numberDecimal"
-                    android:padding="10dp" />
-
-
-                <!--Bathrooms-->
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/edit_text_nb_bathrooms"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="33"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="Nb of bathrooms"
-                    android:inputType="numberDecimal"
-                    android:padding="10dp" />
-
-                <!--Bedrooms-->
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/edit_text_nb_bedrooms"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="33"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="Nb of bedrooms"
-                    android:inputType="numberDecimal"
-                    android:padding="10dp" />
-
-            </LinearLayout>
-
-            <!--Description-->
+            <!--Bathrooms-->
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edit_text_description"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_below="@+id/linearLayout1"
+                android:id="@+id/edit_text_nb_bathrooms"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:layout_weight="33"
                 android:background="@drawable/custom_edit_text"
-                android:hint="Description"
-                android:inputType="textMultiLine"
+                android:hint="Bathrooms"
+                android:inputType="numberDecimal"
                 android:padding="10dp" />
 
-            <!--Address-->
-            <include
-                android:id="@+id/include"
-                layout="@layout/custom_address_displayer"
-                android:layout_width="match_parent"
+            <!--Bedrooms-->
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edit_text_nb_bedrooms"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edit_text_description" />
+                android:layout_margin="8dp"
+                android:layout_weight="33"
+                android:background="@drawable/custom_edit_text"
+                android:hint="Bedrooms"
+                android:inputType="numberDecimal"
+                android:padding="10dp" />
 
-            <!--Status-->
+        </LinearLayout>
 
-            <!--Point of interest-->
+        <!--Description-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_description"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_below="@+id/linearLayout1"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:padding="10dp" />
 
-            <!--Pictures-->
+        <!--Address-->
+        <include
+            android:id="@+id/include"
+            layout="@layout/custom_address_displayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text_description" />
+
+        <!--Status-->
+        <include
+            android:id="@+id/include2"
+            layout="@layout/real_estate_status_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/include" />
+
+        <!--Point of interest-->
+
+        <!--Pictures-->
+
+        <LinearLayout
+            android:id="@+id/slave_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/include2"
+            android:orientation="vertical">
 
             <!--BUTTONS-->
-
-
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
 
             <RelativeLayout
-                android:layout_below="@id/include"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               >
-
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="4dp"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimaryDark" />
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/action_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_margin="15dp"
                     android:layout_toStartOf="@id/action_save"
                     android:text="CANCEL"
                     android:textColor="@color/colorAccent"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/action_save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="20dp"
+                    android:layout_margin="15dp"
                     android:text="SAVE"
                     android:textColor="@color/colorAccent"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
-        </RelativeLayout>
-    </ScrollView>
 
+        </LinearLayout>
 
-
-</LinearLayout>
+    </RelativeLayout>
+</ScrollView>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="100"
+    android:orientation="horizontal">
+
+    <!--Entry Date-->
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edit_text_entry_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_weight="45"
+        android:background="@drawable/custom_edit_text"
+        android:drawableEnd="@drawable/ic_date_picker"
+        android:hint="Entry date"
+        android:inputType="date"
+        android:padding="10dp" />
+
+    <!--Sold Date-->
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edit_text_sold_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_weight="45"
+        android:background="@drawable/custom_edit_text"
+        android:drawableEnd="@drawable/ic_date_picker"
+        android:hint="Sold date"
+        android:inputType="date"
+        android:padding="10dp"
+        android:enabled="false"
+        android:focusable="false"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="10"
+        android:padding="10dp"
+        android:enabled="false"
+        android:focusable="false"/>
+
+</LinearLayout>

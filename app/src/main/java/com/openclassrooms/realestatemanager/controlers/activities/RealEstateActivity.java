@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.controlers.activities;
 
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.openclassrooms.realestatemanager.R;
@@ -19,9 +15,6 @@ import com.openclassrooms.realestatemanager.controlers.fragments.CustomDialogFor
 import com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controlers.fragments.RealEstateFragment;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
-
-import java.io.DataInput;
-import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -143,6 +136,10 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // Action
     // --------------
 
+    /**
+     * @method openCustomDialog
+     * Create and open custom dialog by applying full screen style
+     */
     private void openCustomDialog() {
         CustomDialogForm customDialogForm = new CustomDialogForm();
         customDialogForm.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);

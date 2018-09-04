@@ -75,23 +75,13 @@ public class RealEstateFragment extends Fragment {
     }
 
     // -------------------------------------------------------------------------------------------//
-    //                                    CONFIGURATION                                           //
+    //                                         DATA                                               //
     // -------------------------------------------------------------------------------------------//
 
     // Configure ViewModel
     private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
         this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
-//        this.mRealEstateViewModel.init(USER_ID);
-    }
-
-    // -------------------------------------------------------------------------------------------//
-    //                                         DATA                                               //
-    // -------------------------------------------------------------------------------------------//
-
-    // 3 - Get all items for a user
-    private void getRealEstateItems(int userId) {
-        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
     }
 
 
@@ -118,6 +108,10 @@ public class RealEstateFragment extends Fragment {
                 });
     }
 
+    // Declare our interface that will be implemented by any container activity
+    public interface OnItemClickListenerCustom {
+        public void onItemClickListenerCustom(View view, int position, RealEstate realEstate);
+    }
 
     // -------------------------------------------------------------------------------------------//
     //                                         UI                                                 //
@@ -132,14 +126,15 @@ public class RealEstateFragment extends Fragment {
 
     }
 
+
+    // 3 - Get all items for a user
+    private void getRealEstateItems(int userId) {
+        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
+    }
+
     // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
         this.mAdapter.updateData(realEstates);
-    }
-
-    // Declare our interface that will be implemented by any container activity
-    public interface OnItemClickListenerCustom {
-        public void onItemClickListenerCustom(View view, int position, RealEstate realEstate);
     }
 
 
