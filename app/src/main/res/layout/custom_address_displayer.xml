@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_address_relative_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <!--Address-->
+    <LinearLayout
+        android:id="@+id/first_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <!--Number-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_address_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="15"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Num"
+            android:inputType="number"
+            android:padding="10dp" />
+        <!--Line1-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_address_line1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="85"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Line 1"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+    <!--Line2-->
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edit_text_address_line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/first_linear_layout"
+        android:layout_margin="8dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Line 2"
+        android:padding="10dp" />
+
+    <!--City, State, Zip-->
+    <LinearLayout
+        android:id="@+id/second_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_text_address_line2"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <!--City-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_address_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="38"
+            android:background="@drawable/custom_edit_text"
+            android:hint="City"
+            android:inputType="textCapWords|textAutoCorrect"
+            android:padding="10dp" />
+        <!--State-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_address_state"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="38"
+            android:background="@drawable/custom_edit_text"
+            android:hint="State"
+            android:inputType="textCapCharacters|textAutoCorrect"
+            android:padding="10dp" />
+
+        <!--Zip-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_text_address_zip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="24"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Zip"
+            android:inputType="textPostalAddress"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

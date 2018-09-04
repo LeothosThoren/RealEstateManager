@@ -22,4 +22,9 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!--DialogFragment-->
+    <style name="Dialog.FullScreen" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:padding">0dp</item>
+    </style>
+
 </resources>

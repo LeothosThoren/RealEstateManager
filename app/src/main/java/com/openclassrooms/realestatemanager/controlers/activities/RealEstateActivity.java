@@ -1,31 +1,34 @@
 package com.openclassrooms.realestatemanager.controlers.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.base.BaseActivity;
+import com.openclassrooms.realestatemanager.controlers.fragments.CustomDialogForm;
 import com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controlers.fragments.RealEstateFragment;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
-import com.openclassrooms.realestatemanager.injections.Injection;
-import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
-import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
-import java.io.Serializable;
+import java.io.DataInput;
+import java.util.Objects;
 
 import butterknife.BindView;
 
 public class RealEstateActivity extends BaseActivity implements RealEstateFragment.OnItemClickListenerCustom {
 
 
+    public static final String FRAGMENT_FORM_TAG = "CustomDialogForm";
     private static final String TAG = RealEstateActivity.class.getSimpleName();
     // WIDGET
     @BindView(R.id.toolbar)
@@ -71,6 +74,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_add:
+                this.openCustomDialog();
                 Toast.makeText(this, "Test add", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_update:
@@ -133,6 +137,17 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
             i.putExtra(DetailActivity.EXTRA_POSITION, position);
             startActivity(i);
         }
+    }
+
+    // --------------
+    // Action
+    // --------------
+
+    private void openCustomDialog() {
+        CustomDialogForm customDialogForm = new CustomDialogForm();
+        customDialogForm.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        customDialogForm.show(getSupportFragmentManager(), FRAGMENT_FORM_TAG);
+
     }
 
 }
