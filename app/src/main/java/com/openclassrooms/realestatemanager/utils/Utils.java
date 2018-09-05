@@ -105,4 +105,20 @@ public class Utils {
     public static String checkDigit(int number) {
         return number <= 9 ? "0" + number : String.valueOf(number);
     }
+
+    public static String staticMapUrlEscaped(int nb, String line1, String line2, String city,
+                                                   String state, String zip, String apiKey) {
+        StringBuilder sb = new StringBuilder();
+        String address = (String.valueOf(nb) + " " + line1 + " " + line2 + " " + city + " " + state + " " + zip).toLowerCase();
+        String[] arr = address.split(" ");
+        for (int i = 0; i < arr.length; i++) {
+            if (!arr[i].isEmpty() && i < arr.length - 1) {
+                sb.append(arr[i]).append("+");
+            } else if (!arr[i].isEmpty() && i == arr.length - 1) {
+                sb.append(arr[i]);
+            }
+        }
+        return "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&markers=size:mid%7Ccolor:red%7C" + sb.toString() + "&key=" + apiKey;
+    }
+
 }

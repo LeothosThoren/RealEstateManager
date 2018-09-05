@@ -16,11 +16,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapters.DetailAdapter;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ public class DetailFragment extends Fragment {
     TextView mTextViewDescription;
     @BindView(R.id.detail_map_view)
     ImageView mMapView;
+    String mApiKey = BuildConfig.MapApiKey;
     //VAR
     private DetailAdapter mDetailAdapter;
     private ArrayList<String> pictureUrl = new ArrayList<>();
@@ -124,17 +127,20 @@ public class DetailFragment extends Fragment {
         mTextViewDescription.setText(realEstateList.get(position).getDescription());
         mSurfaceQty.setText(getString(R.string.surface_size, realEstateList.get(position).getSurface()));
         mRoomsQty.setText(getString(R.string.room_quantity, realEstateList.get(position).getRoom()));
-        mBathroomsQty.setText(getString(R.string.bathroom_quantity,realEstateList.get(position).getBathroom()));
-        mBedroomsQty.setText(getString(R.string.bedroom_quantity,realEstateList.get(position).getBedroom()));
+        mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstateList.get(position).getBathroom()));
+        mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstateList.get(position).getBedroom()));
         mAddress.setText(getString(R.string.address, realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1));
-        if (realEstateList.get(position).getAddress().line2 != null) {
+        if (realEstateList.get(position).getAddress().line2 != null && (!realEstateList.get(position).getAddress().line2.equals(""))) {
             mLine2.setText(realEstateList.get(position).getAddress().line2);
+            mLine2.setVisibility(View.VISIBLE);
         }
         mCity.setText(realEstateList.get(position).getAddress().city);
         mState.setText(realEstateList.get(position).getAddress().state);
         mZipCode.setText(realEstateList.get(position).getAddress().zip);
         Glide.with(this)
-                .load("https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyDScyeqtcVMPj5s_3TWTdU4xNb89mqO0cs")
+                .load(Utils.staticMapUrlEscaped(realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1,
+                        realEstateList.get(position).getAddress().line2, realEstateList.get(position).getAddress().city,
+                        realEstateList.get(position).getAddress().state, realEstateList.get(position).getAddress().zip, mApiKey))
                 .apply(RequestOptions.centerCropTransform())
                 .into(mMapView);
     }
@@ -142,4 +148,6 @@ public class DetailFragment extends Fragment {
     public void updateViewOnTablet(RealEstate realEstate) {
         mTextViewDescription.setText(realEstate.getArea());
     }
+
+
 }

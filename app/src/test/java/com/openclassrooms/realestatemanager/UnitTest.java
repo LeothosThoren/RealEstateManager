@@ -34,6 +34,17 @@ public class UnitTest {
     @Test
     public void dateConverter()throws Exception {
         //Don't forget to switch the current day date in the test
-        assertEquals("28/08/2018", Utils.getTodayDate());
+        assertEquals("05/09/2018", Utils.getTodayDate());
     }
+
+    //===================
+    // STRING
+    //===================
+
+    @Test
+    public void stringConverter()throws Exception {
+        assertEquals("75+gresham+street+victoria+park+australia+wa+6100",
+                Utils.formatAddressForUrlEscape(75, "Gresham Street ","", "Victoria Park", "AUSTRALIA", "WA 6100"));
+    }
+
 }

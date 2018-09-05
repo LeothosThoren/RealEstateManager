@@ -29,7 +29,6 @@
             android:authorities="com.openclassrooms.realestatemanager.provider"
             android:name=".provider.RealEstateContentProvider"
             android:exported="true"/>
-
     </application>
 
 </manifest>

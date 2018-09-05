@@ -39,7 +39,6 @@
     <string name="bathroom_quantity">%1$d</string>
     <string name="bedroom_quantity">%1$d</string>
 
-
     <!-- BUG EXPLANATION
     - Bug résolu ligne 17 :  this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);
         le textView pointait sur un widget de la seconde activité
