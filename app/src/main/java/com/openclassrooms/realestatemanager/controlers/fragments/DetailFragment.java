@@ -85,6 +85,10 @@ public class DetailFragment extends Fragment {
         //methods
         pictureUrl.add("https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg");
         descriptionText.add("Kitchen");
+        pictureUrl.add("https://images.pexels.com/photos/276696/pexels-photo-276696.jpeg");
+        descriptionText.add("Dining Room");
+        pictureUrl.add("https://images.pexels.com/photos/276677/pexels-photo-276677.jpeg");
+        descriptionText.add("Living");
         configureViewModel();
         getRealEstateItems(USER_ID);
         configureRecyclerView();
@@ -124,29 +128,50 @@ public class DetailFragment extends Fragment {
     // -------------------------------------------------------------------------------------------//
 
     private void updateDataFromAList(List<RealEstate> realEstateList) {
-        mTextViewDescription.setText(realEstateList.get(position).getDescription());
-        mSurfaceQty.setText(getString(R.string.surface_size, realEstateList.get(position).getSurface()));
-        mRoomsQty.setText(getString(R.string.room_quantity, realEstateList.get(position).getRoom()));
-        mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstateList.get(position).getBathroom()));
-        mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstateList.get(position).getBedroom()));
-        mAddress.setText(getString(R.string.address, realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1));
-        if (realEstateList.get(position).getAddress().line2 != null && (!realEstateList.get(position).getAddress().line2.equals(""))) {
-            mLine2.setText(realEstateList.get(position).getAddress().line2);
-            mLine2.setVisibility(View.VISIBLE);
+        if (realEstateList.size() > 0) {
+            mTextViewDescription.setText(realEstateList.get(position).getDescription());
+            mSurfaceQty.setText(getString(R.string.surface_size, realEstateList.get(position).getSurface()));
+            mRoomsQty.setText(getString(R.string.room_quantity, realEstateList.get(position).getRoom()));
+            mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstateList.get(position).getBathroom()));
+            mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstateList.get(position).getBedroom()));
+            mAddress.setText(getString(R.string.address, realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1));
+            if (realEstateList.get(position).getAddress().line2 != null && (!realEstateList.get(position).getAddress().line2.equals(""))) {
+                mLine2.setText(realEstateList.get(position).getAddress().line2);
+                mLine2.setVisibility(View.VISIBLE);
+            }
+            mCity.setText(realEstateList.get(position).getAddress().city);
+            mState.setText(realEstateList.get(position).getAddress().state);
+            mZipCode.setText(realEstateList.get(position).getAddress().zip);
+            Glide.with(this)
+                    .load(Utils.staticMapUrlEscaped(realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1,
+                            realEstateList.get(position).getAddress().line2, realEstateList.get(position).getAddress().city,
+                            realEstateList.get(position).getAddress().state, realEstateList.get(position).getAddress().zip, mApiKey))
+                    .apply(RequestOptions.centerCropTransform())
+                    .into(mMapView);
         }
-        mCity.setText(realEstateList.get(position).getAddress().city);
-        mState.setText(realEstateList.get(position).getAddress().state);
-        mZipCode.setText(realEstateList.get(position).getAddress().zip);
-        Glide.with(this)
-                .load(Utils.staticMapUrlEscaped(realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1,
-                        realEstateList.get(position).getAddress().line2, realEstateList.get(position).getAddress().city,
-                        realEstateList.get(position).getAddress().state, realEstateList.get(position).getAddress().zip, mApiKey))
-                .apply(RequestOptions.centerCropTransform())
-                .into(mMapView);
+
     }
 
     public void updateViewOnTablet(RealEstate realEstate) {
-        mTextViewDescription.setText(realEstate.getArea());
+        mTextViewDescription.setText(realEstate.getDescription());
+        mSurfaceQty.setText(getString(R.string.surface_size, realEstate.getSurface()));
+        mRoomsQty.setText(getString(R.string.room_quantity, realEstate.getRoom()));
+        mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstate.getBathroom()));
+        mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstate.getBedroom()));
+        mAddress.setText(getString(R.string.address, realEstate.getAddress().number, realEstate.getAddress().line1));
+        if (realEstate.getAddress().line2 != null && (!realEstate.getAddress().line2.equals(""))) {
+            mLine2.setText(realEstate.getAddress().line2);
+            mLine2.setVisibility(View.VISIBLE);
+        }
+        mCity.setText(realEstate.getAddress().city);
+        mState.setText(realEstate.getAddress().state);
+        mZipCode.setText(realEstate.getAddress().zip);
+        Glide.with(this)
+                .load(Utils.staticMapUrlEscaped(realEstate.getAddress().number, realEstate.getAddress().line1,
+                        realEstate.getAddress().line2, realEstate.getAddress().city,
+                        realEstate.getAddress().state, realEstate.getAddress().zip, mApiKey))
+                .apply(RequestOptions.centerCropTransform())
+                .into(mMapView);
     }
 
 

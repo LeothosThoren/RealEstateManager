@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:padding="8dp"
-        android:text="No description to display"
+        android:text="@string/no_description_to_display"
         android:textAlignment="gravity"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"

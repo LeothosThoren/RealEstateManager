@@ -83,8 +83,8 @@
         <!--MAP-->
         <include
             layout="@layout/lite_map_layout"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_margin="10dp" />
 

@@ -55,8 +55,8 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put("id", 1);
                 contentValues.put("username", "Sofiane");
-                contentValues.put("urlPicture","https://oc-" +
-     "user.imgix.net/users/avatars/15262853029714_Photo_profil_Linkedin.jpg?auto=compress,format&q=80&h=100&dpr=1");
+                contentValues.put("urlPicture","http://oc-" +
+     "user.imgix.net/users/avatars/15262853029714_Photo_profil_Linkedin.jpg");
 
                 db.insert("User", OnConflictStrategy.IGNORE, contentValues);
             }
