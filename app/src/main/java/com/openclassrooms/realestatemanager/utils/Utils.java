@@ -1,13 +1,10 @@
 package com.openclassrooms.realestatemanager.utils;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.openclassrooms.realestatemanager.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -105,8 +102,7 @@ public class Utils {
         return sdf.parse(formatedDate);
     }
 
-    public static String checkDigit(int number)
-    {
-        return number<=9?"0"+number:String.valueOf(number);
+    public static String checkDigit(int number) {
+        return number <= 9 ? "0" + number : String.valueOf(number);
     }
 }

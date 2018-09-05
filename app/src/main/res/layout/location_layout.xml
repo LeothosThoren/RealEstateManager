@@ -25,6 +25,7 @@
         android:id="@+id/location_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/location"
@@ -34,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/address"
+            android:id="@+id/detail_address_line1_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -45,44 +46,45 @@
             app:layout_constraintTop_toBottomOf="@+id/location_text_view" />
 
         <TextView
-            android:id="@+id/line2"
+            android:id="@+id/detail_line2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="@string/line2"
             android:textSize="12sp"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/location_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/address" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_address_line1_num" />
 
         <TextView
-            android:id="@+id/city"
+            android:id="@+id/detail_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="@string/city"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/location_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/line2" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_line2" />
 
         <TextView
-            android:id="@+id/zip_code"
+            android:id="@+id/detail_zip_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="@string/zip_code"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/location_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/city" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_city" />
 
         <TextView
-            android:id="@+id/country"
+            android:id="@+id/detail_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="@string/country"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/location_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/zip_code" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_zip_code" />
     </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

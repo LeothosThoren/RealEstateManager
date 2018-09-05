@@ -41,7 +41,7 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
             this.mTextViewPrice.setText(Utils.convertPriceToString(realEstate.getPrice()));
             if (realEstate.getPictureUrl() != null) {
                 glide.load(realEstate.getPictureUrl())
-                        .apply(RequestOptions.circleCropTransform())
+                        .apply(RequestOptions.centerCropTransform())
                         .into(this.mImageViewPicture);
 
             }

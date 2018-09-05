@@ -128,7 +128,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 //Save operation...
                 saveOperation(mType.getText().toString(), mArea.getText().toString(), mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
                         Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()), Integer.valueOf(mBathroomNb.getText().toString()),
-                        Integer.valueOf(mBedroomNb.getText().toString()), "https://unsplash.com/photos/mcL2f-J74GY", populateAddressObject(), entryDate, USER_ID);
+                        Integer.valueOf(mBedroomNb.getText().toString()), "https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg", populateAddressObject(), entryDate, USER_ID);
 
         }
 
@@ -154,7 +154,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         handler.postDelayed(() -> {
             Toast.makeText(getContext(), "Data saved!", Toast.LENGTH_SHORT).show();
             getDialog().dismiss();
-        }, 2000);
+        }, 1000);
     }
 
     private Address populateAddressObject() {
@@ -163,7 +163,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         address.line1 = mAddressLine1.getText().toString();
         address.line2 = mAddressLine2.getText().toString();
         address.city = mAddressCity.getText().toString();
-        address.country = mAddressState.getText().toString();
+        address.state = mAddressState.getText().toString();
         address.zip = mAddressZip.getText().toString();
 
         return address;

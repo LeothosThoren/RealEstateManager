@@ -216,7 +216,7 @@ public class RealEstate {
         if (contentValues.containsKey("bathroom")) realEstate.setBathroom(contentValues.getAsInteger("bathroom"));
         if (contentValues.containsKey("bedroom")) realEstate.setBedroom(contentValues.getAsInteger("bedroom"));
         if (contentValues.containsKey("pictureUrl")) realEstate.setPictureUrl(contentValues.getAsString("pictureUrl"));
-        if (contentValues.containsKey("address")) realEstate.setAddress((Address) contentValues.get("address")); //Risk
+        if (contentValues.containsKey("detail_address_line1_num")) realEstate.setAddress((Address) contentValues.get("detail_address_line1_num")); //Risk
         if (contentValues.containsKey("status")) realEstate.setStatus(contentValues.getAsBoolean("status"));
         if (contentValues.containsKey("entryDate")) realEstate.setEntryDate((Date) contentValues.get("entryDate"));//Risk
         if (contentValues.containsKey("soldDate")) realEstate.setSoldDate((Date) contentValues.get("soldDate"));//Risk

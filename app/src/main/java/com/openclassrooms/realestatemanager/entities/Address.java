@@ -10,6 +10,6 @@ public class Address {
     public String line2;
     public String city;
     public String zip;
-    public String country;
+    public String state;
 
 }

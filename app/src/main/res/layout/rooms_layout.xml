@@ -37,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/surface_quantity"
+            android:id="@+id/detail_surface_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -80,12 +80,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/rooms_quantity"
+            android:id="@+id/detail_rooms_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text=""
+            android:text="@string/room_quantity"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/room_image_view"
             app:layout_constraintTop_toBottomOf="@+id/room_text_view" />
@@ -123,12 +123,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/bathrooms_quantity"
+            android:id="@+id/detail_bathrooms_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text=""
+            android:text="@string/bathroom_quantity"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/bathroom_image_view"
             app:layout_constraintTop_toBottomOf="@+id/bathroom_text_view" />
@@ -166,12 +166,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/bedroom_quantity"
+            android:id="@+id/detail_bedroom_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text=""
+            android:text="@string/bedroom_quantity"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/bedroom_image_view"
             app:layout_constraintTop_toBottomOf="@+id/bedroom_text_view" />
