@@ -116,7 +116,7 @@ public class DetailFragment extends Fragment {
         this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
     }
 
-    // 3 - Get all items for a user
+    // Get all items for a user
     private void getRealEstateItems(int userId) {
         this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateDataFromAList);
         Log.d(TAG, "getRealEstateItems: ");

@@ -100,11 +100,10 @@ public class RealEstateFragment extends Fragment {
         ItemClickSupport.addTo(mRecyclerView, R.layout.recycler_view_item_real_estate_layout)
                 .setOnItemClickListener((recyclerView1, position, v) -> {
                     // Action to do here
-                    Toast.makeText(getContext(), "Click on position :" + position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Click on position : " + position, Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "configureClickWithRecyclerView: "+ mAdapter.getRealEstate(position).getArea());
                     RealEstate realEstate = mAdapter.getRealEstate(position);
                     mCallback.onItemClickListenerCustom(v, position, realEstate);
-
                 });
     }
 

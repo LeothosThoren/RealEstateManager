@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.views;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
@@ -13,7 +14,6 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Optional;
 
 public class RealEstateViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,16 +26,18 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
     TextView mTextViewLocation;
     @BindView(R.id.item_price)
     TextView mTextViewPrice;
+    @BindView(R.id.real_estate_item_background)
+    RelativeLayout mLayout;
 
     public RealEstateViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    @Optional
     public void updateWithRealEstate(RealEstate realEstate, RequestManager glide) {
 
         if (realEstate != null) {
+
             this.mTextViewName.setText(realEstate.getType());
             this.mTextViewLocation.setText(realEstate.getArea());
             this.mTextViewPrice.setText(Utils.convertPriceToString(realEstate.getPrice()));
@@ -46,6 +48,5 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
 
             }
         }
-
     }
 }

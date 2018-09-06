@@ -38,6 +38,7 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
     @Override
     public void onBindViewHolder(@NonNull RealEstateViewHolder viewHolder, int position) {
         viewHolder.updateWithRealEstate(this.realEstateList.get(position), this.glide);
+
     }
 
     @Override
@@ -48,6 +49,8 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
     public RealEstate getRealEstate(int position) {
         return this.realEstateList.get(position);
     }
+
+
 
     public void updateData(List<RealEstate> realEstates) {
         this.realEstateList = realEstates;
