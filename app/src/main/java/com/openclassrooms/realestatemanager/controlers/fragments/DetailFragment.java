@@ -70,7 +70,7 @@ public class DetailFragment extends Fragment {
     private ArrayList<String> descriptionText = new ArrayList<>();
     private RealEstateViewModel mRealEstateViewModel;
     private String mApiKey = "&key=" + BuildConfig.MapApiKey;
-    private String mApiUri = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&markers=size:mid%7Ccolor:red%7C";
+    private String mApiUri = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&zoom=17&markers=size:mid%7Ccolor:red%7C";
 
     public DetailFragment() {
         // Required empty public constructor
