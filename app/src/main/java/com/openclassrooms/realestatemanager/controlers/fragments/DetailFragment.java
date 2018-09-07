@@ -38,7 +38,7 @@ public class DetailFragment extends Fragment {
 
     private static final String TAG = "DetailFragment";
     public static int USER_ID = 1; // ASk
-    public int position;
+    public static int position;
     //WIDGET
     @BindView(R.id.recycler_view_fragment)
     RecyclerView mDetailRecyclerView;
@@ -82,7 +82,13 @@ public class DetailFragment extends Fragment {
         // Inflate the recycler_view_item_layout for this fragment
         View detailView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, detailView);
+        this.init();
 
+        return detailView;
+    }
+
+
+    private void init() {
         //methods
         pictureUrl.add("https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg");
         descriptionText.add("Kitchen");
@@ -90,22 +96,13 @@ public class DetailFragment extends Fragment {
         descriptionText.add("Dining Room");
         pictureUrl.add("https://images.pexels.com/photos/276677/pexels-photo-276677.jpeg");
         descriptionText.add("Living Room");
-        configureViewModel();
-        getRealEstateItems(USER_ID);
-        configureRecyclerView();
 
+        this.configureViewModel();
+        this.getRealEstateItems(USER_ID);
+        this.configureRecyclerView();
 
-        return detailView;
     }
 
-    // RecyclerView
-    private void configureRecyclerView() {
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        this.mDetailRecyclerView.setLayoutManager(layoutManager);
-        this.mDetailAdapter = new DetailAdapter(pictureUrl, descriptionText, Glide.with(this));
-        this.mDetailRecyclerView.setAdapter(this.mDetailAdapter);
-    }
 
     // -------------------------------------------------------------------------------------------//
     //                                         DATA                                               //
@@ -127,6 +124,15 @@ public class DetailFragment extends Fragment {
     // -------------------------------------------------------------------------------------------//
     //                                          UI                                                //
     // -------------------------------------------------------------------------------------------//
+
+    // RecyclerView
+    private void configureRecyclerView() {
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        this.mDetailRecyclerView.setLayoutManager(layoutManager);
+        this.mDetailAdapter = new DetailAdapter(pictureUrl, descriptionText, Glide.with(this));
+        this.mDetailRecyclerView.setAdapter(this.mDetailAdapter);
+    }
 
     private void updateDataFromAList(List<RealEstate> realEstateList) {
         if (realEstateList.size() > 0) {

@@ -1,14 +1,10 @@
 package com.openclassrooms.realestatemanager.controlers.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment;
-import com.openclassrooms.realestatemanager.injections.Injection;
-import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
-import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 
 public class DetailActivity extends AppCompatActivity {

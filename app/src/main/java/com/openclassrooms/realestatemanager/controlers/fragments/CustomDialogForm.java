@@ -4,6 +4,8 @@ package com.openclassrooms.realestatemanager.controlers.fragments;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -30,6 +32,7 @@ import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +64,8 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     EditText mBedroomNb;
     @BindView(R.id.edit_text_entry_date)
     TextView mEntryDateText;
+    @BindView(R.id.edit_text_sold_date)
+    TextView mSoldDateText;
     @BindView(R.id.edit_text_address_number)
     EditText mAddressNum;
     @BindView(R.id.edit_text_address_line1)
@@ -77,7 +82,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     Button mAddPoi;
     // Data
     private RealEstateViewModel mViewModel;
-    private Date entryDate;
+    private Date entryDate, soldDate;
     // Var
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private boolean mIsLargeLayout;
@@ -97,11 +102,27 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         // Methods
         this.configureViewModel();
         this.configureSpinner();
+        this.getRealEstateItems(USER_ID);
         mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
         mActionCancel.setOnClickListener(this);
         mActionSave.setOnClickListener(this);
         mEntryDateText.setOnClickListener(this);
         mAddPoi.setOnClickListener(this);
+
+        //Handle the click of the date picker dialog
+        mDateSetListener = (view, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
+            //For displaying in the view
+            mEntryDateText.setText(date);
+            // Get to database
+            try {
+                entryDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        };
     }
 
     // --------------
@@ -138,25 +159,56 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.edit_text_entry_date:
+                Log.d(TAG, "onClick: change entry date");
+                this.configDatePickerDialog(getContext());
+                break;
+            case R.id.edit_text_sold_date:
+                Log.d(TAG, "onClick: change sold date");
                 this.configDatePickerDialog(getContext());
                 break;
             case R.id.button_add_point_of_interest:
+                Log.d(TAG, "onClick: open poi list");
                 //Todo
-
                 break;
             case R.id.button_add_picture:
+                Log.d(TAG, "onClick: open picture list");
                 //Todo
-
                 break;
             case R.id.action_cancel:
-                Log.d(TAG, "onClick: closing dialog");
+                Log.d(TAG, "onClick: cancel and closing dialog");
                 getDialog().cancel();
                 break;
             case R.id.action_save:
                 Log.d(TAG, "onClick: saving data and closing dialog");
-                //Save operation...
                 saveOperation();
+        }
 
+    }
+
+    // --------------
+    // Config
+    // --------------
+
+    private void configDatePickerDialog(Context context) {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                mDateSetListener, year, month, day);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.show();
+
+    }
+
+    private void configureSpinner() {
+        if (getContext() != null) {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.property_type, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+            mType.setAdapter(adapter);
         }
 
     }
@@ -168,6 +220,20 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
         this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
+    }
+
+    // Get all items for a user
+    private void getRealEstateItems(int userId) {
+        this.mViewModel.getRealEstate(userId).observe(this, this::retrieveDateFromViewModel);
+        Log.d(TAG, "getRealEstateItems: ");
+    }
+
+    private void retrieveDateFromViewModel(List<RealEstate> realEstateList) {
+        Log.d(TAG, "retrieveDateFromViewModel: at position 1:\n"+
+        realEstateList.get(1).getEntryDate()+"\n"+
+        realEstateList.get(1).getPrice()+"\n"+
+        realEstateList.get(1).getSoldDate());
+
     }
 
     private void saveOperation() {
@@ -202,45 +268,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         address.zip = mAddressZip.getText().toString();
 
         return address;
-    }
-
-    // --------------
-    // Config
-    // --------------
-
-    private void configDatePickerDialog(Context context) {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog dialog = new DatePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                mDateSetListener, year, month, day);
-        dialog.show();
-        //Handle the click
-        mDateSetListener = (view, year1, month1, dayOfMonth) -> {
-            month1 = month1 + 1;
-            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
-            //For displaying in the view
-            mEntryDateText.setText(date);
-            // Get to database
-            try {
-                entryDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        };
-
-    }
-
-    private void configureSpinner() {
-        if (getContext() != null) {
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.property_type, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
-            mType.setAdapter(adapter);
-        }
-
     }
 
 
