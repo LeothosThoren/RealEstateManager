@@ -64,12 +64,13 @@ public class DetailFragment extends Fragment {
     TextView mTextViewDescription;
     @BindView(R.id.detail_map_view)
     ImageView mMapView;
-    String mApiKey = BuildConfig.MapApiKey;
     //VAR
     private DetailAdapter mDetailAdapter;
     private ArrayList<String> pictureUrl = new ArrayList<>();
     private ArrayList<String> descriptionText = new ArrayList<>();
     private RealEstateViewModel mRealEstateViewModel;
+    private String mApiKey = "&key=" + BuildConfig.MapApiKey;
+    private String mApiUri = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&markers=size:mid%7Ccolor:red%7C";
 
     public DetailFragment() {
         // Required empty public constructor
@@ -135,7 +136,9 @@ public class DetailFragment extends Fragment {
             mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstateList.get(position).getBathroom()));
             mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstateList.get(position).getBedroom()));
             mAddress.setText(getString(R.string.address, realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1));
-            if (realEstateList.get(position).getAddress().line2 != null && (!realEstateList.get(position).getAddress().line2.equals(""))) {
+
+            if (realEstateList.get(position).getAddress().line2 != null
+                    && (!realEstateList.get(position).getAddress().line2.equals(""))) {
                 mLine2.setText(realEstateList.get(position).getAddress().line2);
                 mLine2.setVisibility(View.VISIBLE);
             }
@@ -143,9 +146,13 @@ public class DetailFragment extends Fragment {
             mState.setText(realEstateList.get(position).getAddress().state);
             mZipCode.setText(realEstateList.get(position).getAddress().zip);
             Glide.with(this)
-                    .load(Utils.staticMapUrlEscaped(realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1,
-                            realEstateList.get(position).getAddress().line2, realEstateList.get(position).getAddress().city,
-                            realEstateList.get(position).getAddress().state, realEstateList.get(position).getAddress().zip, mApiKey))
+                    .load(mApiUri + Utils.formatAddress(
+                            realEstateList.get(position).getAddress().number,
+                            realEstateList.get(position).getAddress().line1,
+                            realEstateList.get(position).getAddress().line2,
+                            realEstateList.get(position).getAddress().city,
+                            realEstateList.get(position).getAddress().state,
+                            realEstateList.get(position).getAddress().zip) + mApiKey)
                     .apply(RequestOptions.centerCropTransform())
                     .into(mMapView);
         }
@@ -167,9 +174,13 @@ public class DetailFragment extends Fragment {
         mState.setText(realEstate.getAddress().state);
         mZipCode.setText(realEstate.getAddress().zip);
         Glide.with(this)
-                .load(Utils.staticMapUrlEscaped(realEstate.getAddress().number, realEstate.getAddress().line1,
-                        realEstate.getAddress().line2, realEstate.getAddress().city,
-                        realEstate.getAddress().state, realEstate.getAddress().zip, mApiKey))
+                .load(mApiUri + Utils.formatAddress(
+                        realEstate.getAddress().number,
+                        realEstate.getAddress().line1,
+                        realEstate.getAddress().line2,
+                        realEstate.getAddress().city,
+                        realEstate.getAddress().state,
+                        realEstate.getAddress().zip) + mApiKey)
                 .apply(RequestOptions.centerCropTransform())
                 .into(mMapView);
     }

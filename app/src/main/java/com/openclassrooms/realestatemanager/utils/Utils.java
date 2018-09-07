@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -7,6 +8,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -88,9 +91,10 @@ public class Utils {
         return isNetworkAvailable;
     }
 
-    //Todo
+
     public static String convertPriceToString(long price) {
-        return String.valueOf(price);
+        DecimalFormat formatter = new DecimalFormat("#,###",new DecimalFormatSymbols(Locale.US));
+        return formatter.format(price);
     }
 
     // To comment
@@ -101,25 +105,16 @@ public class Utils {
         String formatedDate = sdf.format(calendar.getTime());
         return sdf.parse(formatedDate);
     }
-
+//
     public static String checkDigit(int number) {
         return number <= 9 ? "0" + number : String.valueOf(number);
     }
-
-    public static String staticMapUrlEscaped(int nb, String line1, String line2, String city,
-                                                   String state, String zip, String apiKey) {
-//        StringBuilder sb = new StringBuilder();
-        String address = (String.valueOf(nb) + " " + line1 + " " + line2 + " " + city + " " + state + " " + zip).toLowerCase();
-        String result = address.replace(" ", "+");
-//        String[] arr = address.split(" ");
-//        for (int i = 0; i < arr.length; i++) {
-//            if (!arr[i].isEmpty() && i < arr.length - 1) {
-//                sb.append(arr[i]).append("+");
-//            } else if (!arr[i].isEmpty() && i == arr.length - 1) {
-//                sb.append(arr[i]);
-//            }
-//        }
-        return "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&markers=size:mid%7Ccolor:red%7C" + result + "&key=" + apiKey;
+//
+    public static String formatAddress(int nb, String line1, String line2, String city,
+                                       String state, String zip) {
+        String address = (String.valueOf(nb) + " " + line1 + " " + line2 + " " + city + " " + state
+                + " " + zip).toLowerCase();
+        return address.replace(" ", "+");
     }
 
 }

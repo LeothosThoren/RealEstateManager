@@ -44,7 +44,10 @@ public class UnitTest {
     @Test
     public void stringConverter()throws Exception {
         assertEquals("75+gresham+street+++victoria+park+australia+wa+6100",
-                Utils.staticMapUrlEscaped(75, "Gresham Street ","", "Victoria Park", "AUSTRALIA", "WA 6100", ""));
+                Utils.formatAddress(75, "Gresham Street ","", "Victoria Park", "AUSTRALIA", "WA 6100"));
+
+        assertEquals("251,500,890", Utils.convertPriceToString(251500890) );
     }
+
 
 }
