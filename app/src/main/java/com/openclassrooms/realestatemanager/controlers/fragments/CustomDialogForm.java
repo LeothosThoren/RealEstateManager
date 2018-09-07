@@ -19,7 +19,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.entities.Address;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
@@ -156,9 +155,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             case R.id.action_save:
                 Log.d(TAG, "onClick: saving data and closing dialog");
                 //Save operation...
-                saveOperation(/*mType.getText().toString(), mArea.getText().toString(), mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
-                        Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()), Integer.valueOf(mBathroomNb.getText().toString()),
-                        Integer.valueOf(mBedroomNb.getText().toString()), "https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg", populateAddressObject(), entryDate, USER_ID*/);
+                saveOperation();
 
         }
 
@@ -173,11 +170,11 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
     }
 
-    private void saveOperation(/*String type, String area, String description, long price, int surface, int rooms,
-                               int bathrooms, int bedrooms, String url, Address address, Date entryDate, long userId*/) {
+    private void saveOperation() {
 
-        if (mType.getSelectedItem() != null && mArea.getText() != null && mDescription.getText() != null && mPrice.getText() != null && mSurface.getText() != null
-                && mRoomNb.getText() != null && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null) {
+        if (mType.getSelectedItem() != null && mArea.getText() != null && mDescription.getText() != null
+                && mPrice.getText() != null && mSurface.getText() != null && mRoomNb.getText() != null
+                && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null) {
             RealEstate realEstate = new RealEstate(mType.getSelectedItem().toString(), mArea.getText().toString(),
                     mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
                     Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()),
@@ -225,18 +222,19 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             month1 = month1 + 1;
             String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
             //For displaying in the view
+            mEntryDateText.setText(date);
             // Get to database
             try {
                 entryDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            mEntryDateText.setText(date);
+
         };
 
     }
 
-    private void configureSpinner(){
+    private void configureSpinner() {
         if (getContext() != null) {
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.property_type, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);

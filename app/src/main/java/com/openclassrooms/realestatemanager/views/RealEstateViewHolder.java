@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.views;
 
-import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +29,8 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
     TextView mTextViewPrice;
     @BindView(R.id.real_estate_item_background)
     RelativeLayout mLayout;
+    @BindView(R.id.item_banner)
+    ImageView mBanner;
 
     public RealEstateViewHolder(View itemView) {
         super(itemView);
@@ -39,10 +40,18 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
     public void updateWithRealEstate(RealEstate realEstate, RequestManager glide) {
 
         if (realEstate != null) {
+            // Banner
+            if (realEstate.getSoldDate() != null) {
+                this.mBanner.setVisibility(View.VISIBLE);
+            }
+            // Type
             this.mTextViewName.setText(realEstate.getType());
+            // Area
             this.mTextViewLocation.setText(realEstate.getArea());
+            // Price
             this.mTextViewPrice.setText(App.getContext().getResources().getString(R.string.item_price,
                     Utils.convertPriceToString(realEstate.getPrice())));
+            // Picture
             if (realEstate.getPictureUrl() != null) {
                 glide.load(realEstate.getPictureUrl())
                         .apply(RequestOptions.centerCropTransform())
