@@ -4,7 +4,7 @@
     <!-- real estate fragment -->
     <string name="item_name">Name</string>
     <string name="item_location">Location</string>
-    <string name="item_price">Price</string>
+    <string name="item_price">$%1$s</string>
     <!-- detail fragment-->
     <string name="detail_media">Media</string>
     <!-- menu toolbar -->

@@ -11,6 +11,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
+import com.openclassrooms.realestatemanager.utils.App;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import butterknife.BindView;
@@ -38,10 +39,10 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder {
     public void updateWithRealEstate(RealEstate realEstate, RequestManager glide) {
 
         if (realEstate != null) {
-
             this.mTextViewName.setText(realEstate.getType());
             this.mTextViewLocation.setText(realEstate.getArea());
-            this.mTextViewPrice.setText(Utils.convertPriceToString(realEstate.getPrice()));
+            this.mTextViewPrice.setText(App.getContext().getResources().getString(R.string.item_price,
+                    Utils.convertPriceToString(realEstate.getPrice())));
             if (realEstate.getPictureUrl() != null) {
                 glide.load(realEstate.getPictureUrl())
                         .apply(RequestOptions.centerCropTransform())
