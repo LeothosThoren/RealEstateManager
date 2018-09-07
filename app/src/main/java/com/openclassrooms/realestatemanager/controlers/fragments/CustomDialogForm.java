@@ -1,11 +1,9 @@
 package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -29,11 +27,8 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +36,7 @@ import butterknife.ButterKnife;
 public class CustomDialogForm extends DialogFragment implements View.OnClickListener {
 
     public static final int USER_ID = 1;
-    private static final String TAG = "CustomDialogForm";
+    private static final String TAG = CustomDialogForm.class.getSimpleName();
     // Widget
     @BindView(R.id.action_cancel)
     TextView mActionCancel;
@@ -82,10 +77,9 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     // Data
     private RealEstateViewModel mViewModel;
     private Date entryDate;
-    private List<String> mPoiSelection;
     // Var
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private ArrayList<Integer> mSelectedItem;
+    private boolean mIsLargeLayout;
 
 
     @Override
@@ -95,6 +89,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         ButterKnife.bind(this, view);
         // Methods
         this.configureViewModel();
+        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
         mActionCancel.setOnClickListener(this);
         mActionSave.setOnClickListener(this);
         mEntryDateText.setOnClickListener(this);
@@ -110,11 +105,20 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     @Override
     public void onResume() {
         // Get existing layout params for the window
-        ViewGroup.LayoutParams params = Objects.requireNonNull(getDialog().getWindow()).getAttributes();
-        // Assign window properties to fill the parent
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = WindowManager.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        if (getDialog().getWindow() != null) {
+            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+            // Assign window properties to fill the parent
+            if (mIsLargeLayout) {
+                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            } else {
+                params.width = WindowManager.LayoutParams.MATCH_PARENT;
+                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            }
+
+        }
         // Call super onResume after resizing
         super.onResume();
     }
@@ -131,6 +135,10 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 this.configDatePickerDialog(getContext());
                 break;
             case R.id.button_add_point_of_interest:
+                //Todo
+
+                break;
+            case R.id.button_add_picture:
                 //Todo
 
                 break;
@@ -214,43 +222,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     }
 
 
-//    // Persistent multiple choice
-//    public void showPoiDialog() {
-//        mSelectedItem = new ArrayList();  // Where we track the selected items
-//        Resources res = getResources();
-//        String[] poiArray = res.getStringArray(R.array.point_of_interest);
-//        StringBuilder sb = new StringBuilder();
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        // Set the dialog title
-//        builder.setTitle(R.string.pick_poi)
-//                // Specify the list array, the items to be selected by default (null for none),
-//                // and the listener through which to receive callbacks when items are selected
-//                .setMultiChoiceItems(R.array.point_of_interest, null,
-//                        (dialog, which, isChecked) -> {
-//                            if (isChecked) {
-//                                // If the user checked the item, add it to the selected items
-//                                mSelectedItem.add(which);
-//                            } else if (mSelectedItem.contains(which)) {
-//                                // Else, if the item is already in the array, remove it
-//                                mSelectedItem.remove(Integer.valueOf(which));
-//                            }
-//                        })
-//                // Set the action buttons
-//                .setPositiveButton(R.string.ok, (dialog, id) -> {
-//                    // User clicked OK, so save the mSelectedItems results somewhere
-//                    if (mSelectedItem.size() > 0) {
-//                        for (int i = 0; i < mSelectedItem.size(); i++) {
-//                            sb.append(poiArray[mSelectedItem.get(i)]);
-//                        }
-//                        Toast.makeText(getContext(), "Show me my selection: " + mPoiSelection.size() + " Vs " + mSelectedItem.size() + " sb= "+ sb.toString(), Toast.LENGTH_SHORT).show();
-//                        dialog.dismiss();
-//                    }
-//
-//                })
-//                .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
-//
-//        builder.create().show();
-//    }
+
 
 }

@@ -144,7 +144,6 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         CustomDialogForm customDialogForm = new CustomDialogForm();
         customDialogForm.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         customDialogForm.show(getSupportFragmentManager(), FRAGMENT_FORM_TAG);
-
     }
 
 }
