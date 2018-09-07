@@ -39,6 +39,9 @@
     <string name="bathroom_quantity">%1$d</string>
     <string name="bedroom_quantity">%1$d</string>
     <string name="no_description_to_display">No description to display</string>
+    <string name="pick_poi">Select the point of interest</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 
     <!-- BUG EXPLANATION
     - Bug résolu ligne 17 :  this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);

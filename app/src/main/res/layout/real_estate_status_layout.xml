@@ -5,42 +5,45 @@
     android:layout_weight="100"
     android:orientation="horizontal">
 
-    <!--Entry Date-->
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/edit_text_entry_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="45"
-        android:background="@drawable/custom_edit_text"
-        android:drawableEnd="@drawable/ic_date_picker"
-        android:hint="Entry date"
-        android:inputType="date"
-        android:padding="10dp" />
-
-    <!--Sold Date-->
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/edit_text_sold_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="45"
-        android:background="@drawable/custom_edit_text"
-        android:drawableEnd="@drawable/ic_date_picker"
-        android:hint="Sold date"
-        android:inputType="date"
-        android:padding="10dp"
-        android:enabled="false"
-        android:focusable="false"/>
 
     <CheckBox
         android:id="@+id/checkbox_status"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="10"
-        android:padding="10dp"
+        android:layout_weight="20"
         android:enabled="false"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:padding="10dp" />
+
+    <!--Entry Date-->
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/edit_text_entry_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_weight="40"
+        android:drawablePadding="10dp"
+        android:background="@drawable/custom_edit_text"
+        android:drawableStart="@drawable/ic_date_picker"
+        android:hint="Entry date"
+        android:padding="8dp" />
+
+    <!--Sold Date-->
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/edit_text_sold_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:drawablePadding="10dp"
+        android:layout_weight="40"
+        android:background="@drawable/custom_edit_text"
+        android:drawableStart="@drawable/ic_date_picker"
+        android:enabled="false"
+        android:focusable="false"
+        android:hint="Sold date"
+        android:padding="8dp" />
+
+
 
 </LinearLayout>

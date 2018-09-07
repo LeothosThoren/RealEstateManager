@@ -20,7 +20,7 @@
             android:layout_margin="8dp"
             android:layout_weight="15"
             android:background="@drawable/custom_edit_text"
-            android:hint="Num"
+            android:hint="Nb"
             android:inputType="number"
             android:padding="10dp" />
         <!--Line1-->
