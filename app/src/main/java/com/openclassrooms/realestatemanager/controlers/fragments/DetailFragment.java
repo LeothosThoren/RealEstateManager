@@ -89,7 +89,7 @@ public class DetailFragment extends Fragment {
         pictureUrl.add("https://images.pexels.com/photos/276696/pexels-photo-276696.jpeg");
         descriptionText.add("Dining Room");
         pictureUrl.add("https://images.pexels.com/photos/276677/pexels-photo-276677.jpeg");
-        descriptionText.add("Living");
+        descriptionText.add("Living Room");
         configureViewModel();
         getRealEstateItems(USER_ID);
         configureRecyclerView();

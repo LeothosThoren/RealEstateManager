@@ -1,45 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:weightSum="100">
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/button_add_point_of_interest"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:layout_weight="50"
         android:background="@drawable/custom_edit_text"
-        android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_point_of_interest"
-        android:padding="12dp"
-        android:text="Add point of interest" />
+        android:padding="4dp"
+        android:text="Add POI" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/button_add_picture"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_add_point_of_interest"
         android:layout_margin="8dp"
+        android:layout_weight="50"
         android:background="@drawable/custom_edit_text"
-        android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_add_image"
-        android:padding="12dp"
-        android:text="Add picture and title" />
+        android:padding="4dp"
+        android:text="Add pictures" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/point_of_interest_reminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button_add_point_of_interest"
-        android:layout_toEndOf="@id/button_add_point_of_interest"
-        android:text="(%1$d)" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/picture_reminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button_add_picture"
-        android:layout_toEndOf="@id/button_add_picture"
-        android:text="(%1$d)" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -13,14 +13,26 @@
         android:layout_height="wrap_content">
 
         <!--Type-->
-        <android.support.v7.widget.AppCompatEditText
+        <!--<android.support.v7.widget.AppCompatEditText-->
+        <!--android:id="@+id/edit_text_type"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="8dp"-->
+        <!--android:background="@drawable/custom_edit_text"-->
+        <!--android:hint="Type"-->
+        <!--android:padding="10dp">-->
+
+
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/edit_text_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/custom_edit_text"
-            android:hint="Type"
             android:padding="10dp" />
+
+
+        <!--</android.support.v7.widget.AppCompatEditText>-->
 
         <!--Area-->
         <android.support.v7.widget.AppCompatEditText
@@ -125,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/edit_text_description" />
 
-        <!--Status-->
+        <!--Date-->
         <include
             android:id="@+id/include2"
             layout="@layout/real_estate_status_layout"
@@ -133,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/button" />
 
-        <!--Point of interest and Pictures-->
+        <!--Action button list-->
 
         <include
             android:id="@+id/button"
@@ -143,7 +155,7 @@
             android:layout_below="@id/include" />
 
 
-        <!--BUTTONS-->
+        <!--Action buttons-->
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"

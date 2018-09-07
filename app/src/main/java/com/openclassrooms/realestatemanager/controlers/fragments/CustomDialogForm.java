@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.entities.Address;
@@ -42,7 +45,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     @BindView(R.id.action_save)
     TextView mActionSave;
     @BindView(R.id.edit_text_type)
-    EditText mType;
+    Spinner mType;
     @BindView(R.id.edit_text_area)
     EditText mArea;
     @BindView(R.id.edit_text_description)
@@ -86,15 +89,20 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_dialog_form, container, false);
         ButterKnife.bind(this, view);
+        this.init();
+        return view;
+
+    }
+
+    private void init() {
         // Methods
         this.configureViewModel();
+        this.configureSpinner();
         mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
         mActionCancel.setOnClickListener(this);
         mActionSave.setOnClickListener(this);
         mEntryDateText.setOnClickListener(this);
         mAddPoi.setOnClickListener(this);
-        return view;
-
     }
 
     // --------------
@@ -168,9 +176,9 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     private void saveOperation(/*String type, String area, String description, long price, int surface, int rooms,
                                int bathrooms, int bedrooms, String url, Address address, Date entryDate, long userId*/) {
 
-        if (mType.getText() != null && mArea.getText() != null && mDescription.getText() != null && mPrice.getText() != null && mSurface.getText() != null
+        if (mType.getSelectedItem() != null && mArea.getText() != null && mDescription.getText() != null && mPrice.getText() != null && mSurface.getText() != null
                 && mRoomNb.getText() != null && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null) {
-            RealEstate realEstate = new RealEstate(mType.getText().toString(), mArea.getText().toString(),
+            RealEstate realEstate = new RealEstate(mType.getSelectedItem().toString(), mArea.getText().toString(),
                     mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
                     Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()),
                     Integer.valueOf(mBathroomNb.getText().toString()),
@@ -182,7 +190,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             Toast.makeText(getContext(), "Data saved!", Toast.LENGTH_SHORT).show();
             getDialog().dismiss();
         } else {
-            Toast.makeText(getContext(), "Please full all the fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please, fulfil all the fields", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -225,6 +233,15 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             }
             mEntryDateText.setText(date);
         };
+
+    }
+
+    private void configureSpinner(){
+        if (getContext() != null) {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.property_type, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+            mType.setAdapter(adapter);
+        }
 
     }
 

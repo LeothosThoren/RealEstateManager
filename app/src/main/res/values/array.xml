@@ -8,4 +8,15 @@
         <item>Restaurants</item>
         <item>Pet services</item>
     </string-array>
+
+    <string-array name="property_type">
+        <item>Apartment</item>
+        <item>Chateau</item>
+        <item>Duplex</item>
+        <item>Flat</item>
+        <item>House</item>
+        <item>Penthouse</item>
+        <item>Villa</item>
+    </string-array>
+
 </resources>
