@@ -23,21 +23,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_weight="50"
-        android:textColor="@color/black"
         android:background="@drawable/custom_edit_text"
         android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_date_picker"
         android:gravity="center"
         android:hint="Entry date"
         android:padding="5dp"
-        android:textStyle="bold" />
+        android:textColor="@color/black" />
 
     <!--Sold Date-->
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/edit_text_sold_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         android:layout_margin="8dp"
         android:layout_weight="50"
         android:background="@drawable/custom_edit_text"
@@ -48,7 +46,7 @@
         android:gravity="center"
         android:hint="Sold date"
         android:padding="5dp"
-        android:textStyle="bold" />
+        android:textColor="@color/black" />
 
 
 </LinearLayout>

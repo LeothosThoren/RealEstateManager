@@ -1,11 +1,13 @@
 package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
+import android.app.DialogFragment;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,13 +22,17 @@ import com.openclassrooms.realestatemanager.adapters.RealEstateAdapter;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.utils.HelperSingleton;
 import com.openclassrooms.realestatemanager.utils.ItemClickSupport;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
+import com.openclassrooms.realestatemanager.views.RealEstateViewHolder;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.openclassrooms.realestatemanager.controlers.activities.RealEstateActivity.FRAGMENT_FORM_TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,17 +112,27 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
                 });
     }
 
+    //Interface that handle click from specific view
     @Override
     public void onClickCheckButton(int position) {
-        RealEstate realEstate = mAdapter.getRealEstate(position);
+//        RealEstate realEstate = mAdapter.getRealEstate(position);
         Log.d(TAG, "onClickCheckButton: case checked on position: "+ position);
-        Toast.makeText(getContext(), "Selected item to update contains the type = "+ realEstate.getType(), Toast.LENGTH_SHORT).show();
-//        mAdapter.notifyDataSetChanged();
+        HelperSingleton.getInstance().setPosition(position);
+        this.openCustomDialog();
+        mAdapter.notifyItemChanged(position);
+    }
+
+    //Try to open fragment from item check box
+    private void openCustomDialog() {
+        CustomDialogForm customDialogForm = new CustomDialogForm();
+        customDialogForm.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        if (getFragmentManager() != null)
+        customDialogForm.show(getFragmentManager(), FRAGMENT_FORM_TAG);
     }
 
     // Declare our interface that will be implemented by any container activity
     public interface OnItemClickListenerCustom {
-        public void onItemClickListenerCustom(View view, int position, RealEstate realEstate);
+        void onItemClickListenerCustom(View view, int position, RealEstate realEstate);
     }
 
     // --------------
@@ -126,6 +142,7 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
     // RecyclerView
     private void configureRecyclerView() {
         this.mAdapter = new RealEstateAdapter(Glide.with(this), this);
+        this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         this.mRecyclerView.setAdapter(this.mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.configureClickWithRecyclerView();

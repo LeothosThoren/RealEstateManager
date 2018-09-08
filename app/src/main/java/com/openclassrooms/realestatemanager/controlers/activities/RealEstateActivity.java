@@ -15,6 +15,7 @@ import com.openclassrooms.realestatemanager.controlers.fragments.CustomDialogFor
 import com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controlers.fragments.RealEstateFragment;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
+import com.openclassrooms.realestatemanager.utils.HelperSingleton;
 
 import butterknife.BindView;
 
@@ -29,6 +30,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // VAR
     private RealEstateFragment mRealEstateFragment;
     private DetailFragment mDetailFragment;
+    //DATA
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +69,17 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_add:
+                HelperSingleton.getInstance().setMode(id);
                 this.openCustomDialog();
                 //indicate we want to create
-                Toast.makeText(this, "Test add", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onOptionsItemSelected: test create id = " + id + " vs  R.id.menu_add " + R.id.menu_add);
                 break;
             case R.id.menu_update:
                 // indicate the custom fragment we want to update not create
-
-                Toast.makeText(this, "Test update", Toast.LENGTH_SHORT).show();
+                int visibility = View.VISIBLE;
+                HelperSingleton.getInstance().setViewVisibility(visibility);
+                HelperSingleton.getInstance().setMode(id);
+                Log.d(TAG, "onOptionsItemSelected: Test update id = " + id + " vs  R.id.menu_update " + R.id.menu_update);
                 break;
             case R.id.menu_search:
                 Toast.makeText(this, "Test search", Toast.LENGTH_SHORT).show();

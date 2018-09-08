@@ -38,7 +38,7 @@ public class DetailFragment extends Fragment {
 
     private static final String TAG = "DetailFragment";
     public static int USER_ID = 1; // ASk
-    public static int position;
+    public int position;
     //WIDGET
     @BindView(R.id.recycler_view_fragment)
     RecyclerView mDetailRecyclerView;

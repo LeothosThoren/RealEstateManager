@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
+import com.openclassrooms.realestatemanager.utils.App;
+import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.views.RealEstateViewHolder;
 
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
     private List<RealEstate> realEstateList;
     private RequestManager glide;
     private Listener callback;
-    private int lastSelectedPosition = -1;
+    public int lastSelectedPosition = -1;
 
     public RealEstateAdapter(RequestManager glide, Listener callback) {
         this.realEstateList = new ArrayList<>();
@@ -40,7 +43,7 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RealEstateViewHolder viewHolder, int position) {
-        viewHolder.updateWithRealEstate(this.realEstateList.get(position), this.glide, this.callback, this.lastSelectedPosition == position);
+        viewHolder.updateWithRealEstate(this.realEstateList.get(position), this.glide, this.callback, this.lastSelectedPosition);
     }
 
     @Override
