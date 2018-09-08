@@ -42,6 +42,7 @@
             android:layout_below="@+id/edit_text_type"
             android:layout_margin="8dp"
             android:background="@drawable/custom_edit_text"
+            android:imeOptions="actionNext"
             android:hint="Area"
             android:padding="10dp" />
 

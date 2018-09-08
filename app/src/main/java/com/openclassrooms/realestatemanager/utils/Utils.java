@@ -117,4 +117,8 @@ public class Utils {
         return address.replace(" ", "+");
     }
 
+    public static String formatToString(int i) {
+        return String.valueOf(i);
+    }
+
 }

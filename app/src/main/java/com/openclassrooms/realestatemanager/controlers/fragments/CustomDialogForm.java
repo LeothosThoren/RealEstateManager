@@ -90,6 +90,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     // Var
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private boolean mIsLargeLayout;
+    private ArrayAdapter<CharSequence> adapter;
     private boolean isCreateMode = HelperSingleton.getInstance().getMode() == R.id.menu_add;
     private boolean isUpdateMode = HelperSingleton.getInstance().getMode() == R.id.menu_update;
 
@@ -198,7 +199,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 } else if (isUpdateMode) {
                     updateOperation();
                 }
-                
+
         }
 
     }
@@ -224,7 +225,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private void configureSpinner() {
         if (getContext() != null) {
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.property_type, android.R.layout.simple_spinner_item);
+            adapter = ArrayAdapter.createFromResource(getContext(), R.array.property_type, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
             mType.setAdapter(adapter);
         }
@@ -242,12 +243,30 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     // Get all items for a user
     private void getRealEstateItems(int userId) {
-        this.mViewModel.getRealEstate(userId).observe(this, this::updateRealEstate);
+        this.mViewModel.getRealEstate(userId).observe(this, this::updateRealEstateUI);
         Log.d(TAG, "getRealEstateItems: ");
     }
 
-    private void updateRealEstate(List<RealEstate> realEstateList) {
+    //Allow to retrieve data from room  and display it
+    private void updateRealEstateUI(List<RealEstate> realEstateList) {
         mEntryDateText.setText(realEstateList.get(dataPosition).getEntryDate().toString());
+        if (realEstateList.get(dataPosition).getSoldDate() != null) {
+            mSoldDateText.setText(realEstateList.get(dataPosition).getSoldDate().toString());
+        }
+        mPrice.setText(Utils.convertPriceToString(realEstateList.get(dataPosition).getPrice()));
+        mType.setSelection(adapter.getPosition(realEstateList.get(dataPosition).getType()));
+        mArea.setText(realEstateList.get(dataPosition).getArea());
+        mDescription.setText(realEstateList.get(dataPosition).getDescription());
+        mSurface.setText(Utils.formatToString(realEstateList.get(dataPosition).getSurface()));
+        mRoomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getRoom()));
+        mBathroomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getBathroom()));
+        mBedroomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getBedroom()));
+        mAddressNum.setText(Utils.formatToString(realEstateList.get(dataPosition).getAddress().number));
+        mAddressLine1.setText(realEstateList.get(dataPosition).getAddress().line1);
+        mAddressLine2.setText(realEstateList.get(dataPosition).getAddress().line2);
+        mAddressCity.setText(realEstateList.get(dataPosition).getAddress().city);
+        mAddressState.setText(realEstateList.get(dataPosition).getAddress().state);
+        mAddressZip.setText(realEstateList.get(dataPosition).getAddress().zip);
 
     }
 
@@ -272,10 +291,11 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         }
 
     }
-    
+
     private void updateOperation() {
         Log.d(TAG, "updateOperation: ok");
 
+        getDialog().dismiss();
     }
 
     private Address populateAddressObject() {
