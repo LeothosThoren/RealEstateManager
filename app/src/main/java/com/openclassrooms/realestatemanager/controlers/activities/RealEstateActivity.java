@@ -68,9 +68,12 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         switch (id) {
             case R.id.menu_add:
                 this.openCustomDialog();
+                //indicate we want to create
                 Toast.makeText(this, "Test add", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_update:
+                // indicate the custom fragment we want to update not create
+
                 Toast.makeText(this, "Test update", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_search:

@@ -80,6 +80,8 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     EditText mAddressZip;
     @BindView(R.id.button_add_point_of_interest)
     Button mAddPoi;
+    @BindView(R.id.button_add_picture)
+    Button mAddPictures;
     // Data
     private RealEstateViewModel mViewModel;
     private Date entryDate, soldDate;
@@ -102,12 +104,16 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         // Methods
         this.configureViewModel();
         this.configureSpinner();
+
+        //this one to handle for update
         this.getRealEstateItems(USER_ID);
+
         mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
         mActionCancel.setOnClickListener(this);
         mActionSave.setOnClickListener(this);
         mEntryDateText.setOnClickListener(this);
         mAddPoi.setOnClickListener(this);
+        mAddPictures.setOnClickListener(this);
 
         //Handle the click of the date picker dialog
         mDateSetListener = (view, year1, month1, dayOfMonth) -> {
@@ -180,6 +186,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 break;
             case R.id.action_save:
                 Log.d(TAG, "onClick: saving data and closing dialog");
+                //Here need to handle the update configuration
                 saveOperation();
         }
 
@@ -224,15 +231,12 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     // Get all items for a user
     private void getRealEstateItems(int userId) {
-        this.mViewModel.getRealEstate(userId).observe(this, this::retrieveDateFromViewModel);
+        this.mViewModel.getRealEstate(userId).observe(this, this::updateRealEstate);
         Log.d(TAG, "getRealEstateItems: ");
     }
 
-    private void retrieveDateFromViewModel(List<RealEstate> realEstateList) {
-        Log.d(TAG, "retrieveDateFromViewModel: at position 1:\n"+
-        realEstateList.get(1).getEntryDate()+"\n"+
-        realEstateList.get(1).getPrice()+"\n"+
-        realEstateList.get(1).getSoldDate());
+    private void updateRealEstate(List<RealEstate> realEstateList) {
+        mEntryDateText.setText(realEstateList.get(1).getEntryDate().toString());
 
     }
 

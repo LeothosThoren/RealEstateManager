@@ -24,7 +24,6 @@ import com.openclassrooms.realestatemanager.utils.ItemClickSupport;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RealEstateFragment extends Fragment {
+public class RealEstateFragment extends Fragment implements RealEstateAdapter.Listener{
 
     private static final String TAG = "RealEstateFragment";
     //CONSTANT
@@ -74,9 +73,9 @@ public class RealEstateFragment extends Fragment {
         }
     }
 
-    // -------------------------------------------------------------------------------------------//
-    //                                         DATA                                               //
-    // -------------------------------------------------------------------------------------------//
+    // --------------
+    // Data
+    // --------------
 
     // Configure ViewModel
     private void configureViewModel() {
@@ -85,9 +84,9 @@ public class RealEstateFragment extends Fragment {
     }
 
 
-    // -------------------------------------------------------------------------------------------//
-    //                                       ACTION                                               //
-    // -------------------------------------------------------------------------------------------//
+    // --------------
+    // Action
+    // --------------
 
     @Override
     public void onAttach(Context context) {
@@ -107,18 +106,26 @@ public class RealEstateFragment extends Fragment {
                 });
     }
 
+    @Override
+    public void onClickCheckButton(int position) {
+        RealEstate realEstate = mAdapter.getRealEstate(position);
+        Log.d(TAG, "onClickCheckButton: case checked on position: "+ position);
+        Toast.makeText(getContext(), "Selected item to update contains the type = "+ realEstate.getType(), Toast.LENGTH_SHORT).show();
+//        mAdapter.notifyDataSetChanged();
+    }
+
     // Declare our interface that will be implemented by any container activity
     public interface OnItemClickListenerCustom {
         public void onItemClickListenerCustom(View view, int position, RealEstate realEstate);
     }
 
-    // -------------------------------------------------------------------------------------------//
-    //                                         UI                                                 //
-    // -------------------------------------------------------------------------------------------//
+    // --------------
+    // Ui
+    // --------------
 
     // RecyclerView
     private void configureRecyclerView() {
-        this.mAdapter = new RealEstateAdapter(Glide.with(this));
+        this.mAdapter = new RealEstateAdapter(Glide.with(this), this);
         this.mRecyclerView.setAdapter(this.mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.configureClickWithRecyclerView();
@@ -126,7 +133,7 @@ public class RealEstateFragment extends Fragment {
     }
 
 
-    // 3 - Get all items for a user
+    // Get all items for a user
     private void getRealEstateItems(int userId) {
         this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
     }

@@ -35,7 +35,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/opt/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_add_a_photo_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/opt/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/toggle/ic_check_box_outline_blank_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -45,9 +45,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_add_image" />
+                                      <entry key="outputName" value="ic_button_unchecked" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="ff4081" />
+                                      <entry key="themeColor" value="41f924" />
                                     </map>
                                   </option>
                                 </PersistentState>

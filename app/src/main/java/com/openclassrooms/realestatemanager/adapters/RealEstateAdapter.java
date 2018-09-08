@@ -20,10 +20,13 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
     // VAR
     private List<RealEstate> realEstateList;
     private RequestManager glide;
+    private Listener callback;
+    private int lastSelectedPosition = -1;
 
-    public RealEstateAdapter(RequestManager glide) {
+    public RealEstateAdapter(RequestManager glide, Listener callback) {
         this.realEstateList = new ArrayList<>();
         this.glide = glide;
+        this.callback = callback;
     }
 
     @NonNull
@@ -37,8 +40,7 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RealEstateViewHolder viewHolder, int position) {
-        viewHolder.updateWithRealEstate(this.realEstateList.get(position), this.glide);
-
+        viewHolder.updateWithRealEstate(this.realEstateList.get(position), this.glide, this.callback, this.lastSelectedPosition == position);
     }
 
     @Override
@@ -50,7 +52,11 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
         return this.realEstateList.get(position);
     }
 
+    //Interface
+    public interface Listener {
+        void onClickCheckButton(int position);
 
+    }
 
     public void updateData(List<RealEstate> realEstates) {
         this.realEstateList = realEstates;
