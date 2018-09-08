@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.entities.Address;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.utils.HelperSingleton;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
@@ -85,9 +86,12 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     // Data
     private RealEstateViewModel mViewModel;
     private Date entryDate, soldDate;
+    private int dataPosition = HelperSingleton.getInstance().getPosition();
     // Var
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private boolean mIsLargeLayout;
+    private boolean isCreateMode = HelperSingleton.getInstance().getMode() == R.id.menu_add;
+    private boolean isUpdateMode = HelperSingleton.getInstance().getMode() == R.id.menu_update;
 
 
     @Override
@@ -96,6 +100,12 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         View view = inflater.inflate(R.layout.fragment_custom_dialog_form, container, false);
         ButterKnife.bind(this, view);
         this.init();
+        if (isCreateMode) {
+            mActionSave.setText(getString(R.string.save));
+        } else if (isUpdateMode) {
+            this.getRealEstateItems(USER_ID);
+            mActionSave.setText(getString(R.string.update));
+        }
         return view;
 
     }
@@ -104,10 +114,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         // Methods
         this.configureViewModel();
         this.configureSpinner();
-
-        //this one to handle for update
-        this.getRealEstateItems(USER_ID);
-
         mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
         mActionCancel.setOnClickListener(this);
         mActionSave.setOnClickListener(this);
@@ -187,7 +193,12 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             case R.id.action_save:
                 Log.d(TAG, "onClick: saving data and closing dialog");
                 //Here need to handle the update configuration
-                saveOperation();
+                if (isCreateMode) {
+                    saveOperation();
+                } else if (isUpdateMode) {
+                    updateOperation();
+                }
+                
         }
 
     }
@@ -236,7 +247,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     }
 
     private void updateRealEstate(List<RealEstate> realEstateList) {
-        mEntryDateText.setText(realEstateList.get(1).getEntryDate().toString());
+        mEntryDateText.setText(realEstateList.get(dataPosition).getEntryDate().toString());
 
     }
 
@@ -259,6 +270,11 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         } else {
             Toast.makeText(getContext(), "Please, fulfil all the fields", Toast.LENGTH_SHORT).show();
         }
+
+    }
+    
+    private void updateOperation() {
+        Log.d(TAG, "updateOperation: ok");
 
     }
 
