@@ -31,6 +31,7 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -85,10 +86,12 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     Button mAddPictures;
     // Data
     private RealEstateViewModel mViewModel;
-    private Date entryDate, soldDate;
     private int dataPosition = HelperSingleton.getInstance().getPosition();
+    private List<RealEstate> mRealEstateList = new ArrayList<>();
     // Var
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private Date entryDate, soldDate;
+    private DatePickerDialog.OnDateSetListener mEntryDateSetListener;
+    private DatePickerDialog.OnDateSetListener mSoldDateSetListener;
     private boolean mIsLargeLayout;
     private ArrayAdapter<CharSequence> adapter;
     private boolean isCreateMode = HelperSingleton.getInstance().getMode() == R.id.menu_add;
@@ -105,6 +108,8 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             mActionSave.setText(getString(R.string.save));
         } else if (isUpdateMode) {
             this.getRealEstateItems(USER_ID);
+            mSoldDateText.setEnabled(true);
+            mSoldDateText.setFocusable(true);
             mActionSave.setText(getString(R.string.update));
         }
         return view;
@@ -112,18 +117,20 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     }
 
     private void init() {
+        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
         // Methods
         this.configureViewModel();
         this.configureSpinner();
-        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
+
         mActionCancel.setOnClickListener(this);
         mActionSave.setOnClickListener(this);
         mEntryDateText.setOnClickListener(this);
+        mSoldDateText.setOnClickListener(this);
         mAddPoi.setOnClickListener(this);
         mAddPictures.setOnClickListener(this);
 
         //Handle the click of the date picker dialog
-        mDateSetListener = (view, year1, month1, dayOfMonth) -> {
+        mEntryDateSetListener = (view, year1, month1, dayOfMonth) -> {
             month1 = month1 + 1;
             String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
             //For displaying in the view
@@ -131,6 +138,20 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             // Get to database
             try {
                 entryDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        };
+
+        mSoldDateSetListener = (view, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
+            //For displaying in the view
+            mSoldDateText.setText(date);
+            // Get to database
+            try {
+                soldDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -214,12 +235,20 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog dialog = new DatePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                mDateSetListener, year, month, day);
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        DatePickerDialog entryDialog = new DatePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                mEntryDateSetListener, year, month, day);
+        if (entryDialog.getWindow() != null) {
+            entryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
-        dialog.show();
+        entryDialog.show();
+
+        DatePickerDialog soldDialog = new DatePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                mSoldDateSetListener, year, month, day);
+        if (soldDialog.getWindow() != null) {
+            soldDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        soldDialog.show();
 
     }
 
@@ -249,7 +278,9 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     //Allow to retrieve data from room  and display it
     private void updateRealEstateUI(List<RealEstate> realEstateList) {
-        mEntryDateText.setText(realEstateList.get(dataPosition).getEntryDate().toString());
+        if (realEstateList.get(dataPosition).getEntryDate() != null) {
+            mEntryDateText.setText(realEstateList.get(dataPosition).getEntryDate().toString());
+        }
         if (realEstateList.get(dataPosition).getSoldDate() != null) {
             mSoldDateText.setText(realEstateList.get(dataPosition).getSoldDate().toString());
         }
@@ -268,6 +299,10 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         mAddressState.setText(realEstateList.get(dataPosition).getAddress().state);
         mAddressZip.setText(realEstateList.get(dataPosition).getAddress().zip);
 
+        //Fulfill data inside new easy to retrieve data arrayList
+        mRealEstateList.addAll(realEstateList);
+        Log.d(TAG, "updateRealEstateUI: show the size of the array list " + mRealEstateList.size());
+
     }
 
     private void saveOperation() {
@@ -278,8 +313,8 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             RealEstate realEstate = new RealEstate(mType.getSelectedItem().toString(), mArea.getText().toString(),
                     mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
                     Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()),
-                    Integer.valueOf(mBathroomNb.getText().toString()),
-                    Integer.valueOf(mBedroomNb.getText().toString()), "https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg",
+                    Integer.valueOf(mBathroomNb.getText().toString()), Integer.valueOf(mBedroomNb.getText().toString()),
+                    "https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg",
                     populateAddressObject(), entryDate, USER_ID);
             //Creation on DB
             mViewModel.createRealEstate(realEstate);
@@ -294,7 +329,25 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private void updateOperation() {
         Log.d(TAG, "updateOperation: ok");
+        mRealEstateList.get(dataPosition).setType(mType.getSelectedItem().toString());
+        mRealEstateList.get(dataPosition).setArea(mArea.getText().toString());
+        mRealEstateList.get(dataPosition).setDescription(mDescription.getText().toString());
+        mRealEstateList.get(dataPosition).setPrice(Long.valueOf(mPrice.getText().toString()));
+        mRealEstateList.get(dataPosition).setSurface(Integer.valueOf(mSurface.getText().toString()));
+        mRealEstateList.get(dataPosition).setRoom(Integer.valueOf(mRoomNb.getText().toString()));
+        mRealEstateList.get(dataPosition).setBedroom(Integer.valueOf(mBedroomNb.getText().toString()));
+        mRealEstateList.get(dataPosition).setBathroom(Integer.valueOf(mBathroomNb.getText().toString()));
+        mRealEstateList.get(dataPosition).setAddress(populateAddressObject());
+        mRealEstateList.get(dataPosition).setEntryDate(entryDate);
+        //Handle sold date
+        if (soldDate != null) {
+            mRealEstateList.get(dataPosition).setSoldDate(soldDate);
+        }
 
+        //View Model update method
+        mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
+        Log.d(TAG, "updateOperation: show the data of the array list " + mRealEstateList.get(dataPosition).getArea());
+        Toast.makeText(getContext(), "Data updated!", Toast.LENGTH_SHORT).show();
         getDialog().dismiss();
     }
 

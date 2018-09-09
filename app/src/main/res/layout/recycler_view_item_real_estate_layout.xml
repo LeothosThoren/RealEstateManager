@@ -29,7 +29,7 @@
             android:layout_width="100dp"
             android:layout_height="72dp"
             android:foreground="@drawable/sold_banner"
-            android:visibility="gone"
+            android:visibility="visible"
             />
 
         <TextView
