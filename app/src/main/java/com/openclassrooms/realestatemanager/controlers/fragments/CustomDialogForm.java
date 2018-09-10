@@ -118,6 +118,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private void init() {
         mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
+        HelperSingleton.getInstance().setViewVisibility(View.GONE);
         // Methods
         this.configureViewModel();
         this.configureSpinner();

@@ -48,7 +48,6 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
     //DATA
     private RealEstateAdapter mAdapter;
     private RealEstateViewModel mRealEstateViewModel;
-
     // Declare callback
     private OnItemClickListenerCustom mCallback;
 
@@ -109,6 +108,7 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
                     Log.d(TAG, "configureClickWithRecyclerView: "+ mAdapter.getRealEstate(position).getArea());
                     RealEstate realEstate = mAdapter.getRealEstate(position);
                     mCallback.onItemClickListenerCustom(v, position, realEstate);
+
                 });
     }
 
@@ -142,7 +142,6 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
     // RecyclerView
     private void configureRecyclerView() {
         this.mAdapter = new RealEstateAdapter(Glide.with(this), this);
-        this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         this.mRecyclerView.setAdapter(this.mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.configureClickWithRecyclerView();

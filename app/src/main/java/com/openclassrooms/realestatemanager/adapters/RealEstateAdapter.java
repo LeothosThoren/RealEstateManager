@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.utils.App;
+import com.openclassrooms.realestatemanager.utils.HelperSingleton;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.views.RealEstateViewHolder;
 
@@ -25,6 +26,7 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
     private RequestManager glide;
     private Listener callback;
     public int lastSelectedPosition = -1;
+    private int selection = HelperSingleton.getInstance().getPosition();
 
     public RealEstateAdapter(RequestManager glide, Listener callback) {
         this.realEstateList = new ArrayList<>();
@@ -43,6 +45,7 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RealEstateViewHolder viewHolder, int position) {
+        viewHolder.mRadioButtonToCheck.setVisibility(/*HelperSingleton.getInstance().getViewVisibility() == View.VISIBLE ?*/ View.VISIBLE /*: View.GONE*/);
         viewHolder.updateWithRealEstate(this.realEstateList.get(position), this.glide, this.callback, this.lastSelectedPosition);
     }
 

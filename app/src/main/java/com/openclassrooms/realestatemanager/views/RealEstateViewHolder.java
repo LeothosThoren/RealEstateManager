@@ -52,6 +52,8 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder implements Vie
             // Banner
             if (realEstate.getSoldDate() != null) {
                 this.mBanner.setVisibility(View.VISIBLE);
+            } else {
+                this.mBanner.setVisibility(View.GONE);
             }
             // Type
             this.mTextViewName.setText(realEstate.getType());
@@ -67,7 +69,7 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder implements Vie
                         .into(this.mImageViewPicture);
 
             }
-            mRadioButtonToCheck.setVisibility(HelperSingleton.getInstance().getViewVisibility());
+
             //Click on checkBox
             this.mRadioButtonToCheck.setOnClickListener(this);
             this.callbackWeakRef = new WeakReference<>(callback);
@@ -78,7 +80,7 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder implements Vie
 
     @Override
     public void onClick(View v) {
-        RealEstateAdapter.Listener callback = callbackWeakRef.get();
-        if (callback != null) callback.onClickCheckButton(getAdapterPosition());
+        RealEstateAdapter.Listener callbackAdapter = callbackWeakRef.get();
+        if (callbackAdapter != null) callbackAdapter.onClickCheckButton(getAdapterPosition());
     }
 }

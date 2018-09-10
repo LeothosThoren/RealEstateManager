@@ -76,8 +76,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
                 break;
             case R.id.menu_update:
                 // indicate the custom fragment we want to update
-                int visibility = View.VISIBLE;
-                HelperSingleton.getInstance().setViewVisibility(visibility);
+//                HelperSingleton.getInstance().setViewVisibility(View.VISIBLE);
                 HelperSingleton.getInstance().setMode(id);
                 Log.d(TAG, "onOptionsItemSelected: Test update id = " + id + " vs  R.id.menu_update " + R.id.menu_update);
                 break;
