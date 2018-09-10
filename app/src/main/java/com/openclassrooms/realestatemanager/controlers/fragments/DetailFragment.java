@@ -141,7 +141,7 @@ public class DetailFragment extends Fragment {
             mRoomsQty.setText(getString(R.string.room_quantity, realEstateList.get(position).getRoom()));
             mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstateList.get(position).getBathroom()));
             mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstateList.get(position).getBedroom()));
-            mAddress.setText(getString(R.string.address, realEstateList.get(position).getAddress().number, realEstateList.get(position).getAddress().line1));
+            mAddress.setText(getString(R.string.address/*, realEstateList.get(position).getAddress().number*/, realEstateList.get(position).getAddress().line1));
 
             if (realEstateList.get(position).getAddress().line2 != null
                     && (!realEstateList.get(position).getAddress().line2.equals(""))) {
@@ -153,7 +153,7 @@ public class DetailFragment extends Fragment {
             mZipCode.setText(realEstateList.get(position).getAddress().zip);
             Glide.with(this)
                     .load(mApiUri + Utils.formatAddress(
-                            realEstateList.get(position).getAddress().number,
+                            /*realEstateList.get(position).getAddress().number,*/
                             realEstateList.get(position).getAddress().line1,
                             realEstateList.get(position).getAddress().line2,
                             realEstateList.get(position).getAddress().city,
@@ -171,7 +171,7 @@ public class DetailFragment extends Fragment {
         mRoomsQty.setText(getString(R.string.room_quantity, realEstate.getRoom()));
         mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstate.getBathroom()));
         mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstate.getBedroom()));
-        mAddress.setText(getString(R.string.address, realEstate.getAddress().number, realEstate.getAddress().line1));
+        mAddress.setText(getString(R.string.address/*, realEstate.getAddress().number*/, realEstate.getAddress().line1));
         if (realEstate.getAddress().line2 != null && (!realEstate.getAddress().line2.equals(""))) {
             mLine2.setText(realEstate.getAddress().line2);
             mLine2.setVisibility(View.VISIBLE);
@@ -181,7 +181,7 @@ public class DetailFragment extends Fragment {
         mZipCode.setText(realEstate.getAddress().zip);
         Glide.with(this)
                 .load(mApiUri + Utils.formatAddress(
-                        realEstate.getAddress().number,
+                       /* realEstate.getAddress().number,*/
                         realEstate.getAddress().line1,
                         realEstate.getAddress().line2,
                         realEstate.getAddress().city,

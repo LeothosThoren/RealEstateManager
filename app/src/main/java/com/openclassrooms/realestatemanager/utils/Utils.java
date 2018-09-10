@@ -110,9 +110,9 @@ public class Utils {
         return number <= 9 ? "0" + number : String.valueOf(number);
     }
 //
-    public static String formatAddress(int nb, String line1, String line2, String city,
+    public static String formatAddress(/*int nb,*/ String line1, String line2, String city,
                                        String state, String zip) {
-        String address = (String.valueOf(nb) + " " + line1 + " " + line2 + " " + city + " " + state
+        String address = (/*String.valueOf(nb) + " " +*/ line1 + " " + line2 + " " + city + " " + state
                 + " " + zip).toLowerCase();
         return address.replace(" ", "+");
     }

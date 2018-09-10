@@ -5,7 +5,7 @@ package com.openclassrooms.realestatemanager.entities;
  */
 public class Address {
 
-    public int number;
+//    public int number;
     public String line1;
     public String line2;
     public String city;

@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/custom_address_relative_layout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <!--Address-->
-    <LinearLayout
-        android:id="@+id/first_linear_layout"
+    <!--<LinearLayout-->
+    <!--android:id="@+id/first_linear_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="100">-->
+
+    <!--&lt;!&ndash;Number&ndash;&gt;-->
+    <!--<android.support.v7.widget.AppCompatEditText-->
+    <!--android:id="@+id/edit_text_address_number"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="8dp"-->
+    <!--android:layout_weight="15"-->
+    <!--android:background="@drawable/custom_edit_text"-->
+    <!--android:hint="Nb"-->
+    <!--android:inputType="number"-->
+    <!--android:padding="10dp" />-->
+    <!---->
+
+    <!--</LinearLayout>-->
+
+    <!--Line1-->
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edit_text_address_line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="100">
-
-        <!--Number-->
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edit_text_address_number"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="15"
-            android:background="@drawable/custom_edit_text"
-            android:hint="Nb"
-            android:inputType="number"
-            android:padding="10dp" />
-        <!--Line1-->
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edit_text_address_line1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="85"
-            android:background="@drawable/custom_edit_text"
-            android:hint="Line 1"
-            android:padding="10dp" />
-
-    </LinearLayout>
-
+        android:layout_margin="8dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Line 1"
+        android:padding="10dp" />
     <!--Line2-->
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/edit_text_address_line2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/first_linear_layout"
         android:layout_margin="8dp"
         android:background="@drawable/custom_edit_text"
         android:hint="Line 2"
@@ -52,7 +52,6 @@
         android:id="@+id/second_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edit_text_address_line2"
         android:orientation="horizontal"
         android:weightSum="100">
 
@@ -94,4 +93,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

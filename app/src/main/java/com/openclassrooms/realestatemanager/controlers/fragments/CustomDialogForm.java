@@ -68,8 +68,8 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     TextView mEntryDateText;
     @BindView(R.id.edit_text_sold_date)
     TextView mSoldDateText;
-    @BindView(R.id.edit_text_address_number)
-    EditText mAddressNum;
+//    @BindView(R.id.edit_text_address_number)
+//    EditText mAddressNum;
     @BindView(R.id.edit_text_address_line1)
     EditText mAddressLine1;
     @BindView(R.id.edit_text_address_line2)
@@ -118,7 +118,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private void init() {
         mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
-        HelperSingleton.getInstance().setViewVisibility(View.GONE);
+//        HelperSingleton.getInstance().setViewVisibility(View.GONE);
         // Methods
         this.configureViewModel();
         this.configureSpinner();
@@ -293,7 +293,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         mRoomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getRoom()));
         mBathroomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getBathroom()));
         mBedroomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getBedroom()));
-        mAddressNum.setText(Utils.formatToString(realEstateList.get(dataPosition).getAddress().number));
+//        mAddressNum.setText(Utils.formatToString(realEstateList.get(dataPosition).getAddress().number));
         mAddressLine1.setText(realEstateList.get(dataPosition).getAddress().line1);
         mAddressLine2.setText(realEstateList.get(dataPosition).getAddress().line2);
         mAddressCity.setText(realEstateList.get(dataPosition).getAddress().city);
@@ -354,7 +354,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private Address populateAddressObject() {
         Address address = new Address();
-        address.number = Integer.valueOf(mAddressNum.getText().toString());
+//        address.number = Integer.valueOf(mAddressNum.getText().toString());
         address.line1 = mAddressLine1.getText().toString();
         address.line2 = mAddressLine2.getText().toString();
         address.city = mAddressCity.getText().toString();
