@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapters.DetailAdapter;
+import com.openclassrooms.realestatemanager.controlers.activities.MapsActivity;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
@@ -100,13 +102,14 @@ public class DetailFragment extends Fragment {
         this.configureViewModel();
         this.getRealEstateItems(USER_ID);
         this.configureRecyclerView();
+        mMapView.setOnClickListener(v -> this.launchMapActivity());
 
     }
 
 
-    // -------------------------------------------------------------------------------------------//
-    //                                         DATA                                               //
-    // -------------------------------------------------------------------------------------------//
+    // ------------
+    // DATA
+    // ------------
 
     // Configure ViewModel
     private void configureViewModel() {
@@ -116,14 +119,13 @@ public class DetailFragment extends Fragment {
 
     // Get all items for a user
     private void getRealEstateItems(int userId) {
-        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateDataFromAList);
+        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateDataOnMobile);
         Log.d(TAG, "getRealEstateItems: ");
     }
 
-
-    // -------------------------------------------------------------------------------------------//
-    //                                          UI                                                //
-    // -------------------------------------------------------------------------------------------//
+    // ------------
+    // UI
+    // ------------
 
     // RecyclerView
     private void configureRecyclerView() {
@@ -134,7 +136,7 @@ public class DetailFragment extends Fragment {
         this.mDetailRecyclerView.setAdapter(this.mDetailAdapter);
     }
 
-    private void updateDataFromAList(List<RealEstate> realEstateList) {
+    private void updateDataOnMobile(List<RealEstate> realEstateList) {
         if (realEstateList.size() > 0) {
             mTextViewDescription.setText(realEstateList.get(position).getDescription());
             mSurfaceQty.setText(getString(R.string.surface_size, realEstateList.get(position).getSurface()));
@@ -191,5 +193,13 @@ public class DetailFragment extends Fragment {
                 .into(mMapView);
     }
 
+    // ------------
+    // ACTION
+    // ------------
+
+    private void launchMapActivity() {
+        Intent i = new Intent(getContext(), MapsActivity.class);
+        startActivity(i);
+    }
 
 }
