@@ -46,7 +46,7 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     //DATA
-    private RealEstateAdapter mAdapter;
+    public static RealEstateAdapter mAdapter;
     private RealEstateViewModel mRealEstateViewModel;
     // Declare callback
     private OnItemClickListenerCustom mCallback;
@@ -106,6 +106,7 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
                     // Action to do here
                     Toast.makeText(getContext(), "Click on position : " + position, Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "configureClickWithRecyclerView: "+ mAdapter.getRealEstate(position).getArea());
+
                     RealEstate realEstate = mAdapter.getRealEstate(position);
                     mCallback.onItemClickListenerCustom(v, position, realEstate);
 

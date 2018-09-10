@@ -105,6 +105,11 @@ public class Utils {
         String formatedDate = sdf.format(calendar.getTime());
         return sdf.parse(formatedDate);
     }
+
+    public static String getFormattedDate(Date date, String pattern) {
+        DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+        return dateFormat.format(date);
+    }
 //
     public static String checkDigit(int number) {
         return number <= 9 ? "0" + number : String.valueOf(number);

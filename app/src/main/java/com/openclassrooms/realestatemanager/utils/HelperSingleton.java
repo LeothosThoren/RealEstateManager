@@ -3,7 +3,7 @@ package com.openclassrooms.realestatemanager.utils;
 public class HelperSingleton {
 
     private static final HelperSingleton ourInstance = new HelperSingleton();
-    private int viewVisibility;
+    private boolean isVisible;
     private int mode;
     private int position;
 
@@ -22,12 +22,12 @@ public class HelperSingleton {
         this.position = position;
     }
 
-    public int getViewVisibility() {
-        return viewVisibility;
+    public boolean getIsVisible() {
+        return isVisible;
     }
 
-    public void setViewVisibility(int viewVisibility) {
-        this.viewVisibility = viewVisibility;
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
     }
 
     public int getMode() {

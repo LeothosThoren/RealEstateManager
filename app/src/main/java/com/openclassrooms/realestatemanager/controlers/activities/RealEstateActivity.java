@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.controlers.activities;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -76,8 +77,9 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
                 break;
             case R.id.menu_update:
                 // indicate the custom fragment we want to update
-//                HelperSingleton.getInstance().setViewVisibility(View.VISIBLE);
+                HelperSingleton.getInstance().setIsVisible(true);
                 HelperSingleton.getInstance().setMode(id);
+                RealEstateFragment.mAdapter.notifyDataSetChanged();
                 Log.d(TAG, "onOptionsItemSelected: Test update id = " + id + " vs  R.id.menu_update " + R.id.menu_update);
                 break;
             case R.id.menu_search:

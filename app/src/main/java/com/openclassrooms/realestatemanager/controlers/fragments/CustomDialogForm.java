@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -68,8 +69,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     TextView mEntryDateText;
     @BindView(R.id.edit_text_sold_date)
     TextView mSoldDateText;
-//    @BindView(R.id.edit_text_address_number)
-//    EditText mAddressNum;
     @BindView(R.id.edit_text_address_line1)
     EditText mAddressLine1;
     @BindView(R.id.edit_text_address_line2)
@@ -90,8 +89,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     private List<RealEstate> mRealEstateList = new ArrayList<>();
     // Var
     private Date entryDate, soldDate;
-    private DatePickerDialog.OnDateSetListener mEntryDateSetListener;
-    private DatePickerDialog.OnDateSetListener mSoldDateSetListener;
+    private DatePickerDialog.OnDateSetListener mEntryDateSetListener, mSoldDateSetListener;
     private boolean mIsLargeLayout;
     private ArrayAdapter<CharSequence> adapter;
     private boolean isCreateMode = HelperSingleton.getInstance().getMode() == R.id.menu_add;
@@ -103,6 +101,8 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_dialog_form, container, false);
         ButterKnife.bind(this, view);
+        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
+
         this.init();
         if (isCreateMode) {
             mActionSave.setText(getString(R.string.save));
@@ -117,12 +117,11 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     }
 
     private void init() {
-        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
-//        HelperSingleton.getInstance().setViewVisibility(View.GONE);
         // Methods
         this.configureViewModel();
         this.configureSpinner();
-
+        this.updateCheckBoxViews();
+        //Clicks
         mActionCancel.setOnClickListener(this);
         mActionSave.setOnClickListener(this);
         mEntryDateText.setOnClickListener(this);
@@ -130,34 +129,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         mAddPoi.setOnClickListener(this);
         mAddPictures.setOnClickListener(this);
 
-        //Handle the click of the date picker dialog
-        mEntryDateSetListener = (view, year1, month1, dayOfMonth) -> {
-            month1 = month1 + 1;
-            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
-            //For displaying in the view
-            mEntryDateText.setText(date);
-            // Get to database
-            try {
-                entryDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        };
-
-        mSoldDateSetListener = (view, year1, month1, dayOfMonth) -> {
-            month1 = month1 + 1;
-            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
-            //For displaying in the view
-            mSoldDateText.setText(date);
-            // Get to database
-            try {
-                soldDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        };
     }
 
     // --------------
@@ -173,16 +145,24 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             if (mIsLargeLayout) {
                 params.width = WindowManager.LayoutParams.WRAP_CONTENT;
                 params.height = WindowManager.LayoutParams.MATCH_PARENT;
-                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
             } else {
                 params.width = WindowManager.LayoutParams.MATCH_PARENT;
                 params.height = WindowManager.LayoutParams.MATCH_PARENT;
-                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
             }
 
         }
         // Call super onResume after resizing
         super.onResume();
+    }
+
+    private void updateCheckBoxViews() {
+        HelperSingleton.getInstance().setIsVisible(false);
+        if (!HelperSingleton.getInstance().getIsVisible()) {
+            Handler handler = new Handler();
+            handler.postDelayed(() -> RealEstateFragment.mAdapter.notifyDataSetChanged(), 1500);
+        }
     }
 
     // --------------
@@ -195,11 +175,11 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         switch (id) {
             case R.id.edit_text_entry_date:
                 Log.d(TAG, "onClick: change entry date");
-                this.configDatePickerDialog(getContext());
+                this.configEntryDatePickerDialog(getContext());
                 break;
             case R.id.edit_text_sold_date:
                 Log.d(TAG, "onClick: change sold date");
-                this.configDatePickerDialog(getContext());
+                this.configSoldDatePickerDialog(getContext());
                 break;
             case R.id.button_add_point_of_interest:
                 Log.d(TAG, "onClick: open poi list");
@@ -221,7 +201,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 } else if (isUpdateMode) {
                     updateOperation();
                 }
-
         }
 
     }
@@ -230,7 +209,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     // Config
     // --------------
 
-    private void configDatePickerDialog(Context context) {
+    private void configEntryDatePickerDialog(Context context) {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -242,15 +221,50 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             entryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
         entryDialog.show();
+        //Handle the click of the date picker dialog
+        mEntryDateSetListener = (view, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
+            //For displaying in the view
+            mEntryDateText.setText(date);
 
-        DatePickerDialog soldDialog = new DatePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+            // Set to database
+            try {
+                entryDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        };
+    }
+
+    private void configSoldDatePickerDialog(Context context) {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog entryDialog = new DatePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 mSoldDateSetListener, year, month, day);
-        if (soldDialog.getWindow() != null) {
-            soldDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (entryDialog.getWindow() != null) {
+            entryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
+        entryDialog.show();
+        //Handle the click of the date picker dialog
+        mSoldDateSetListener = (view, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
+            //For displaying in the view
+            mSoldDateText.setText(date);
 
-        soldDialog.show();
+            // Set to database
+            try {
+                soldDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
+        };
     }
 
     private void configureSpinner() {
@@ -262,14 +276,14 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     }
 
-    // --------------
-    // Data
-    // --------------
-
     private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
         this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
     }
+
+    // --------------
+    // Data
+    // --------------
 
     // Get all items for a user
     private void getRealEstateItems(int userId) {
@@ -280,12 +294,14 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     //Allow to retrieve data from room  and display it
     private void updateRealEstateUI(List<RealEstate> realEstateList) {
         if (realEstateList.get(dataPosition).getEntryDate() != null) {
-            mEntryDateText.setText(realEstateList.get(dataPosition).getEntryDate().toString());
+            mEntryDateText.setText(Utils.getFormattedDate(realEstateList.get(dataPosition).getEntryDate(),
+                    getString(R.string.pattern)));
         }
         if (realEstateList.get(dataPosition).getSoldDate() != null) {
-            mSoldDateText.setText(realEstateList.get(dataPosition).getSoldDate().toString());
+            mSoldDateText.setText(Utils.getFormattedDate(realEstateList.get(dataPosition).getSoldDate(),
+                    getString(R.string.pattern)));
         }
-        mPrice.setText(Utils.convertPriceToString(realEstateList.get(dataPosition).getPrice()));
+        mPrice.setText(String.valueOf(realEstateList.get(dataPosition).getPrice()));
         mType.setSelection(adapter.getPosition(realEstateList.get(dataPosition).getType()));
         mArea.setText(realEstateList.get(dataPosition).getArea());
         mDescription.setText(realEstateList.get(dataPosition).getDescription());
@@ -293,7 +309,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         mRoomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getRoom()));
         mBathroomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getBathroom()));
         mBedroomNb.setText(Utils.formatToString(realEstateList.get(dataPosition).getBedroom()));
-//        mAddressNum.setText(Utils.formatToString(realEstateList.get(dataPosition).getAddress().number));
         mAddressLine1.setText(realEstateList.get(dataPosition).getAddress().line1);
         mAddressLine2.setText(realEstateList.get(dataPosition).getAddress().line2);
         mAddressCity.setText(realEstateList.get(dataPosition).getAddress().city);
@@ -354,7 +369,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private Address populateAddressObject() {
         Address address = new Address();
-//        address.number = Integer.valueOf(mAddressNum.getText().toString());
         address.line1 = mAddressLine1.getText().toString();
         address.line2 = mAddressLine2.getText().toString();
         address.city = mAddressCity.getText().toString();

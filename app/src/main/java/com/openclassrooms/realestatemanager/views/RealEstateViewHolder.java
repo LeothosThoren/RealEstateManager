@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.views;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -43,10 +44,9 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder implements Vie
     public RealEstateViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-
     }
 
-    public void updateWithRealEstate(RealEstate realEstate, RequestManager glide, RealEstateAdapter.Listener callback, int lastSelectedPosition) {
+    public void updateWithRealEstate(RealEstate realEstate, RequestManager glide, RealEstateAdapter.Listener callback) {
 
         if (realEstate != null) {
             // Banner
@@ -73,8 +73,6 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder implements Vie
             //Click on checkBox
             this.mRadioButtonToCheck.setOnClickListener(this);
             this.callbackWeakRef = new WeakReference<>(callback);
-            this.mRadioButtonToCheck.setChecked(lastSelectedPosition == getAdapterPosition());
-
         }
     }
 
@@ -82,5 +80,7 @@ public class RealEstateViewHolder extends RecyclerView.ViewHolder implements Vie
     public void onClick(View v) {
         RealEstateAdapter.Listener callbackAdapter = callbackWeakRef.get();
         if (callbackAdapter != null) callbackAdapter.onClickCheckButton(getAdapterPosition());
+
     }
+
 }

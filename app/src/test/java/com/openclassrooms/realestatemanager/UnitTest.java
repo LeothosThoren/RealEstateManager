@@ -4,6 +4,8 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 
 import org.junit.Test;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -34,8 +36,11 @@ public class UnitTest {
     @Test
     public void dateConverter()throws Exception {
         //Don't forget to switch the current day date in the test
-        assertEquals("05/09/2018", Utils.getTodayDate());
+        assertEquals("10/09/2018", Utils.getTodayDate());
+
+        assertEquals("09/10/2018", Utils.getFormattedDate(new Date(), "MM/dd/yyyy"));
     }
+
 
     //===================
     // STRING
@@ -44,7 +49,7 @@ public class UnitTest {
     @Test
     public void stringConverter()throws Exception {
         assertEquals("75+gresham+street+++victoria+park+australia+wa+6100",
-                Utils.formatAddress(75, "Gresham Street ","", "Victoria Park", "AUSTRALIA", "WA 6100"));
+                Utils.formatAddress("Gresham Street ","", "Victoria Park", "AUSTRALIA", "WA 6100"));
 
         assertEquals("251,500,890", Utils.convertPriceToString(251500890) );
 

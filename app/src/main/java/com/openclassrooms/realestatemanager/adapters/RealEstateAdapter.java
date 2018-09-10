@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,8 +26,6 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
     private List<RealEstate> realEstateList;
     private RequestManager glide;
     private Listener callback;
-    public int lastSelectedPosition = -1;
-    private int selection = HelperSingleton.getInstance().getPosition();
 
     public RealEstateAdapter(RequestManager glide, Listener callback) {
         this.realEstateList = new ArrayList<>();
@@ -45,8 +44,8 @@ public class RealEstateAdapter extends RecyclerView.Adapter<RealEstateViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RealEstateViewHolder viewHolder, int position) {
-        viewHolder.mRadioButtonToCheck.setVisibility(/*HelperSingleton.getInstance().getViewVisibility() == View.VISIBLE ?*/ View.VISIBLE /*: View.GONE*/);
-        viewHolder.updateWithRealEstate(this.realEstateList.get(position), this.glide, this.callback, this.lastSelectedPosition);
+        viewHolder.mRadioButtonToCheck.setVisibility(HelperSingleton.getInstance().getIsVisible() ? View.VISIBLE : View.GONE);
+        viewHolder.updateWithRealEstate(this.realEstateList.get(position), this.glide, this.callback);
     }
 
     @Override
