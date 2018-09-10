@@ -64,5 +64,6 @@ dependencies {
 
     //GOOGLE PLAY SERVICES
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
 
 }
