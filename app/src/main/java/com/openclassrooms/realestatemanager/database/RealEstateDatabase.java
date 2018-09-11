@@ -11,13 +11,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.openclassrooms.realestatemanager.database.converter.DateConverter;
+import com.openclassrooms.realestatemanager.database.converter.TypeConverter;
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao;
 import com.openclassrooms.realestatemanager.database.dao.UserDao;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.entities.User;
 
 @Database(entities = {RealEstate.class, User.class}, version = 1, exportSchema = false)
-@TypeConverters(DateConverter.class)
+@TypeConverters({DateConverter.class, TypeConverter.class})
 public abstract class RealEstateDatabase extends RoomDatabase {
 
     // --- SINGLETON ---

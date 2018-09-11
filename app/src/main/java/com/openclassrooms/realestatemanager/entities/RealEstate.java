@@ -3,12 +3,9 @@ package com.openclassrooms.realestatemanager.entities;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.content.ContentValues;
 import android.support.annotation.Nullable;
-
-import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.Date;
 import java.util.List;
@@ -38,7 +35,7 @@ public class RealEstate {
     private Date entryDate;
     private Date soldDate;
     private long userId;
-    // Miss point of interest maybe a list of String
+    private List<String> poi;
     //Miss carousel of picture and description maybe a list of Nested object
 
 
@@ -47,7 +44,7 @@ public class RealEstate {
 
     public RealEstate(String type, String area, String description, long price, int surface, int room,
                       int bathroom, int bedroom, @Nullable String pictureUrl, Address address,
-                      Date entryDate, long userId) {
+                      Date entryDate,List<String> poiList, long userId) {
         this.type = type;
         this.area = area;
         this.description = description;
@@ -60,6 +57,7 @@ public class RealEstate {
         this.address = address;
         this.userId = userId;
         this.status = false;
+        this.poi = poiList;
         this.entryDate = entryDate;
         this.soldDate = null;
     }
@@ -138,6 +136,9 @@ public class RealEstate {
         return userId;
     }
 
+    public List<String> getPoi() {
+        return poi;
+    }
 
     // --- SETTER ---
 
@@ -202,6 +203,9 @@ public class RealEstate {
         this.userId = userId;
     }
 
+    public void setPoi(List<String> poi) {
+        this.poi = poi;
+    }
 
     // --- Utils ---
 
@@ -220,6 +224,7 @@ public class RealEstate {
         if (contentValues.containsKey("status")) realEstate.setStatus(contentValues.getAsBoolean("status"));
         if (contentValues.containsKey("entryDate")) realEstate.setEntryDate((Date) contentValues.get("entryDate"));//Risk
         if (contentValues.containsKey("soldDate")) realEstate.setSoldDate((Date) contentValues.get("soldDate"));//Risk
+        if (contentValues.containsKey("poi")) realEstate.setPoi((List<String>) contentValues.get("poi"));//Risk
         if (contentValues.containsKey("userId")) realEstate.setUserId(contentValues.getAsLong("userId"));
         return realEstate;
     }

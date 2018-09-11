@@ -40,9 +40,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CustomDialogForm extends DialogFragment implements View.OnClickListener {
+public class CustomDialogForm extends DialogFragment implements View.OnClickListener, CustomPoiDialog.OnInputSelected {
 
     public static final int USER_ID = 1;
+    public static final String CUSTOM_POI_DIALOG = "com.openclassrooms.realestatemanager.controlers.fragments.CustomPoiDialog";
     private static final String TAG = CustomDialogForm.class.getSimpleName();
     // Widget
     @BindView(R.id.action_cancel)
@@ -87,6 +88,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     private RealEstateViewModel mViewModel;
     private int dataPosition = HelperSingleton.getInstance().getPosition();
     private List<RealEstate> mRealEstateList = new ArrayList<>();
+    private List<String> mPoiList = new ArrayList<>();
     // Var
     private Date entryDate, soldDate;
     private DatePickerDialog.OnDateSetListener mEntryDateSetListener, mSoldDateSetListener;
@@ -128,8 +130,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         mSoldDateText.setOnClickListener(this);
         mAddPoi.setOnClickListener(this);
         mAddPictures.setOnClickListener(this);
-
-
     }
 
     // --------------
@@ -183,7 +183,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 break;
             case R.id.button_add_point_of_interest:
                 Log.d(TAG, "onClick: open poi list");
-                //Todo
+                this.openPoiDialog();
                 break;
             case R.id.button_add_picture:
                 Log.d(TAG, "onClick: open picture list");
@@ -203,6 +203,14 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 }
         }
 
+    }
+
+    private void openPoiDialog() {
+        CustomPoiDialog dialog = new CustomPoiDialog();
+        dialog.setTargetFragment(CustomDialogForm.this, 1);
+        if (getFragmentManager() != null) {
+            dialog.show(getFragmentManager(), CUSTOM_POI_DIALOG);
+        }
     }
 
     // --------------
@@ -325,13 +333,13 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
         if (mType.getSelectedItem() != null && mArea.getText() != null && mDescription.getText() != null
                 && mPrice.getText() != null && mSurface.getText() != null && mRoomNb.getText() != null
-                && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null) {
+                && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null && mPoiList != null) {
             RealEstate realEstate = new RealEstate(mType.getSelectedItem().toString(), mArea.getText().toString(),
                     mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
                     Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()),
                     Integer.valueOf(mBathroomNb.getText().toString()), Integer.valueOf(mBedroomNb.getText().toString()),
                     "https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg",
-                    populateAddressObject(), entryDate, USER_ID);
+                    populateAddressObject(), entryDate, mPoiList, USER_ID);
             //Creation on DB
             mViewModel.createRealEstate(realEstate);
             //Confirmation
@@ -379,4 +387,9 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     }
 
 
+    @Override
+    public void sendInput(List<String> input) {
+        Log.d(TAG, "sendInput: found incoming input: " + input.size());
+        mPoiList.addAll(input);
+    }
 }

@@ -57,7 +57,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Go
     // Data
     private RealEstateViewModel mViewModel;
     private Marker mMarker;
-    private HashMap<String, RealEstate> mMarkerMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,8 +202,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Go
                     realEstateList.get(i).getBathroom(), realEstateList.get(i).getBedroom());
             geoLocate(address, snippet);
 
-
-//            mMarkerMap.put(mMarker.getId(), realEstateList.get(i));
         }
     }
 

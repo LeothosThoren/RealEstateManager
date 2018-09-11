@@ -48,6 +48,10 @@
     <string name="title_activity_maps">Locate the properties</string>
     <string name="message_geolocation">Make sur you device geolocation is activated.</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add">ADD</string>
+
     <!-- BUG EXPLANATION
     - Bug résolu ligne 17 :  this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);
         le textView pointait sur un widget de la seconde activité

@@ -142,8 +142,8 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
 
     // RecyclerView
     private void configureRecyclerView() {
-        this.mAdapter = new RealEstateAdapter(Glide.with(this), this);
-        this.mRecyclerView.setAdapter(this.mAdapter);
+        mAdapter = new RealEstateAdapter(Glide.with(this), this);
+        this.mRecyclerView.setAdapter(mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.configureClickWithRecyclerView();
 
@@ -157,7 +157,7 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
 
     // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
-        this.mAdapter.updateData(realEstates);
+        mAdapter.updateData(realEstates);
     }
 
 
