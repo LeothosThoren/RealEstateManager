@@ -38,7 +38,7 @@ import static com.openclassrooms.realestatemanager.controlers.fragments.CustomDi
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CustomPoiDialog extends DialogFragment {
+public class CustomPoiDialog extends DialogFragment implements View.OnClickListener {
 
     private static final String TAG = "CustomPoiDialog";
     public OnInputSelected mOnInputSelected;
@@ -57,24 +57,40 @@ public class CustomPoiDialog extends DialogFragment {
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private PoiAdapter mPoiAdapter;
     private int dataPosition = HelperSingleton.getInstance().getPosition();
+    private boolean isCreateMode = HelperSingleton.getInstance().getMode() == R.id.menu_add;
+    private boolean isUpdateMode = HelperSingleton.getInstance().getMode() == R.id.menu_update;
     //Data
     private List<String> poiList = new ArrayList<>();
+    private List<RealEstate> mRealEstateList = new ArrayList<>();
     private RealEstateViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_custom_list_object, container, false);
+        View view = inflater.inflate(R.layout.fragment_custom_poi_dialog, container, false);
         ButterKnife.bind(this, view);
         //Methods
+        this.init();
+
+        if (isUpdateMode) {
+            this.getRealEstateItems(USER_ID);
+        }
+        return view;
+    }
+
+
+    // ----------------
+    // init
+    // ----------------
+
+    private void init() {
+        this.configureViewModel();
         this.configureRecyclerView();
         this.configureSpinner();
-        this.configureClickAction();
-        this.configureViewModel();
-        this.getRealEstateItems(USER_ID);
-
-        return view;
+        mActionCancel.setOnClickListener(this);
+        mActionOk.setOnClickListener(this);
+        mPoiButtonAdd.setOnClickListener(this);
     }
 
 
@@ -100,41 +116,36 @@ public class CustomPoiDialog extends DialogFragment {
 
     }
 
+    private void configureViewModel() {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
+        this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
+    }
+
     // --------------
     // Action
     // --------------
 
-    private void configureClickAction() {
-        mActionOk.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: capturing spinner input.");
-            if (poiList != null) {
-                mOnInputSelected.sendInput(poiList);
-                Log.d(TAG, "Show size of the array : " + poiList.size());
-                Toast.makeText(getContext(), "Poi added!", Toast.LENGTH_SHORT).show();
-                getDialog().dismiss();
-            } else {
-                Toast.makeText(getContext(), "Please add at least one item", Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
-        mActionCancel.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: closing dialog");
-            getDialog().cancel();
-        });
-
-
-        //If we want to update it need to be done directly in here, add or delete
-        mPoiButtonAdd.setOnClickListener(v -> {
-            String input = mSpinner.getSelectedItem().toString();
-            if (!input.equals("")) {
-                poiList.add(input);
-                if (poiList.size() > 0)
-                    mPoiAdapter.notifyItemChanged(poiList.size());
-                Log.d(TAG, "configureClickAction: find item = " + input);
-            }
-
-        });
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.action_cancel:
+                getDialog().cancel();
+                break;
+            case R.id.action_save:
+                saveOperation();
+                break;
+            case R.id.poi_button_add:
+                if (isCreateMode) {
+                    addPoi();
+                } else if (isUpdateMode) {
+                    addPoi();
+                    updateOperation();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -147,14 +158,30 @@ public class CustomPoiDialog extends DialogFragment {
         }
     }
 
+    private void addPoi() {
+        String input = mSpinner.getSelectedItem().toString();
+        poiList.add(input);
+        mPoiAdapter.notifyDataSetChanged();
+        Log.d(TAG, "configureClickAction: find item = " + input);
+
+
+    }
+
+    private void saveOperation() {
+        if (poiList != null) {
+            mOnInputSelected.sendInput(poiList);
+            Log.d(TAG, "Show size of the array : " + poiList.size());
+            Toast.makeText(getContext(), "Poi added!", Toast.LENGTH_SHORT).show();
+            getDialog().dismiss();
+        } else {
+            Toast.makeText(getContext(), "Please add at least one item", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // ------------
     // Data
     // ------------
 
-    private void configureViewModel() {
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
-        this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
-    }
 
     // Get all items for a user
     private void getRealEstateItems(int userId) {
@@ -163,8 +190,16 @@ public class CustomPoiDialog extends DialogFragment {
     }
 
     private void updatePoiUI(List<RealEstate> realEstateList) {
+        mRealEstateList.addAll(realEstateList);
+        poiList.addAll(realEstateList.get(dataPosition).getPoi());
         mPoiAdapter.updateData(realEstateList.get(dataPosition).getPoi());
     }
+
+    private void updateOperation() {
+        mRealEstateList.get(dataPosition).setPoi(poiList);
+        mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
+    }
+
 
     //Interface
     public interface OnInputSelected {

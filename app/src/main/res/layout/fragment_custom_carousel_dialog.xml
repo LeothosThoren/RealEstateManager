@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".controlers.fragments.CustomCarouselDialog">
+
+    <TextView
+        android:id="@+id/carousel_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Add you picture"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <include
+        android:id="@+id/recycler_view_carousel"
+        layout="@layout/recycler_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_margin="15dp" />
+
+    <LinearLayout
+        android:id="@+id/carousel_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <ImageView
+            android:id="@+id/carousel_select_picture"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_weight="20"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_add_image"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/carousel_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="60"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Title"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/carousel_button_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="20"
+            android:background="@null"
+            android:src="@drawable/ic_point_of_interest"
+            android:text="@string/add" />
+
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/action_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+
+</LinearLayout>

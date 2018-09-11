@@ -27,8 +27,6 @@ public class RealEstate {
     private int room;
     private int bathroom;
     private int bedroom;
-    @Nullable
-    private String PictureUrl;
     @Embedded
     private Address address;
     private boolean status;
@@ -36,15 +34,17 @@ public class RealEstate {
     private Date soldDate;
     private long userId;
     private List<String> poi;
-    //Miss carousel of picture and description maybe a list of Nested object
+    @Nullable
+    private List<String> pictureUrl;
+    private List<String> title;
 
 
     public RealEstate() {
     }
 
     public RealEstate(String type, String area, String description, long price, int surface, int room,
-                      int bathroom, int bedroom, @Nullable String pictureUrl, Address address,
-                      Date entryDate,List<String> poiList, long userId) {
+                      int bathroom, int bedroom, @Nullable List<String> pictureUrl, List<String> title,
+                      Address address, Date entryDate, List<String> poiList, long userId) {
         this.type = type;
         this.area = area;
         this.description = description;
@@ -53,7 +53,8 @@ public class RealEstate {
         this.room = room;
         this.bathroom = bathroom;
         this.bedroom = bedroom;
-        PictureUrl = pictureUrl;
+        this.pictureUrl = pictureUrl;
+        this.title = title;
         this.address = address;
         this.userId = userId;
         this.status = false;
@@ -73,138 +74,144 @@ public class RealEstate {
         this.soldDate = null;
     }
 
-    // --- GETTER ---
+    // --- GETTERS / SETTERS ---
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getType() {
         return type;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public int getSurface() {
-        return surface;
-    }
-
-    public int getRoom() {
-        return room;
-    }
-
-    public int getBathroom() {
-        return bathroom;
-    }
-
-    public int getBedroom() {
-        return bedroom;
-    }
-
-    @Nullable
-    public String getPictureUrl() {
-        return PictureUrl;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public Date getEntryDate() {
-        return entryDate;
-    }
-
-    public Date getSoldDate() {
-        return soldDate;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public List<String> getPoi() {
-        return poi;
-    }
-
-    // --- SETTER ---
-
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getArea() {
+        return area;
     }
 
     public void setArea(String area) {
         this.area = area;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getPrice() {
+        return price;
     }
 
     public void setPrice(long price) {
         this.price = price;
     }
 
+    public int getSurface() {
+        return surface;
+    }
+
     public void setSurface(int surface) {
         this.surface = surface;
+    }
+
+    public int getRoom() {
+        return room;
     }
 
     public void setRoom(int room) {
         this.room = room;
     }
 
+    public int getBathroom() {
+        return bathroom;
+    }
+
     public void setBathroom(int bathroom) {
         this.bathroom = bathroom;
     }
 
-    public void setBedroom(int bedroom) {
-        this.bedroom = bedroom;
-    }
-
-    public void setPictureUrl(@Nullable String pictureUrl) {
-        PictureUrl = pictureUrl;
+    public Address getAddress() {
+        return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public List<String> getTitle() {
+        return title;
     }
 
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
+    public void setTitle(List<String> title) {
+        this.title = title;
     }
 
-    public void setSoldDate(Date soldDate) {
-        this.soldDate = soldDate;
+    public List<String> getPoi() {
+        return poi;
+    }
+
+    public void setPoi(List<String> poi) {
+        this.poi = poi;
+    }
+
+
+    public int getBedroom() {
+        return bedroom;
+    }
+
+    public void setBedroom(int bedroom) {
+        this.bedroom = bedroom;
+    }
+
+    @Nullable
+    public List<String> getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(@Nullable List<String> pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public long getUserId() {
+        return userId;
     }
 
     public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public void setPoi(List<String> poi) {
-        this.poi = poi;
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public Date getSoldDate() {
+        return soldDate;
+    }
+
+    public void setSoldDate(Date soldDate) {
+        this.soldDate = soldDate;
     }
 
     // --- Utils ---
@@ -219,7 +226,8 @@ public class RealEstate {
         if (contentValues.containsKey("room")) realEstate.setRoom(contentValues.getAsInteger("room"));
         if (contentValues.containsKey("bathroom")) realEstate.setBathroom(contentValues.getAsInteger("bathroom"));
         if (contentValues.containsKey("bedroom")) realEstate.setBedroom(contentValues.getAsInteger("bedroom"));
-        if (contentValues.containsKey("pictureUrl")) realEstate.setPictureUrl(contentValues.getAsString("pictureUrl"));
+        if (contentValues.containsKey("pictureUrl")) realEstate.setPictureUrl((List<String>) contentValues.get("pictureUrl"));
+        if (contentValues.containsKey("title")) realEstate.setTitle((List<String>) contentValues.get("title"));
         if (contentValues.containsKey("detail_address_line1_num")) realEstate.setAddress((Address) contentValues.get("detail_address_line1_num")); //Risk
         if (contentValues.containsKey("status")) realEstate.setStatus(contentValues.getAsBoolean("status"));
         if (contentValues.containsKey("entryDate")) realEstate.setEntryDate((Date) contentValues.get("entryDate"));//Risk

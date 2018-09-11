@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".controlers.fragments.CustomPoiDialog">
+
+    <TextView
+        android:id="@+id/poi_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Select your point of interest"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <include
+        android:id="@+id/recycler_view_object"
+        layout="@layout/recycler_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_margin="15dp" />
+
+    <LinearLayout
+        android:id="@+id/poi_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/poi_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="70"
+            android:background="@drawable/custom_edit_text"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/poi_button_add"
+            android:layout_width="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:src="@drawable/ic_point_of_interest"
+            android:text="@string/add" />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/action_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+
+</LinearLayout>

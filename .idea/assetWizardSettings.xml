@@ -24,6 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="paddingPercent" value="10" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>

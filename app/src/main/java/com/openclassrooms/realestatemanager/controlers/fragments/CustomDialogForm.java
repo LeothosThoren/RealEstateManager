@@ -44,6 +44,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     public static final int USER_ID = 1;
     public static final String CUSTOM_POI_DIALOG = "com.openclassrooms.realestatemanager.controlers.fragments.CustomPoiDialog";
+    public static final String CUSTOM_CAROUSEL_DIALOG = "com.openclassrooms.realestatemanager.controlers.fragments.CustomCarouselDialog";
     private static final String TAG = CustomDialogForm.class.getSimpleName();
     // Widget
     @BindView(R.id.action_cancel)
@@ -89,6 +90,8 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     private int dataPosition = HelperSingleton.getInstance().getPosition();
     private List<RealEstate> mRealEstateList = new ArrayList<>();
     private List<String> mPoiList = new ArrayList<>();
+    private List<String> mUrlPicture = new ArrayList<>();
+    private List<String> mTitle = new ArrayList<>();
     // Var
     private Date entryDate, soldDate;
     private DatePickerDialog.OnDateSetListener mEntryDateSetListener, mSoldDateSetListener;
@@ -109,6 +112,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         if (isCreateMode) {
             mActionSave.setText(getString(R.string.save));
         } else if (isUpdateMode) {
+
             this.getRealEstateItems(USER_ID);
             mSoldDateText.setEnabled(true);
             mSoldDateText.setFocusable(true);
@@ -187,7 +191,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 break;
             case R.id.button_add_picture:
                 Log.d(TAG, "onClick: open picture list");
-                //Todo
+                this.openCarouselDialog();
                 break;
             case R.id.action_cancel:
                 Log.d(TAG, "onClick: cancel and closing dialog");
@@ -210,6 +214,14 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         dialog.setTargetFragment(CustomDialogForm.this, 1);
         if (getFragmentManager() != null) {
             dialog.show(getFragmentManager(), CUSTOM_POI_DIALOG);
+        }
+    }
+
+    private void openCarouselDialog() {
+        CustomCarouselDialog dialog = new CustomCarouselDialog();
+        dialog.setTargetFragment(CustomDialogForm.this, 1);
+        if (getFragmentManager() != null) {
+            dialog.show(getFragmentManager(), CUSTOM_CAROUSEL_DIALOG);
         }
     }
 
@@ -333,13 +345,13 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
         if (mType.getSelectedItem() != null && mArea.getText() != null && mDescription.getText() != null
                 && mPrice.getText() != null && mSurface.getText() != null && mRoomNb.getText() != null
-                && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null && mPoiList != null) {
+                && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null && mPoiList != null
+                && mUrlPicture != null && mTitle != null) {
             RealEstate realEstate = new RealEstate(mType.getSelectedItem().toString(), mArea.getText().toString(),
                     mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
                     Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()),
                     Integer.valueOf(mBathroomNb.getText().toString()), Integer.valueOf(mBedroomNb.getText().toString()),
-                    "https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg",
-                    populateAddressObject(), entryDate, mPoiList, USER_ID);
+                    mUrlPicture, mTitle, populateAddressObject(), entryDate, mPoiList, USER_ID);
             //Creation on DB
             mViewModel.createRealEstate(realEstate);
             //Confirmation
@@ -367,6 +379,9 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         if (soldDate != null) {
             mRealEstateList.get(dataPosition).setSoldDate(soldDate);
         }
+        mRealEstateList.get(dataPosition).setPoi(mPoiList);
+        mRealEstateList.get(dataPosition).setTitle(mTitle);
+        mRealEstateList.get(dataPosition).setPictureUrl(mUrlPicture);
 
         //View Model update method
         mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
