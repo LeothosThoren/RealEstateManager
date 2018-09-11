@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -93,7 +92,7 @@ public class Utils {
 
 
     public static String convertPriceToString(long price) {
-        DecimalFormat formatter = new DecimalFormat("#,###",new DecimalFormatSymbols(Locale.US));
+        DecimalFormat formatter = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.US));
         return formatter.format(price);
     }
 
@@ -110,20 +109,34 @@ public class Utils {
         DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
         return dateFormat.format(date);
     }
-//
+
+    //
     public static String checkDigit(int number) {
         return number <= 9 ? "0" + number : String.valueOf(number);
     }
-//
-    public static String formatAddress(/*int nb,*/ String line1, String line2, String city,
+
+    //
+    public static String formatAddress(String line1, String line2, String city,
                                        String state, String zip) {
-        String address = (/*String.valueOf(nb) + " " +*/ line1 + " " + line2 + " " + city + " " + state
+        String address = (line1 + " " + line2 + " " + city + " " + state
                 + " " + zip).toLowerCase();
         return address.replace(" ", "+");
     }
 
     public static String formatToString(int i) {
         return String.valueOf(i);
+    }
+
+    public static String formatSnippet(String type, String area, long price, int surface,
+                                       int nbRoom, int nbBathroom, int nbBedroom) {
+
+        return "- Type: " + type
+                + "\n- Area: " + area
+                + "\n- Price: " + convertPriceToString(price)
+                + "\n- Surface: " + surface +" sq m"
+                + "\n- Nb of room: " + nbRoom
+                + "\n- Nb of Bathroom: " + nbBathroom
+                + "\n- Nb of Bedroom: " + nbBedroom;
     }
 
 }

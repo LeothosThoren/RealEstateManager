@@ -155,7 +155,6 @@ public class DetailFragment extends Fragment {
             mZipCode.setText(realEstateList.get(position).getAddress().zip);
             Glide.with(this)
                     .load(mApiUri + Utils.formatAddress(
-                            /*realEstateList.get(position).getAddress().number,*/
                             realEstateList.get(position).getAddress().line1,
                             realEstateList.get(position).getAddress().line2,
                             realEstateList.get(position).getAddress().city,
@@ -183,7 +182,6 @@ public class DetailFragment extends Fragment {
         mZipCode.setText(realEstate.getAddress().zip);
         Glide.with(this)
                 .load(mApiUri + Utils.formatAddress(
-                       /* realEstate.getAddress().number,*/
                         realEstate.getAddress().line1,
                         realEstate.getAddress().line2,
                         realEstate.getAddress().city,

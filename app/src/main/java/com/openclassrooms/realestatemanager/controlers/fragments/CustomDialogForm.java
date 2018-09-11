@@ -145,11 +145,11 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             if (mIsLargeLayout) {
                 params.width = WindowManager.LayoutParams.WRAP_CONTENT;
                 params.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
             } else {
                 params.width = WindowManager.LayoutParams.MATCH_PARENT;
                 params.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
             }
 
         }
