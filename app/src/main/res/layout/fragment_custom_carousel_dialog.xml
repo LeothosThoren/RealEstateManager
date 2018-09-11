@@ -39,7 +39,7 @@
             android:src="@drawable/ic_add_image"/>
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/carousel_spinner"
+            android:id="@+id/carousel_edit_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"

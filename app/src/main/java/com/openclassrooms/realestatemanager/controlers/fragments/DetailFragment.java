@@ -92,13 +92,6 @@ public class DetailFragment extends Fragment {
 
     private void init() {
         //methods
-        pictureUrl.add("https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg");
-        descriptionText.add("Kitchen");
-        pictureUrl.add("https://images.pexels.com/photos/276696/pexels-photo-276696.jpeg");
-        descriptionText.add("Dining Room");
-        pictureUrl.add("https://images.pexels.com/photos/276677/pexels-photo-276677.jpeg");
-        descriptionText.add("Living Room");
-
         this.configureViewModel();
         this.getRealEstateItems(USER_ID);
         this.configureRecyclerView();
@@ -132,7 +125,7 @@ public class DetailFragment extends Fragment {
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         this.mDetailRecyclerView.setLayoutManager(layoutManager);
-        this.mDetailAdapter = new DetailAdapter(pictureUrl, descriptionText, Glide.with(this));
+        this.mDetailAdapter = new DetailAdapter(Glide.with(this));
         this.mDetailRecyclerView.setAdapter(this.mDetailAdapter);
     }
 
@@ -143,7 +136,7 @@ public class DetailFragment extends Fragment {
             mRoomsQty.setText(getString(R.string.room_quantity, realEstateList.get(position).getRoom()));
             mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstateList.get(position).getBathroom()));
             mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstateList.get(position).getBedroom()));
-            mAddress.setText(getString(R.string.address/*, realEstateList.get(position).getAddress().number*/, realEstateList.get(position).getAddress().line1));
+            mAddress.setText(getString(R.string.address, realEstateList.get(position).getAddress().line1));
 
             if (realEstateList.get(position).getAddress().line2 != null
                     && (!realEstateList.get(position).getAddress().line2.equals(""))) {
@@ -162,6 +155,7 @@ public class DetailFragment extends Fragment {
                             realEstateList.get(position).getAddress().zip) + mApiKey)
                     .apply(RequestOptions.centerCropTransform())
                     .into(mMapView);
+            mDetailAdapter.notifyDataSetChanged();
         }
 
     }
@@ -172,7 +166,7 @@ public class DetailFragment extends Fragment {
         mRoomsQty.setText(getString(R.string.room_quantity, realEstate.getRoom()));
         mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstate.getBathroom()));
         mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstate.getBedroom()));
-        mAddress.setText(getString(R.string.address/*, realEstate.getAddress().number*/, realEstate.getAddress().line1));
+        mAddress.setText(getString(R.string.address, realEstate.getAddress().line1));
         if (realEstate.getAddress().line2 != null && (!realEstate.getAddress().line2.equals(""))) {
             mLine2.setText(realEstate.getAddress().line2);
             mLine2.setVisibility(View.VISIBLE);
@@ -180,6 +174,7 @@ public class DetailFragment extends Fragment {
         mCity.setText(realEstate.getAddress().city);
         mState.setText(realEstate.getAddress().state);
         mZipCode.setText(realEstate.getAddress().zip);
+
         Glide.with(this)
                 .load(mApiUri + Utils.formatAddress(
                         realEstate.getAddress().line1,
@@ -189,6 +184,7 @@ public class DetailFragment extends Fragment {
                         realEstate.getAddress().zip) + mApiKey)
                 .apply(RequestOptions.centerCropTransform())
                 .into(mMapView);
+        mDetailAdapter.notifyDataSetChanged();
     }
 
     // ------------

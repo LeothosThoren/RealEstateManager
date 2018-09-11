@@ -15,14 +15,13 @@ import java.util.ArrayList;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailViewHolder> {
 
-    // TODO see how we can do to use entities
-    private ArrayList<String> pictureUrl = new ArrayList<>();
-    private ArrayList<String> descriptionText = new ArrayList<>();
+    private ArrayList<String> pictureUrl;
+    private ArrayList<String> descriptionText;
     private RequestManager glide;
 
-    public DetailAdapter(ArrayList<String> pictureUrl, ArrayList<String> descriptionText, RequestManager glide) {
-        this.pictureUrl = pictureUrl;
-        this.descriptionText = descriptionText;
+    public DetailAdapter(RequestManager glide) {
+        this.pictureUrl = new ArrayList<>();;
+        this.descriptionText = new ArrayList<>();;
         this.glide = glide;
     }
 

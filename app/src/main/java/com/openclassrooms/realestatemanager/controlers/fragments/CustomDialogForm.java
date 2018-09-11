@@ -40,7 +40,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CustomDialogForm extends DialogFragment implements View.OnClickListener, CustomPoiDialog.OnInputSelected {
+public class CustomDialogForm extends DialogFragment implements View.OnClickListener,
+        CustomPoiDialog.OnInputSelected, CustomCarouselDialog.OnInputsSelected {
 
     public static final int USER_ID = 1;
     public static final String CUSTOM_POI_DIALOG = "com.openclassrooms.realestatemanager.controlers.fragments.CustomPoiDialog";
@@ -385,7 +386,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
         //View Model update method
         mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
-        Log.d(TAG, "updateOperation: show the data of the array list " + mRealEstateList.get(dataPosition).getArea());
         Toast.makeText(getContext(), "Data updated!", Toast.LENGTH_SHORT).show();
         getDialog().dismiss();
     }
@@ -402,9 +402,16 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     }
 
 
+    //Callbacks
     @Override
-    public void sendInput(List<String> input) {
-        Log.d(TAG, "sendInput: found incoming input: " + input.size());
-        mPoiList.addAll(input);
+    public void sendInput(List<String> inputs) {
+        Log.d(TAG, "sendInput: found incoming input: " + inputs.size());
+        mPoiList.addAll(inputs);
+    }
+
+    @Override
+    public void sendBothInputs(List<String> pictures, List<String> titles) {
+        mTitle.addAll(titles);
+        mUrlPicture.addAll(pictures);
     }
 }

@@ -133,18 +133,17 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
                 getDialog().cancel();
                 break;
             case R.id.action_save:
-                saveOperation();
+                saveData();
                 break;
             case R.id.poi_button_add:
                 if (isCreateMode) {
                     addPoi();
                 } else if (isUpdateMode) {
                     addPoi();
-                    updateOperation();
+                    updateData();
                 }
                 break;
-            default:
-                break;
+
         }
     }
 
@@ -167,7 +166,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
 
     }
 
-    private void saveOperation() {
+    private void saveData() {
         if (poiList != null) {
             mOnInputSelected.sendInput(poiList);
             Log.d(TAG, "Show size of the array : " + poiList.size());
@@ -195,7 +194,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         mPoiAdapter.updateData(realEstateList.get(dataPosition).getPoi());
     }
 
-    private void updateOperation() {
+    private void updateData() {
         mRealEstateList.get(dataPosition).setPoi(poiList);
         mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
     }

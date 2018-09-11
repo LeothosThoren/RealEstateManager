@@ -51,6 +51,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add">ADD</string>
+    <string name="popup_title_permission_files_access">Permission file access</string>
+    <string name="toast_title_no_image_chosen">No image chosen!</string>
 
     <!-- BUG EXPLANATION
     - Bug résolu ligne 17 :  this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);
