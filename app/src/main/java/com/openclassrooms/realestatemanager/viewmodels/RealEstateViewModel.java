@@ -9,6 +9,7 @@ import com.openclassrooms.realestatemanager.entities.User;
 import com.openclassrooms.realestatemanager.repositories.RealEstateDataRepository;
 import com.openclassrooms.realestatemanager.repositories.UserDataRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -50,6 +51,12 @@ public class RealEstateViewModel extends ViewModel {
 
     public LiveData<List<RealEstate>> getRealEstate(long userId) {
         return realEstateDataSource.getRealEstate(userId);
+    }
+
+    public LiveData<List<RealEstate>> searchRealEstate(String area, int minSurface, int maxSurface, long minPrice, long maxPrice,
+                                                       int minRoom, int maxRoom, Date minDate, Date maxDate, long userId) {
+        return realEstateDataSource.searchRealEstate(area, minSurface, maxSurface, minPrice, maxPrice,
+                minRoom, maxRoom, minDate, maxDate, userId);
     }
 
     public void createRealEstate(RealEstate realEstate) {

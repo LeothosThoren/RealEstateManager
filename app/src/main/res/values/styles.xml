@@ -27,4 +27,9 @@
         <item name="android:padding">0dp</item>
     </style>
 
+    <!--Spinner-->
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/bg_spinner</item>
+    </style>
+
 </resources>

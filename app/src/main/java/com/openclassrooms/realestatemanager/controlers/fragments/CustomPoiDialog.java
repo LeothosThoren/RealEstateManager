@@ -110,7 +110,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
     private void configureSpinner() {
         if (getContext() != null) {
             spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.point_of_interest, android.R.layout.simple_spinner_item);
-            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             mSpinner.setAdapter(spinnerAdapter);
         }
 

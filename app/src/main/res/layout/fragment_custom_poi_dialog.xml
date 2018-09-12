@@ -33,11 +33,11 @@
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/poi_spinner"
+            style="@style/SpinnerTheme"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_weight="70"
-            android:background="@drawable/custom_edit_text"
             android:padding="10dp" />
 
         <ImageView

@@ -9,6 +9,7 @@ import android.database.Cursor;
 
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -16,6 +17,12 @@ public interface RealEstateDao {
 
     @Query("SELECT * FROM RealEstate WHERE userId = :userId")
     LiveData<List<RealEstate>> getRealEstate(long userId);
+
+    @Query("SELECT * FROM RealEstate WHERE area LIKE :area AND surface BETWEEN :minSurface AND :maxSurface" +
+            " AND price BETWEEN :minPrice AND :maxPrice AND room BETWEEN :minRoom AND :maxRoom AND  " +
+            "entryDate BETWEEN :minDate AND :maxDate AND userId = :userId")
+    LiveData<List<RealEstate>> searchRealEstate(String area, int minSurface, int maxSurface, long minPrice, long maxPrice,
+                                                int minRoom, int maxRoom, Date minDate, Date maxDate, long userId);
 
     @Query("SELECT * FROM RealEstate WHERE userId = :userId")
     Cursor getRealEstateWithCursor(long userId);

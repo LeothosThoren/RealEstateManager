@@ -93,6 +93,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // MENU DRAWER
     // --------------
 
+    /*...*/
 
     // --------------
     // FRAGMENTS

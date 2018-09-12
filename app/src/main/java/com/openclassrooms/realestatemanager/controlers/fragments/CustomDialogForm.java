@@ -291,7 +291,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     private void configureSpinner() {
         if (getContext() != null) {
             adapter = ArrayAdapter.createFromResource(getContext(), R.array.property_type, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+            adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             mType.setAdapter(adapter);
         }
 

@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import com.openclassrooms.realestatemanager.database.dao.RealEstateDao;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 
+import java.util.Date;
 import java.util.List;
 
 public class RealEstateDataRepository {
@@ -19,6 +20,14 @@ public class RealEstateDataRepository {
 
     public LiveData<List<RealEstate>> getRealEstate(long userId) {
         return this.realEstateDao.getRealEstate(userId);
+    }
+
+    // --- SEARCH ---
+
+    public LiveData<List<RealEstate>> searchRealEstate(String area, int minSurface, int maxSurface, long minPrice, long maxPrice,
+                                                       int minRoom, int maxRoom, Date minDate, Date maxDate, long userId) {
+        return this.realEstateDao.searchRealEstate(area, minSurface, maxSurface, minPrice, maxPrice,
+                minRoom, maxRoom, minDate, maxDate, userId);
     }
 
     // --- CREATE ---
