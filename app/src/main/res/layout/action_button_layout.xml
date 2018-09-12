@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:background="@drawable/rectangle"
         android:orientation="horizontal"
         android:weightSum="100">
 

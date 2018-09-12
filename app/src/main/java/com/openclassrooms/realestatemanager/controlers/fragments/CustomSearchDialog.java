@@ -68,9 +68,6 @@ public class CustomSearchDialog extends DialogFragment {
     private RealEstateViewModel mViewModel;
     private List<RealEstate> mRealEstateList = new ArrayList<>();
 
-
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

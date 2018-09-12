@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.adapters;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;

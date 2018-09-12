@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -59,6 +60,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
     private int dataPosition = HelperSingleton.getInstance().getPosition();
     private boolean isCreateMode = HelperSingleton.getInstance().getMode() == R.id.menu_add;
     private boolean isUpdateMode = HelperSingleton.getInstance().getMode() == R.id.menu_update;
+    private boolean mIsLargeLayout;
     //Data
     private List<String> poiList = new ArrayList<>();
     private List<RealEstate> mRealEstateList = new ArrayList<>();
@@ -70,6 +72,8 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_poi_dialog, container, false);
         ButterKnife.bind(this, view);
+        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
+        getDialog().setTitle("Select points of interest");
         //Methods
         this.init();
 
@@ -79,6 +83,26 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         return view;
     }
 
+    @Override
+    public void onResume() {
+        // Get existing layout params for the window
+        if (getDialog().getWindow() != null) {
+            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+            // Assign window properties to fill the parent
+            if (mIsLargeLayout) {
+                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            } else {
+                params.width = WindowManager.LayoutParams.MATCH_PARENT;
+                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            }
+
+        }
+        // Call super onResume after resizing
+        super.onResume();
+    }
 
     // ----------------
     // init

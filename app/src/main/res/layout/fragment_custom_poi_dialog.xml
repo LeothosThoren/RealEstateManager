@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="bottom"
     android:orientation="vertical"
     tools:context=".controlers.fragments.CustomPoiDialog">
 
@@ -19,7 +20,7 @@
         android:id="@+id/recycler_view_object"
         layout="@layout/recycler_view_layout"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="320dp"
         android:layout_margin="15dp" />
 
     <LinearLayout
