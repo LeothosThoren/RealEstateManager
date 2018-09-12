@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.base.BaseActivity;
 import com.openclassrooms.realestatemanager.controlers.fragments.CustomDialogForm;
+import com.openclassrooms.realestatemanager.controlers.fragments.CustomSearchDialog;
 import com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controlers.fragments.RealEstateFragment;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
@@ -24,6 +25,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
 
 
     public static final String FRAGMENT_FORM_TAG = "CustomDialogForm";
+    public static final String FRAGMENT_SEARCH_TAG = "CustomSearchDialog";
     private static final String TAG = RealEstateActivity.class.getSimpleName();
     // WIDGET
     @BindView(R.id.toolbar)
@@ -83,7 +85,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
                 Log.d(TAG, "onOptionsItemSelected: Test update id = " + id + " vs  R.id.menu_update " + R.id.menu_update);
                 break;
             case R.id.menu_search:
-                Toast.makeText(this, "Test search", Toast.LENGTH_SHORT).show();
+                this.openCustomSearchDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -156,4 +158,9 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         customDialogForm.show(getSupportFragmentManager(), FRAGMENT_FORM_TAG);
     }
 
+
+    private void openCustomSearchDialog() {
+        CustomSearchDialog customSearchDialog = new CustomSearchDialog();
+        customSearchDialog.show(getSupportFragmentManager(), FRAGMENT_SEARCH_TAG);
+    }
 }
