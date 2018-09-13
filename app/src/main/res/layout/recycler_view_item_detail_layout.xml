@@ -9,7 +9,7 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         app:cardCornerRadius="5dp"
-        app:cardElevation="@dimen/cardview_default_elevation"
+        app:cardElevation="1dp"
         app:cardMaxElevation="2dp"
         android:layout_centerInParent="true">
 
@@ -18,14 +18,14 @@
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/item_detail_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/item_detail_description_text"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:textColor="@color/white"

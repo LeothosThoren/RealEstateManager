@@ -100,6 +100,7 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
         this.createCallbackToParentActivity();
     }
 
+    //Click on list handle with utility class
     private void configureClickWithRecyclerView() {
         ItemClickSupport.addTo(mRecyclerView, R.layout.recycler_view_item_real_estate_layout)
                 .setOnItemClickListener((recyclerView1, position, v) -> {

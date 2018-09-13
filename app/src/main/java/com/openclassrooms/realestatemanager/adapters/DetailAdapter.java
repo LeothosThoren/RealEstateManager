@@ -12,16 +12,17 @@ import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.views.DetailViewHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailViewHolder> {
 
-    private ArrayList<String> pictureUrl;
-    private ArrayList<String> descriptionText;
+    private List<String> pictureUrl;
+    private List<String> titleDescripton;
     private RequestManager glide;
 
     public DetailAdapter(RequestManager glide) {
         this.pictureUrl = new ArrayList<>();;
-        this.descriptionText = new ArrayList<>();;
+        this.titleDescripton = new ArrayList<>();;
         this.glide = glide;
     }
 
@@ -36,11 +37,17 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DetailViewHolder holder, int position) {
-        holder.updateWithDetail(this.pictureUrl.get(position), this.descriptionText.get(position), this.glide);
+        holder.updateWithDetail(this.pictureUrl.get(position), this.titleDescripton.get(position), this.glide);
     }
 
     @Override
     public int getItemCount() {
         return pictureUrl.size();
+    }
+
+    public void updateData(List<String> pictures, List<String> title) {
+        this.pictureUrl = pictures;
+        this.titleDescripton = title;
+        this.notifyDataSetChanged();
     }
 }

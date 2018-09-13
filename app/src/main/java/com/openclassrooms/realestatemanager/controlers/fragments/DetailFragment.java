@@ -68,8 +68,6 @@ public class DetailFragment extends Fragment {
     ImageView mMapView;
     //VAR
     private DetailAdapter mDetailAdapter;
-    private ArrayList<String> pictureUrl = new ArrayList<>();
-    private ArrayList<String> descriptionText = new ArrayList<>();
     private RealEstateViewModel mRealEstateViewModel;
     private String mApiKey = "&key=" + BuildConfig.MapApiKey;
     private String mApiUri = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&zoom=17&markers=size:mid%7Ccolor:red%7C";
@@ -155,7 +153,7 @@ public class DetailFragment extends Fragment {
                             realEstateList.get(position).getAddress().zip) + mApiKey)
                     .apply(RequestOptions.centerCropTransform())
                     .into(mMapView);
-            mDetailAdapter.notifyDataSetChanged();
+            mDetailAdapter.updateData(realEstateList.get(position).getPictureUrl(), realEstateList.get(position).getTitle());
         }
 
     }
@@ -184,7 +182,7 @@ public class DetailFragment extends Fragment {
                         realEstate.getAddress().zip) + mApiKey)
                 .apply(RequestOptions.centerCropTransform())
                 .into(mMapView);
-        mDetailAdapter.notifyDataSetChanged();
+        mDetailAdapter.updateData(realEstate.getPictureUrl(), realEstate.getTitle());
     }
 
     // ------------

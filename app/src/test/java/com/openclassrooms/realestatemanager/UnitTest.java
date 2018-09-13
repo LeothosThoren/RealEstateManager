@@ -14,10 +14,6 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class UnitTest {
-    @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
-    }
 
     //===================
     // CONVERSIONS
@@ -37,7 +33,6 @@ public class UnitTest {
     public void dateConverter()throws Exception {
         //Don't forget to switch the current day date in the test
         assertEquals("10/09/2018", Utils.getTodayDate());
-
         assertEquals("09/10/2018", Utils.getFormattedDate(new Date(), "MM/dd/yyyy"));
     }
 
