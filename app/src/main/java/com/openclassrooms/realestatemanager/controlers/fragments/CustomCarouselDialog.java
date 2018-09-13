@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapters.DetailAdapter;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
@@ -47,6 +48,7 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int RC_IMAGE_PERMS = 100;
     private static final int RC_CHOOSE_PHOTO = 200;
+    //Interface
     OnInputsSelected mOnInputsSelected;
     //Widget
     @BindView(R.id.action_cancel)
@@ -95,7 +97,7 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
             // Assign window properties to fill the parent
             if (mIsLargeLayout) {
                 params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                params.height = WindowManager.LayoutParams.WRAP_CONTENT;
                 getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
             } else {
                 params.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -122,9 +124,9 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
         mCarouselPictureSelection.setOnClickListener(this);
     }
 
-    // ----------------
-    // Permission
-    // ----------------
+    // --------------------
+    // Permission picture
+    // --------------------
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -145,6 +147,10 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
         if (requestCode == RC_CHOOSE_PHOTO) {
             if (resultCode == RESULT_OK) { //SUCCESS
                 this.uriImageSelected = data.getData();
+                Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                        .load(this.uriImageSelected)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(this.mCarouselPictureSelection);
             } else {
                 Toast.makeText(getContext(), getString(R.string.toast_title_no_image_chosen), Toast.LENGTH_SHORT).show();
             }
@@ -160,13 +166,23 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
         this.mAdapter = new DetailAdapter(Glide.with(this));
         this.mRecyclerView.setAdapter(this.mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        this.configureClickWithRecyclerView();
 
     }
 
     private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
         this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
+    }
+
+    // --------------
+    // Ui
+    // --------------
+
+
+    private void updateUI() {
+        mAdapter.updateData(pictureList, titleList);
+        this.mEditText.setText("");
+        this.mCarouselPictureSelection.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_image));
     }
 
     // --------------
@@ -193,13 +209,12 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
     }
 
     private void addPictureAndTitleInList() {
-        if (mEditText.getText() != null || uriImageSelected != null) {
+        if (mEditText.getText() != null && uriImageSelected != null) {
             String title = mEditText.getText().toString();
             String url = uriImageSelected.toString();
-            pictureList.add(url);
-            titleList.add(title);
-            mAdapter.notifyDataSetChanged();
-            Log.d(TAG, "configureClickAction: find title = " + title + " url = " + url);
+            this.pictureList.add(url);
+            this.titleList.add(title);
+            this.updateUI();
         } else {
             Toast.makeText(getContext(), "The title or the picture is missing!", Toast.LENGTH_SHORT).show();
         }
@@ -218,7 +233,7 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
 
 
     private void saveData() {
-        if (pictureList != null && titleList != null) {
+        if (pictureList.size() > 0 && titleList.size() > 0) {
             mOnInputsSelected.sendBothInputs(pictureList, titleList);
             Toast.makeText(getContext(), "Elements added!", Toast.LENGTH_SHORT).show();
             getDialog().dismiss();

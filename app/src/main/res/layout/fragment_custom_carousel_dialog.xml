@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="bottom"
+    android:layout_height="wrap_content"
+
     android:orientation="vertical"
     tools:context=".controlers.fragments.CustomCarouselDialog">
 
     <TextView
         android:id="@+id/carousel_heading"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Add your picture"
+        android:textAlignment="center"
+        android:text="Add your pictures"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
@@ -33,7 +33,7 @@
 
         <ImageView
             android:id="@+id/carousel_select_picture"
-            android:layout_width="30dp"
+            android:layout_width="20dp"
             android:layout_height="50dp"
             android:layout_weight="20"
             android:layout_gravity="center_vertical"
@@ -51,12 +51,12 @@
 
         <ImageView
             android:id="@+id/carousel_button_add"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_width="20dp"
+            android:layout_height="42dp"
             android:layout_weight="20"
+            android:layout_gravity="center_vertical|bottom"
             android:background="@null"
-            android:src="@drawable/ic_point_of_interest"
+            android:src="@drawable/ic_add"
             android:text="@string/add" />
 
     </LinearLayout>
