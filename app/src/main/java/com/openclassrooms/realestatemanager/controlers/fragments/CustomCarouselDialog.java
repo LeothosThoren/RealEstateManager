@@ -44,6 +44,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class CustomCarouselDialog extends DialogFragment implements View.OnClickListener {
 
+    public static final int USER_ID = 1;
     private static final String TAG = "CustomCarouselDialog";
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int RC_IMAGE_PERMS = 100;
@@ -116,7 +117,13 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
 
     private void init() {
         getDialog().setTitle("Add pictures");
-        this.configureViewModel();
+
+        if (isUpdateMode) {
+            this.configureViewModel();
+            this.getRealEstateItems(USER_ID);
+            this.mActionSave.setText(R.string.button_ok);
+        }
+
         this.configureRecyclerView();
         mActionCancel.setOnClickListener(this);
         mActionSave.setOnClickListener(this);
@@ -185,6 +192,18 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
         this.mCarouselPictureSelection.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_image));
     }
 
+    // Get all items for a user
+    private void getRealEstateItems(int userId) {
+        this.mViewModel.getRealEstate(userId).observe(this, this::updateRealEstateUI);
+        Log.d(TAG, "getRealEstateItems: ");
+    }
+
+    //Allow to retrieve data from room  and display it
+    private void updateRealEstateUI(List<RealEstate> realEstateList) {
+        this.mAdapter.updateData(realEstateList.get(dataPosition).getPictureUrl(), realEstateList.get(dataPosition).getTitle());
+        this.mRealEstateList.addAll(realEstateList);
+    }
+
     // --------------
     // Action
     // --------------
@@ -197,13 +216,22 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
                 this.selectPictureOnDevice();
                 break;
             case R.id.carousel_button_add:
-                this.addPictureAndTitleInList();
+                if (isCreateMode) {
+                    this.addPictureAndTitleInList();
+                } else if (isUpdateMode) {
+                    this.updateDatabase();
+                }
                 break;
             case R.id.action_cancel:
                 getDialog().cancel();
                 break;
             case R.id.action_save:
-                this.saveData();
+                if (isCreateMode) {
+                    this.saveData();
+                } else if (isUpdateMode) {
+                    getDialog().dismiss();
+                }
+
                 break;
         }
     }
@@ -219,6 +247,20 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
             Toast.makeText(getContext(), "The title or the picture is missing!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void updateDatabase() {
+        if (mEditText.getText() != null && uriImageSelected != null) {
+            String title = mEditText.getText().toString();
+            String url = uriImageSelected.toString();
+
+            this.mRealEstateList.get(dataPosition).getPictureUrl().add(url);
+            this.mRealEstateList.get(dataPosition).getTitle().add(title);
+            //Update here
+            mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
+        } else {
+            Toast.makeText(getContext(), "The title or the picture is missing!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void selectPictureOnDevice() {

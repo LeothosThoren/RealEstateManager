@@ -346,7 +346,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     }
 
     private void saveOperation() {
-
         if (mType.getSelectedItem() != null && mArea.getText() != null && mDescription.getText() != null
                 && mPrice.getText() != null && mSurface.getText() != null && mRoomNb.getText() != null
                 && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null && mPoiList != null
