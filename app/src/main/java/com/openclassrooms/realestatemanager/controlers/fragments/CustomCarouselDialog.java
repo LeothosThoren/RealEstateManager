@@ -181,22 +181,22 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
         this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
     }
 
+    // Get all items for a user
+    private void getRealEstateItems(int userId) {
+        this.mViewModel.getRealEstate(userId).observe(this, this::updateRealEstateUI);
+        Log.d(TAG, "getRealEstateItems: ");
+    }
+
     // --------------
     // Ui
     // --------------
 
 
     private void updateUI() {
-        mAdapter.updateData(pictureList, titleList);
         this.mEditText.setText("");
         this.mCarouselPictureSelection.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_image));
     }
 
-    // Get all items for a user
-    private void getRealEstateItems(int userId) {
-        this.mViewModel.getRealEstate(userId).observe(this, this::updateRealEstateUI);
-        Log.d(TAG, "getRealEstateItems: ");
-    }
 
     //Allow to retrieve data from room  and display it
     private void updateRealEstateUI(List<RealEstate> realEstateList) {
@@ -216,22 +216,19 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
                 this.selectPictureOnDevice();
                 break;
             case R.id.carousel_button_add:
-                if (isCreateMode) {
+                if (isCreateMode)
                     this.addPictureAndTitleInList();
-                } else if (isUpdateMode) {
-                    this.updateDatabase();
-                }
+                else if (isUpdateMode)
+                    this.updatePictureAndTitleInDatabase();
                 break;
             case R.id.action_cancel:
                 getDialog().cancel();
                 break;
             case R.id.action_save:
-                if (isCreateMode) {
+                if (isCreateMode)
                     this.saveData();
-                } else if (isUpdateMode) {
+                else if (isUpdateMode)
                     getDialog().dismiss();
-                }
-
                 break;
         }
     }
@@ -240,8 +237,10 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
         if (mEditText.getText() != null && uriImageSelected != null) {
             String title = mEditText.getText().toString();
             String url = uriImageSelected.toString();
+
             this.pictureList.add(url);
             this.titleList.add(title);
+            this.mAdapter.updateData(pictureList, titleList);
             this.updateUI();
         } else {
             Toast.makeText(getContext(), "The title or the picture is missing!", Toast.LENGTH_SHORT).show();
@@ -249,15 +248,15 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
 
     }
 
-    private void updateDatabase() {
+    private void updatePictureAndTitleInDatabase() {
         if (mEditText.getText() != null && uriImageSelected != null) {
             String title = mEditText.getText().toString();
             String url = uriImageSelected.toString();
 
             this.mRealEstateList.get(dataPosition).getPictureUrl().add(url);
             this.mRealEstateList.get(dataPosition).getTitle().add(title);
-            //Update here
-            mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
+            mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));//Update here
+            this.updateUI();
         } else {
             Toast.makeText(getContext(), "The title or the picture is missing!", Toast.LENGTH_SHORT).show();
         }

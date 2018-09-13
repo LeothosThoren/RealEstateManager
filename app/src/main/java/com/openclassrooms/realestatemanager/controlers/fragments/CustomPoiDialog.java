@@ -73,13 +73,8 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_custom_poi_dialog, container, false);
         ButterKnife.bind(this, view);
         mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
-        getDialog().setTitle("Select points of interest");
-        //Methods
-        this.init();
 
-        if (isUpdateMode) {
-            this.getRealEstateItems(USER_ID);
-        }
+        this.init();
         return view;
     }
 
@@ -109,7 +104,14 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
     // ----------------
 
     private void init() {
-        this.configureViewModel();
+        getDialog().setTitle("Select points of interest");
+
+        if (isUpdateMode) {
+            this.configureViewModel();
+            this.getRealEstateItems(USER_ID);
+            this.mActionOk.setText(R.string.button_ok);
+        }
+
         this.configureRecyclerView();
         this.configureSpinner();
         mActionCancel.setOnClickListener(this);
@@ -127,7 +129,6 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         this.mPoiAdapter = new PoiAdapter();
         this.mRecyclerView.setAdapter(this.mPoiAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        this.configureClickWithRecyclerView();
 
     }
 
@@ -145,6 +146,26 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
     }
 
+    // Get all items for a user
+    private void getRealEstateItems(int userId) {
+        this.mViewModel.getRealEstate(userId).observe(this, this::updateRealEstateUI);
+        Log.d(TAG, "getRealEstateItems: ");
+    }
+
+    // --------------
+    // Ui
+    // --------------
+
+    //Allow to retrieve data from room  and display it
+    private void updateRealEstateUI(List<RealEstate> realEstateList) {
+        this.mPoiAdapter.updateData(realEstateList.get(dataPosition).getPoi());
+        this.mRealEstateList.addAll(realEstateList);
+    }
+
+    private void updateUI() {
+        mPoiAdapter.updateData(poiList);
+    }
+
     // --------------
     // Action
     // --------------
@@ -157,19 +178,50 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
                 getDialog().cancel();
                 break;
             case R.id.action_save:
-                saveData();
+                if (isCreateMode)
+                    this.saveData();
+                else if (isUpdateMode)
+                    getDialog().dismiss();
                 break;
             case R.id.poi_button_add:
                 if (isCreateMode) {
-                    addPoi();
+                    this.addPoiInList();
                 } else if (isUpdateMode) {
-                    addPoi();
-                    updateData();
+                    updatePoiInDatabase();
                 }
                 break;
-
         }
     }
+
+
+    private void addPoiInList() {
+        String input = mSpinner.getSelectedItem().toString();
+        this.poiList.add(input);
+        this.updateUI();
+        Log.d(TAG, "configureClickAction: find item = " + input);
+    }
+
+    private void updatePoiInDatabase() {
+        String input = mSpinner.getSelectedItem().toString();
+        this.mRealEstateList.get(dataPosition).getPoi().add(input);
+        mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
+    }
+
+    private void saveData() {
+        if (poiList.size() > 0) {
+            mOnInputSelected.sendInput(poiList);
+            Log.d(TAG, "Show size of the array : " + poiList.size());
+            Toast.makeText(getContext(), "Poi added!", Toast.LENGTH_SHORT).show();
+            getDialog().dismiss();
+        } else {
+            Toast.makeText(getContext(), "Please add at least one item", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    //--------------
+    // Interface
+    // -------------
 
     @Override
     public void onAttach(Context context) {
@@ -180,49 +232,6 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
             Log.e(TAG, "onAttach: ClassCastException : " + e.getMessage());
         }
     }
-
-    private void addPoi() {
-        String input = mSpinner.getSelectedItem().toString();
-        poiList.add(input);
-        mPoiAdapter.notifyDataSetChanged();
-        Log.d(TAG, "configureClickAction: find item = " + input);
-
-
-    }
-
-    private void saveData() {
-        if (poiList != null) {
-            mOnInputSelected.sendInput(poiList);
-            Log.d(TAG, "Show size of the array : " + poiList.size());
-            Toast.makeText(getContext(), "Poi added!", Toast.LENGTH_SHORT).show();
-            getDialog().dismiss();
-        } else {
-            Toast.makeText(getContext(), "Please add at least one item", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // ------------
-    // Data
-    // ------------
-
-
-    // Get all items for a user
-    private void getRealEstateItems(int userId) {
-        this.mViewModel.getRealEstate(userId).observe(this, this::updatePoiUI);
-        Log.d(TAG, "getRealEstateItems: ");
-    }
-
-    private void updatePoiUI(List<RealEstate> realEstateList) {
-        mRealEstateList.addAll(realEstateList);
-        poiList.addAll(realEstateList.get(dataPosition).getPoi());
-        mPoiAdapter.updateData(realEstateList.get(dataPosition).getPoi());
-    }
-
-    private void updateData() {
-        mRealEstateList.get(dataPosition).setPoi(poiList);
-        mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
-    }
-
 
     //Interface
     public interface OnInputSelected {
