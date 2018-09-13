@@ -21,8 +21,8 @@ public interface RealEstateDao {
     @Query("SELECT * FROM RealEstate WHERE area LIKE :area AND surface BETWEEN :minSurface AND :maxSurface" +
             " AND price BETWEEN :minPrice AND :maxPrice AND room BETWEEN :minRoom AND :maxRoom AND  " +
             "entryDate BETWEEN :minDate AND :maxDate AND userId = :userId")
-    LiveData<List<RealEstate>> searchRealEstate(String area, int minSurface, int maxSurface, long minPrice, long maxPrice,
-                                                int minRoom, int maxRoom, Date minDate, Date maxDate, long userId);
+    LiveData<List<RealEstate>> searchRealEstate(String area, Integer minSurface, Integer maxSurface, Long minPrice, Long maxPrice,
+                                                Integer minRoom, Integer maxRoom, Date minDate, Date maxDate, long userId);
 
     @Query("SELECT * FROM RealEstate WHERE userId = :userId")
     Cursor getRealEstateWithCursor(long userId);

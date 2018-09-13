@@ -27,7 +27,6 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -147,7 +146,6 @@ public class DetailFragment extends Fragment {
             Glide.with(this)
                     .load(mApiUri + Utils.formatAddress(
                             realEstateList.get(position).getAddress().line1,
-                            realEstateList.get(position).getAddress().line2,
                             realEstateList.get(position).getAddress().city,
                             realEstateList.get(position).getAddress().state,
                             realEstateList.get(position).getAddress().zip) + mApiKey)
@@ -176,7 +174,6 @@ public class DetailFragment extends Fragment {
         Glide.with(this)
                 .load(mApiUri + Utils.formatAddress(
                         realEstate.getAddress().line1,
-                        realEstate.getAddress().line2,
                         realEstate.getAddress().city,
                         realEstate.getAddress().state,
                         realEstate.getAddress().zip) + mApiKey)

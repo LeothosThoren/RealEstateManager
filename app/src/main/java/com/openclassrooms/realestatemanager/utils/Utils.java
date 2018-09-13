@@ -105,7 +105,7 @@ public class Utils {
         return sdf.parse(formatedDate);
     }
 
-    public static Date getDateFromString(String s)  {
+    public static Date getDateFromString(String s) {
         SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = null;
         try {
@@ -127,9 +127,9 @@ public class Utils {
     }
 
     //
-    public static String formatAddress(String line1, String line2, String city,
+    public static String formatAddress(String line1, String city,
                                        String state, String zip) {
-        String address = (line1 + " " + line2 + " " + city + " " + state
+        String address = (line1 + " " + city + " " + state
                 + " " + zip).toLowerCase();
         return address.replace(" ", "+");
     }
@@ -144,7 +144,7 @@ public class Utils {
         return "- Type: " + type
                 + "\n- Area: " + area
                 + "\n- Price: " + convertPriceToString(price)
-                + "\n- Surface: " + surface +" sq m"
+                + "\n- Surface: " + surface + " sq m"
                 + "\n- Nb of room: " + nbRoom
                 + "\n- Nb of Bathroom: " + nbBathroom
                 + "\n- Nb of Bedroom: " + nbBedroom;
