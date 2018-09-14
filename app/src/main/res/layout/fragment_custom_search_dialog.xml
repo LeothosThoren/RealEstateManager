@@ -138,40 +138,40 @@
 
     </android.support.v7.widget.LinearLayoutCompat>
 
-    <android.support.v7.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:background="@drawable/rectangle"
-        android:weightSum="100"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <!--<android.support.v7.widget.LinearLayoutCompat-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:background="@drawable/rectangle"-->
+        <!--android:weightSum="100"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/search_date_min"
-            android:layout_width="0dp"
-            android:layout_weight="40"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/custom_edit_text"
-            android:hint="Date min"
-            android:inputType="date"
-            android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/search_date_max"
-            android:layout_width="0dp"
-            android:layout_weight="40"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/custom_edit_text"
-            android:hint="Date max"
-            android:inputType="date"
-            android:padding="10dp" />
+        <!--<android.support.v7.widget.AppCompatEditText-->
+            <!--android:id="@+id/search_date_min"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="40"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:background="@drawable/custom_edit_text"-->
+            <!--android:hint="Date min"-->
+            <!--android:inputType="date"-->
+            <!--android:padding="10dp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent" />-->
 
 
-    </android.support.v7.widget.LinearLayoutCompat>
+        <!--<android.support.v7.widget.AppCompatEditText-->
+            <!--android:id="@+id/search_date_max"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="40"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:background="@drawable/custom_edit_text"-->
+            <!--android:hint="Date max"-->
+            <!--android:inputType="date"-->
+            <!--android:padding="10dp" />-->
+
+
+    <!--</android.support.v7.widget.LinearLayoutCompat>-->
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"

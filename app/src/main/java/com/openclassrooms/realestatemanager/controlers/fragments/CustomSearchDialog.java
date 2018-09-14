@@ -41,10 +41,10 @@ public class CustomSearchDialog extends DialogFragment {
     EditText mArea;
     @BindView(R.id.search_type)
     EditText mType;
-    @BindView(R.id.search_date_min)
-    EditText mDateMin;
-    @BindView(R.id.search_date_max)
-    EditText mDateMax;
+//    @BindView(R.id.search_date_min)
+//    EditText mDateMin;
+//    @BindView(R.id.search_date_max)
+//    EditText mDateMax;
     @BindView(R.id.search_surface_min)
     EditText mSurfaceMin;
     @BindView(R.id.search_surface_max)
@@ -66,7 +66,6 @@ public class CustomSearchDialog extends DialogFragment {
     private Date dateMax;
     //Data
     private RealEstateViewModel mViewModel;
-    private List<RealEstate> mRealEstateList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -83,12 +82,12 @@ public class CustomSearchDialog extends DialogFragment {
         //methods
         this.configureViewModel();
         this.getRealEstateItems(USER_ID);
-        getDialog().setTitle("Search properties");
+        getDialog().setTitle("Search real estates");
         mCancel.setOnClickListener(v -> getDialog().cancel());
         mSearch.setOnClickListener(v -> this.startQuery());
     }
 
-//    private Date convertDateMin() {
+/*//    private Date convertDateMin() {
 //        try {
 //            dateMin = !mDateMin.getText().toString().equals("") ?
 //                    Utils.getDateFromString(mDateMin.getText().toString(), getString(R.string.pattern)) : Utils.getDateFromDatePicker(1, 2, 1990);
@@ -106,7 +105,7 @@ public class CustomSearchDialog extends DialogFragment {
 //            e.printStackTrace();
 //        }
 //        return dateMax;
-//    }
+//    }*/
 
     // --------------
     // UI

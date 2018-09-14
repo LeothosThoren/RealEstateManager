@@ -143,26 +143,26 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     // UI
     // --------------
 
-    @Override
-    public void onResume() {
-        // Get existing layout params for the window
-        if (getDialog().getWindow() != null) {
-            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
-            // Assign window properties to fill the parent
-            if (mIsLargeLayout) {
-                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                params.height = WindowManager.LayoutParams.MATCH_PARENT;
-                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-            } else {
-                params.width = WindowManager.LayoutParams.MATCH_PARENT;
-                params.height = WindowManager.LayoutParams.MATCH_PARENT;
-                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-            }
-
-        }
-        // Call super onResume after resizing
-        super.onResume();
-    }
+//    @Override
+//    public void onResume() {
+//        // Get existing layout params for the window
+//        if (getDialog().getWindow() != null) {
+//            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+//            // Assign window properties to fill the parent
+//            if (mIsLargeLayout) {
+//                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+//                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+//            } else {
+//                params.width = WindowManager.LayoutParams.MATCH_PARENT;
+//                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+//            }
+//
+//        }
+//        // Call super onResume after resizing
+//        super.onResume();
+//    }
 
     private void updateCheckBoxViews() {
         HelperSingleton.getInstance().setIsVisible(false);
@@ -243,7 +243,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private void openPoiDialog() {
         CustomPoiDialog dialog = new CustomPoiDialog();
-        dialog.setStyle(android.app.DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+//        dialog.setStyle(android.app.DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         dialog.setTargetFragment(CustomDialogForm.this, 1);
         if (getFragmentManager() != null) {
             dialog.show(getFragmentManager(), CUSTOM_POI_DIALOG);
@@ -252,7 +252,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private void openCarouselDialog() {
         CustomCarouselDialog dialog = new CustomCarouselDialog();
-        dialog.setStyle(android.app.DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+//        dialog.setStyle(android.app.DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         dialog.setTargetFragment(CustomDialogForm.this, 1);
         if (getFragmentManager() != null) {
             dialog.show(getFragmentManager(), CUSTOM_CAROUSEL_DIALOG);

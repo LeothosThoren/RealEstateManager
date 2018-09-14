@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:text="poi to display"
         android:textStyle="bold"
-        android:textAlignment="center"
         android:textSize="16sp"
         android:padding="10dp"/>
 </LinearLayout>
