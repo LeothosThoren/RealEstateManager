@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,30 +88,29 @@ public class CustomSearchDialog extends DialogFragment {
         mSearch.setOnClickListener(v -> this.startQuery());
     }
 
-    private Date convertDateMin() {
-        try {
-            dateMin = !mDateMin.getText().toString().equals("") ?
-                    Utils.getDateFromString(mDateMin.getText().toString(), getString(R.string.pattern)) : Utils.getDateFromDatePicker(1, 2, 1990);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dateMin;
-    }
-
-    private Date convertDateMax() {
-        try {
-            dateMax = !mDateMax.getText().toString().equals("") ?
-                    Utils.getDateFromString(mDateMax.getText().toString(), getString(R.string.pattern)) : Calendar.getInstance().getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dateMax;
-    }
+//    private Date convertDateMin() {
+//        try {
+//            dateMin = !mDateMin.getText().toString().equals("") ?
+//                    Utils.getDateFromString(mDateMin.getText().toString(), getString(R.string.pattern)) : Utils.getDateFromDatePicker(1, 2, 1990);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return dateMin;
+//    }
+//
+//    private Date convertDateMax() {
+//        try {
+//            dateMax = !mDateMax.getText().toString().equals("") ?
+//                    Utils.getDateFromString(mDateMax.getText().toString(), getString(R.string.pattern)) : Calendar.getInstance().getTime();
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return dateMax;
+//    }
 
     // --------------
     // UI
     // --------------
-
 
     private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(getContext());
@@ -125,6 +125,7 @@ public class CustomSearchDialog extends DialogFragment {
     // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
         RealEstateFragment.mAdapter.updateData(realEstates);
+        Log.d(TAG, "search features real estate size: "+ realEstates.size());
     }
 
     // --------------
@@ -132,17 +133,17 @@ public class CustomSearchDialog extends DialogFragment {
     // --------------
 
     private void startQuery() {
-        String type = !mType.getText().toString().equals("") ? mType.getText().toString() : "Apartment";
+        String type = !mType.getText().toString().equals("") ? mType.getText().toString() : "%";
         String area = !mArea.getText().toString().equals("") ? mArea.getText().toString() : "%";
         String surfaceMin = !mSurfaceMin.getText().toString().equals("") ? mSurfaceMin.getText().toString() : "0";
-        String surfaceMax = !mSurfaceMax.getText().toString().equals("") ? mSurfaceMax.getText().toString() : "10000";
+        String surfaceMax = !mSurfaceMax.getText().toString().equals("") ? mSurfaceMax.getText().toString() : "100000";
         String priceMin = !mPriceMin.getText().toString().equals("") ? mPriceMin.getText().toString() : "0";
-        String priceMax = !mPriceMax.getText().toString().equals("") ? mPriceMax.getText().toString() : "9999999999";
+        String priceMax = !mPriceMax.getText().toString().equals("") ? mPriceMax.getText().toString() : "999999999999";
         String roomMin = !mRoomMin.getText().toString().equals("") ? mRoomMin.getText().toString() : "0";
-        String roomMax = !mRoomMax.getText().toString().equals("") ? mRoomMax.getText().toString() : "50";
+        String roomMax = !mRoomMax.getText().toString().equals("") ? mRoomMax.getText().toString() : "100";
 
         this.mViewModel.searchRealEstate(area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin), Long.valueOf(priceMax),
-                Integer.valueOf(roomMin), Integer.valueOf(roomMax), convertDateMin(), convertDateMax(), USER_ID)
+                Integer.valueOf(roomMin), Integer.valueOf(roomMax)/*, convertDateMin(), convertDateMax()*/, USER_ID)
                 .observe(this, this::updateRealEstateItemsList);
 
         getDialog().dismiss();

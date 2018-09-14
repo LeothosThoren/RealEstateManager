@@ -1,11 +1,13 @@
 package com.openclassrooms.realestatemanager.views;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
 
 import butterknife.BindView;
@@ -25,9 +27,10 @@ public class DetailViewHolder extends RecyclerView.ViewHolder {
     }
 
     @Optional
-    public void updateWithDetail(String uri, String description, RequestManager glide) {
-        if (uri != null) {
-            glide.load(uri).into(this.mImageView);
+    public void updateWithDetail(String picture, String description, RequestManager glide) {
+        if (picture != null) {
+            Uri uri = Uri.parse(picture);
+            glide.load(uri).apply(RequestOptions.centerCropTransform()).into(this.mImageView);
         }
         if (description != null) {
             mTextView.setText(description);

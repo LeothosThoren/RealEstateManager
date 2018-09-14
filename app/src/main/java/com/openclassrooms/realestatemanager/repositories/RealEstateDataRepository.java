@@ -25,9 +25,9 @@ public class RealEstateDataRepository {
     // --- SEARCH ---
 
     public LiveData<List<RealEstate>> searchRealEstate(String area, Integer minSurface, Integer maxSurface, Long minPrice, Long maxPrice,
-                                                       Integer minRoom, Integer maxRoom, Date minDate, Date maxDate, long userId) {
+                                                       Integer minRoom, Integer maxRoom, /*Date minDate, Date maxDate,*/ long userId) {
         return this.realEstateDao.searchRealEstate(area, minSurface, maxSurface, minPrice, maxPrice,
-                minRoom, maxRoom, minDate, maxDate, userId);
+                minRoom, maxRoom,/* minDate, maxDate,*/ userId);
     }
 
     // --- CREATE ---
