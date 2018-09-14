@@ -38,7 +38,7 @@ public class PoiAdapter extends RecyclerView.Adapter<PoiViewHolder> {
 
     @Override
     public int getItemCount() {
-        return poiList.size() > 0 ? poiList.size() : 0;
+        return poiList.size();
     }
 
     public String getPoiValue(int position) {

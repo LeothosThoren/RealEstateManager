@@ -1,29 +1,25 @@
 package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.adapters.RealEstateAdapter;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,8 +33,8 @@ import butterknife.ButterKnife;
  */
 public class CustomSearchDialog extends DialogFragment {
 
-    private static final String TAG = "CustomSearchDialog";
     public static final int USER_ID = 1;
+    private static final String TAG = "CustomSearchDialog";
     //Widget
     @BindView(R.id.search_area)
     EditText mArea;
@@ -64,6 +60,9 @@ public class CustomSearchDialog extends DialogFragment {
     ImageButton mCancel;
     @BindView(R.id.search_button_search)
     ImageButton mSearch;
+    //Var
+    private Date dateMin;
+    private Date dateMax;
     //Data
     private RealEstateViewModel mViewModel;
     private List<RealEstate> mRealEstateList = new ArrayList<>();
@@ -74,12 +73,38 @@ public class CustomSearchDialog extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_search_dialog, container, false);
         ButterKnife.bind(this, view);
+
+        this.init();
+        return view;
+    }
+
+    private void init() {
         //methods
         this.configureViewModel();
+        this.getRealEstateItems(USER_ID);
         getDialog().setTitle("Search properties");
         mCancel.setOnClickListener(v -> getDialog().cancel());
         mSearch.setOnClickListener(v -> this.startQuery());
-        return view;
+    }
+
+    private Date convertDateMin() {
+        try {
+            dateMin = !mDateMin.getText().toString().equals("") ?
+                    Utils.getDateFromString(mDateMin.getText().toString(), getString(R.string.pattern)) : Utils.getDateFromDatePicker(1, 2, 1990);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateMin;
+    }
+
+    private Date convertDateMax() {
+        try {
+            dateMax = !mDateMax.getText().toString().equals("") ?
+                    Utils.getDateFromString(mDateMax.getText().toString(), getString(R.string.pattern)) : Calendar.getInstance().getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateMax;
     }
 
     // --------------
@@ -92,12 +117,23 @@ public class CustomSearchDialog extends DialogFragment {
         this.mViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
     }
 
+    // Get all items for a user
+    private void getRealEstateItems(int userId) {
+        this.mViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
+    }
+
+    // Update the list of Real Estate item
+    private void updateRealEstateItemsList(List<RealEstate> realEstates) {
+        RealEstateFragment.mAdapter.updateData(realEstates);
+    }
+
+    // --------------
+    // Action
+    // --------------
+
     private void startQuery() {
         String type = !mType.getText().toString().equals("") ? mType.getText().toString() : "Apartment";
         String area = !mArea.getText().toString().equals("") ? mArea.getText().toString() : "%";
-        Log.d(TAG, "startQuery: show area = "+ area);
-//        Date dateMin = !mDateMin.getText().toString().equals("") ? Utils.getDateFromString(mDateMin.getText().toString()) : Utils.getDateFromString("01/01/1990");
-//        Date dateMax = !mDateMax.getText().toString().equals("") ? Utils.getDateFromString(mDateMax.getText().toString()) : Calendar.getInstance().getTime();
         String surfaceMin = !mSurfaceMin.getText().toString().equals("") ? mSurfaceMin.getText().toString() : "0";
         String surfaceMax = !mSurfaceMax.getText().toString().equals("") ? mSurfaceMax.getText().toString() : "10000";
         String priceMin = !mPriceMin.getText().toString().equals("") ? mPriceMin.getText().toString() : "0";
@@ -106,10 +142,10 @@ public class CustomSearchDialog extends DialogFragment {
         String roomMax = !mRoomMax.getText().toString().equals("") ? mRoomMax.getText().toString() : "50";
 
         this.mViewModel.searchRealEstate(area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin), Long.valueOf(priceMax),
-                Integer.valueOf(roomMin), Integer.valueOf(roomMax), Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), USER_ID);
+                Integer.valueOf(roomMin), Integer.valueOf(roomMax), convertDateMin(), convertDateMax(), USER_ID)
+                .observe(this, this::updateRealEstateItemsList);
+
         getDialog().dismiss();
     }
-
-
 
 }

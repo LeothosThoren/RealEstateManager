@@ -34,13 +34,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.openclassrooms.realestatemanager.controlers.fragments.CustomDialogForm.USER_ID;
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CustomPoiDialog extends DialogFragment implements View.OnClickListener {
 
+    //Constant
+    public static final int USER_ID = 1;
     private static final String TAG = "CustomPoiDialog";
     public OnInputSelected mOnInputSelected;
     //Widget
@@ -62,7 +62,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
     private boolean isUpdateMode = HelperSingleton.getInstance().getMode() == R.id.menu_update;
     private boolean mIsLargeLayout;
     //Data
-    private List<String> poiList = new ArrayList<>();
+    private List<String> mPoiList = new ArrayList<>();
     private List<RealEstate> mRealEstateList = new ArrayList<>();
     private RealEstateViewModel mViewModel;
 
@@ -162,9 +162,6 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         this.mRealEstateList.addAll(realEstateList);
     }
 
-    private void updateUI() {
-        mPoiAdapter.updateData(poiList);
-    }
 
     // --------------
     // Action
@@ -174,21 +171,21 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+
+            case R.id.poi_button_add:
+                if (isCreateMode)
+                    this.addPoiInList();
+                else if (isUpdateMode)
+                    this.updatePoiInDatabase();
+                break;
             case R.id.action_cancel:
                 getDialog().cancel();
                 break;
             case R.id.action_save:
                 if (isCreateMode)
-                    this.saveData();
+                    this.saveData(mPoiList);
                 else if (isUpdateMode)
-                    getDialog().dismiss();
-                break;
-            case R.id.poi_button_add:
-                if (isCreateMode) {
-                    this.addPoiInList();
-                } else if (isUpdateMode) {
-                    updatePoiInDatabase();
-                }
+                    this.saveData(mRealEstateList.get(dataPosition).getPoi());
                 break;
         }
     }
@@ -196,18 +193,18 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
 
     private void addPoiInList() {
         String input = mSpinner.getSelectedItem().toString();
-        this.poiList.add(input);
-        this.updateUI();
+        this.mPoiList.add(input);
+        this.mPoiAdapter.updateData(mPoiList);
         Log.d(TAG, "configureClickAction: find item = " + input);
     }
 
     private void updatePoiInDatabase() {
         String input = mSpinner.getSelectedItem().toString();
         this.mRealEstateList.get(dataPosition).getPoi().add(input);
-        mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
+        mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));//Update here
     }
 
-    private void saveData() {
+    private void saveData(List<String> poiList) {
         if (poiList.size() > 0) {
             mOnInputSelected.sendInput(poiList);
             Log.d(TAG, "Show size of the array : " + poiList.size());
@@ -235,7 +232,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
 
     //Interface
     public interface OnInputSelected {
-        void sendInput(List<String> input);
+        void sendInput(List<String> poiList);
     }
 }
 

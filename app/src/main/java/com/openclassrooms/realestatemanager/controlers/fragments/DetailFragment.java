@@ -92,7 +92,7 @@ public class DetailFragment extends Fragment {
         this.configureViewModel();
         this.getRealEstateItems(USER_ID);
         this.configureRecyclerView();
-        mMapView.setOnClickListener(v -> this.launchMapActivity());
+        this.mMapView.setOnClickListener(v -> this.launchMapActivity());
 
     }
 
@@ -109,7 +109,7 @@ public class DetailFragment extends Fragment {
 
     // Get all items for a user
     private void getRealEstateItems(int userId) {
-        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateDataOnMobile);
+        this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateViewOnMobile);
         Log.d(TAG, "getRealEstateItems: ");
     }
 
@@ -126,7 +126,7 @@ public class DetailFragment extends Fragment {
         this.mDetailRecyclerView.setAdapter(this.mDetailAdapter);
     }
 
-    private void updateDataOnMobile(List<RealEstate> realEstateList) {
+    private void updateViewOnMobile(List<RealEstate> realEstateList) {
         if (realEstateList.size() > 0) {
             mTextViewDescription.setText(realEstateList.get(position).getDescription());
             mSurfaceQty.setText(getString(R.string.surface_size, realEstateList.get(position).getSurface()));

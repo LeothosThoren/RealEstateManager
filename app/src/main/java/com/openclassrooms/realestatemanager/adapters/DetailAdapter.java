@@ -21,8 +21,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailViewHolder> {
     private RequestManager glide;
 
     public DetailAdapter(RequestManager glide) {
-        this.pictureUrl = new ArrayList<>();;
-        this.titleDescripton = new ArrayList<>();;
+        this.pictureUrl = new ArrayList<>();
+        this.titleDescripton = new ArrayList<>();
         this.glide = glide;
     }
 

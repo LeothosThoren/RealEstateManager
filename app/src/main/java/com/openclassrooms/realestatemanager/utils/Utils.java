@@ -105,15 +105,9 @@ public class Utils {
         return sdf.parse(formatedDate);
     }
 
-    public static Date getDateFromString(String s) {
-        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = null;
-        try {
-            date = formater.parse(s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
+    public static Date getDateFromString(String s, String pattern) throws ParseException{
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+        return dateFormat.parse(s);
     }
 
     public static String getFormattedDate(Date date, String pattern) {
@@ -143,7 +137,7 @@ public class Utils {
 
         return "- Type: " + type
                 + "\n- Area: " + area
-                + "\n- Price: " + convertPriceToString(price)
+                + "\n- Price: $" + convertPriceToString(price)
                 + "\n- Surface: " + surface + " sq m"
                 + "\n- Nb of room: " + nbRoom
                 + "\n- Nb of Bathroom: " + nbBathroom

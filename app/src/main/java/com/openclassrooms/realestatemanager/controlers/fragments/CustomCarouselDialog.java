@@ -34,6 +34,7 @@ import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,8 +71,8 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
     private boolean isUpdateMode = HelperSingleton.getInstance().getMode() == R.id.menu_update;
     private DetailAdapter mAdapter;
     //Data
-    private List<String> titleList = new ArrayList<>();
-    private List<String> pictureList = new ArrayList<>();
+    private List<String> mTitleList = new ArrayList<>();
+    private List<String> mPictureList = new ArrayList<>();
     private List<RealEstate> mRealEstateList = new ArrayList<>();
     private RealEstateViewModel mViewModel;
     private Uri uriImageSelected;
@@ -226,11 +227,21 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
                 break;
             case R.id.action_save:
                 if (isCreateMode)
-                    this.saveData();
+                    this.saveData(mPictureList, mTitleList);
                 else if (isUpdateMode)
-                    getDialog().dismiss();
+                    this.saveData(Objects.requireNonNull(mRealEstateList.get(dataPosition).getPictureUrl()), mRealEstateList.get(dataPosition).getTitle());
                 break;
         }
+    }
+
+    private void selectPictureOnDevice() {
+        if (getContext() != null)
+            if (!EasyPermissions.hasPermissions(getContext(), PERMS)) {
+                EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_files_access), RC_IMAGE_PERMS, PERMS);
+                return;
+            }
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RC_CHOOSE_PHOTO);
     }
 
     private void addPictureAndTitleInList() {
@@ -238,9 +249,9 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
             String title = mEditText.getText().toString();
             String url = uriImageSelected.toString();
 
-            this.pictureList.add(url);
-            this.titleList.add(title);
-            this.mAdapter.updateData(pictureList, titleList);
+            this.mPictureList.add(url);
+            this.mTitleList.add(title);
+            this.mAdapter.updateData(mPictureList, mTitleList);
             this.updateUI();
         } else {
             Toast.makeText(getContext(), "The title or the picture is missing!", Toast.LENGTH_SHORT).show();
@@ -262,18 +273,8 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
         }
     }
 
-    private void selectPictureOnDevice() {
-        if (getContext() != null)
-            if (!EasyPermissions.hasPermissions(getContext(), PERMS)) {
-                EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_files_access), RC_IMAGE_PERMS, PERMS);
-                return;
-            }
-        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RC_CHOOSE_PHOTO);
-    }
 
-
-    private void saveData() {
+    private void saveData(List<String> pictureList, List<String> titleList) {
         if (pictureList.size() > 0 && titleList.size() > 0) {
             mOnInputsSelected.sendBothInputs(pictureList, titleList);
             Toast.makeText(getContext(), "Elements added!", Toast.LENGTH_SHORT).show();

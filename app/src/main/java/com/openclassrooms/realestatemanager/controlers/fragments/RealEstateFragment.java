@@ -150,7 +150,6 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
 
     }
 
-
     // Get all items for a user
     private void getRealEstateItems(int userId) {
         this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateRealEstateItemsList);
