@@ -3,11 +3,18 @@ package com.openclassrooms.realestatemanager.controlers.activities;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.openclassrooms.realestatemanager.R;
@@ -21,8 +28,8 @@ import com.openclassrooms.realestatemanager.utils.HelperSingleton;
 
 import butterknife.BindView;
 
-public class RealEstateActivity extends BaseActivity implements RealEstateFragment.OnItemClickListenerCustom {
-
+public class RealEstateActivity extends BaseActivity implements RealEstateFragment.OnItemClickListenerCustom,
+        NavigationView.OnNavigationItemSelectedListener{
 
     public static final String FRAGMENT_FORM_TAG = "CustomDialogForm";
     public static final String FRAGMENT_SEARCH_TAG = "CustomSearchDialog";
@@ -30,6 +37,12 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // WIDGET
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.nav_view)
+    NavigationView mNavigationView;
+    private TextView mTextViewUser;
+    private ImageView mImageViewProfile;
     // VAR
     private RealEstateFragment mRealEstateFragment;
     private DetailFragment mDetailFragment;
@@ -40,6 +53,9 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         super.onCreate(savedInstanceState);
         // Configure and show home fragment
         this.configureToolbar();
+        this.configureDrawerLayout();
+        this.configureNavigationView();
+        this.configureNavHeader();
         this.configureAndShowRealEstateFragment();
         this.configureAndShowDetailFragment();
     }
@@ -95,7 +111,60 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // MENU DRAWER
     // --------------
 
-    /*...*/
+    //Handle the clickHandler on MENU DRAWER
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle Navigation Item Click
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.nav_drawer_map:
+               this.launchMapActivity();
+                break;
+            case R.id.nav_drawer_settings:
+                Toast.makeText(this, "No settings for now...", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_drawer_logout:
+                Toast.makeText(this, "Can't logout for now...", Toast.LENGTH_SHORT).show();                break;
+            default:
+                break;
+        }
+        this.mDrawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    //Handle menu drawer on back press button
+    @Override
+    public void onBackPressed() {
+        // Handle back clickHandler to close menu
+        if (this.mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // Configure Drawer Layout
+    private void configureDrawerLayout() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    // Configure NavigationView
+    private void configureNavigationView() {
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    private void configureNavHeader() {
+        // Handle navigation header items
+        View headView = mNavigationView.getHeaderView(0);
+        mTextViewUser = (TextView) headView.findViewById(R.id.menu_drawer_username);
+        mImageViewProfile = (ImageView) headView.findViewById(R.id.menu_drawer_picture);
+    }
 
     // --------------
     // FRAGMENTS
@@ -163,5 +232,10 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         CustomSearchDialog customSearchDialog = new CustomSearchDialog();
 //        customSearchDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         customSearchDialog.show(getSupportFragmentManager(), FRAGMENT_SEARCH_TAG);
+    }
+
+    private void launchMapActivity() {
+        Intent i = new Intent(this, MapsActivity.class);
+        startActivity(i);
     }
 }
