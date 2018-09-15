@@ -41,10 +41,6 @@ public class CustomSearchDialog extends DialogFragment {
     EditText mArea;
     @BindView(R.id.search_type)
     EditText mType;
-//    @BindView(R.id.search_date_min)
-//    EditText mDateMin;
-//    @BindView(R.id.search_date_max)
-//    EditText mDateMax;
     @BindView(R.id.search_surface_min)
     EditText mSurfaceMin;
     @BindView(R.id.search_surface_max)
@@ -61,9 +57,6 @@ public class CustomSearchDialog extends DialogFragment {
     ImageButton mCancel;
     @BindView(R.id.search_button_search)
     ImageButton mSearch;
-    //Var
-    private Date dateMin;
-    private Date dateMax;
     //Data
     private RealEstateViewModel mViewModel;
 
@@ -87,25 +80,6 @@ public class CustomSearchDialog extends DialogFragment {
         mSearch.setOnClickListener(v -> this.startQuery());
     }
 
-/*//    private Date convertDateMin() {
-//        try {
-//            dateMin = !mDateMin.getText().toString().equals("") ?
-//                    Utils.getDateFromString(mDateMin.getText().toString(), getString(R.string.pattern)) : Utils.getDateFromDatePicker(1, 2, 1990);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return dateMin;
-//    }
-//
-//    private Date convertDateMax() {
-//        try {
-//            dateMax = !mDateMax.getText().toString().equals("") ?
-//                    Utils.getDateFromString(mDateMax.getText().toString(), getString(R.string.pattern)) : Calendar.getInstance().getTime();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return dateMax;
-//    }*/
 
     // --------------
     // UI
@@ -142,7 +116,7 @@ public class CustomSearchDialog extends DialogFragment {
         String roomMax = !mRoomMax.getText().toString().equals("") ? mRoomMax.getText().toString() : "100";
 
         this.mViewModel.searchRealEstate(area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin), Long.valueOf(priceMax),
-                Integer.valueOf(roomMin), Integer.valueOf(roomMax)/*, convertDateMin(), convertDateMax()*/, USER_ID)
+                Integer.valueOf(roomMin), Integer.valueOf(roomMax), USER_ID)
                 .observe(this, this::updateRealEstateItemsList);
 
         getDialog().dismiss();

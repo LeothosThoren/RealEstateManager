@@ -129,7 +129,7 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
     //Try to open fragment from item check box
     private void openCustomDialog() {
         CustomDialogForm customDialogForm = new CustomDialogForm();
-        customDialogForm.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        customDialogForm.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_FullScreen);
         if (getFragmentManager() != null)
         customDialogForm.show(getFragmentManager(), FRAGMENT_FORM_TAG);
     }

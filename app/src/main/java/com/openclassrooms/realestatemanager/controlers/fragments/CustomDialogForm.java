@@ -243,7 +243,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private void openPoiDialog() {
         CustomPoiDialog dialog = new CustomPoiDialog();
-//        dialog.setStyle(android.app.DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        dialog.setStyle(android.app.DialogFragment.STYLE_NO_TITLE, R.style.Dialog_FullScreen);
         dialog.setTargetFragment(CustomDialogForm.this, 1);
         if (getFragmentManager() != null) {
             dialog.show(getFragmentManager(), CUSTOM_POI_DIALOG);
@@ -252,7 +252,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
 
     private void openCarouselDialog() {
         CustomCarouselDialog dialog = new CustomCarouselDialog();
-//        dialog.setStyle(android.app.DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        dialog.setStyle(android.app.DialogFragment.STYLE_NO_TITLE, R.style.Dialog_FullScreen);
         dialog.setTargetFragment(CustomDialogForm.this, 1);
         if (getFragmentManager() != null) {
             dialog.show(getFragmentManager(), CUSTOM_CAROUSEL_DIALOG);

@@ -259,14 +259,14 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
      */
     private void openCustomDialog() {
         CustomDialogForm customDialogForm = new CustomDialogForm();
-        customDialogForm.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        customDialogForm.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_FullScreen);
         customDialogForm.show(getSupportFragmentManager(), FRAGMENT_FORM_TAG);
     }
 
 
     private void openCustomSearchDialog() {
         CustomSearchDialog customSearchDialog = new CustomSearchDialog();
-//        customSearchDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        customSearchDialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_FullScreen);
         customSearchDialog.show(getSupportFragmentManager(), FRAGMENT_SEARCH_TAG);
     }
 

@@ -12,9 +12,10 @@
         android:id="@+id/poi_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:textAlignment="center"
-        android:padding="8dp"
-        android:text="Select your point of interest"
+        android:background="@drawable/rectangle"
+        android:padding="15dp"
+        android:text="Add points of interests"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
         android:textStyle="bold" />

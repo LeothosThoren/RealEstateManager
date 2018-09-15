@@ -56,7 +56,7 @@ public class RealEstateViewModel extends ViewModel {
     public LiveData<List<RealEstate>> searchRealEstate(String area, Integer minSurface, Integer maxSurface, Long minPrice, Long maxPrice,
                                                        Integer minRoom, Integer maxRoom,/* Date minDate, Date maxDate,*/ long userId) {
         return realEstateDataSource.searchRealEstate(area, minSurface, maxSurface, minPrice, maxPrice,
-                minRoom, maxRoom, /*minDate, maxDate,*/ userId);
+                minRoom, maxRoom, userId);
     }
 
     public void createRealEstate(RealEstate realEstate) {

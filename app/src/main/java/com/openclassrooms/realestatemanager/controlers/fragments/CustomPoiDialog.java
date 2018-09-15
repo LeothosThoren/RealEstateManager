@@ -78,26 +78,6 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         return view;
     }
 
-//    @Override
-//    public void onResume() {
-//        // Get existing layout params for the window
-//        if (getDialog().getWindow() != null) {
-//            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
-//            // Assign window properties to fill the parent
-//            if (mIsLargeLayout) {
-//                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-//                params.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-//            } else {
-//                params.width = WindowManager.LayoutParams.MATCH_PARENT;
-//                params.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-//            }
-//
-//        }
-//        // Call super onResume after resizing
-//        super.onResume();
-//    }
 
     // ----------------
     // init
@@ -161,7 +141,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         this.mPoiAdapter.updateData(realEstateList.get(dataPosition).getPoi());
         this.mRealEstateList.addAll(realEstateList);
     }
-
+    
 
     // --------------
     // Action
