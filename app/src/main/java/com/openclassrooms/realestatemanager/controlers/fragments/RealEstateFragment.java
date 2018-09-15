@@ -7,7 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,7 +25,6 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.utils.HelperSingleton;
 import com.openclassrooms.realestatemanager.utils.ItemClickSupport;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
-import com.openclassrooms.realestatemanager.views.RealEstateViewHolder;
 
 import java.util.List;
 
@@ -45,6 +44,8 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
     //WIDGET
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.frag_swipe_layout)
+    SwipeRefreshLayout mRefreshLayout;
     //DATA
     public static RealEstateAdapter mAdapter;
     private RealEstateViewModel mRealEstateViewModel;
@@ -61,25 +62,21 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
         // Inflate the recycler_view_item_real_estate_layout for this fragment
         View view = inflater.inflate(R.layout.fragment_real_estate, container, false);
         ButterKnife.bind(this, view);
+
+        this.init();
+        return view;
+    }
+    private void init() {
         // Call for new methods
         this.configureRecyclerView();
         this.configureViewModel();
         this.getRealEstateItems(USER_ID);
-        return view;
+        this.configureSwipeRefreshLayout();
     }
 
-    // Create callback to parent activity
-    private void createCallbackToParentActivity() {
-        try {
-            //Parent activity will automatically subscribe to callback
-            mCallback = (OnItemClickListenerCustom) getActivity();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(e.toString() + " must implement OnItemClickListenerCustom");
-        }
-    }
 
     // --------------
-    // Data
+    // Configure
     // --------------
 
     // Configure ViewModel
@@ -88,17 +85,24 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
         this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
     }
 
+    private void configureSwipeRefreshLayout() {
+        this.mRefreshLayout.setOnRefreshListener(() -> {
+            getRealEstateItems(USER_ID);
+        });
+    }
+
+    // RecyclerView
+    private void configureRecyclerView() {
+        mAdapter = new RealEstateAdapter(Glide.with(this), this);
+        this.mRecyclerView.setAdapter(mAdapter);
+        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.configureClickWithRecyclerView();
+
+    }
 
     // --------------
     // Action
     // --------------
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        // Call the method that creating callback after being attached to parent activity
-        this.createCallbackToParentActivity();
-    }
 
     //Click on list handle with utility class
     private void configureClickWithRecyclerView() {
@@ -110,14 +114,12 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
 
                     RealEstate realEstate = mAdapter.getRealEstate(position);
                     mCallback.onItemClickListenerCustom(v, position, realEstate);
-
                 });
     }
 
     //Interface that handle click from specific view
     @Override
     public void onClickCheckButton(int position) {
-//        RealEstate realEstate = mAdapter.getRealEstate(position);
         Log.d(TAG, "onClickCheckButton: case checked on position: "+ position);
         HelperSingleton.getInstance().setPosition(position);
         mAdapter.notifyItemChanged(position);
@@ -132,23 +134,9 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
         customDialogForm.show(getFragmentManager(), FRAGMENT_FORM_TAG);
     }
 
-    // Declare our interface that will be implemented by any container activity
-    public interface OnItemClickListenerCustom {
-        void onItemClickListenerCustom(View view, int position, RealEstate realEstate);
-    }
-
     // --------------
     // Ui
     // --------------
-
-    // RecyclerView
-    private void configureRecyclerView() {
-        mAdapter = new RealEstateAdapter(Glide.with(this), this);
-        this.mRecyclerView.setAdapter(mAdapter);
-        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        this.configureClickWithRecyclerView();
-
-    }
 
     // Get all items for a user
     private void getRealEstateItems(int userId) {
@@ -158,6 +146,33 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
     // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
         mAdapter.updateData(realEstates);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+    // -------------
+    // Callback
+    // -------------
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // Call the method that creating callback after being attached to parent activity
+        this.createCallbackToParentActivity();
+    }
+
+    // Create callback to parent activity
+    private void createCallbackToParentActivity() {
+        try {
+            //Parent activity will automatically subscribe to callback
+            mCallback = (OnItemClickListenerCustom) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(e.toString() + " must implement OnItemClickListenerCustom");
+        }
+    }
+
+    // Declare our interface that will be implemented by any container activity
+    public interface OnItemClickListenerCustom {
+        void onItemClickListenerCustom(View view, int position, RealEstate realEstate);
     }
 
 
