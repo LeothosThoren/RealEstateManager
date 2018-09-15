@@ -143,26 +143,26 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     // UI
     // --------------
 
-//    @Override
-//    public void onResume() {
-//        // Get existing layout params for the window
-//        if (getDialog().getWindow() != null) {
-//            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
-//            // Assign window properties to fill the parent
-//            if (mIsLargeLayout) {
-//                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-//                params.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-//            } else {
-//                params.width = WindowManager.LayoutParams.MATCH_PARENT;
-//                params.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-//            }
-//
-//        }
-//        // Call super onResume after resizing
-//        super.onResume();
-//    }
+    @Override
+    public void onResume() {
+        // Get existing layout params for the window
+        if (getDialog().getWindow() != null) {
+            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+            // Assign window properties to fill the parent
+            if (mIsLargeLayout) {
+                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            } else {
+                params.width = WindowManager.LayoutParams.MATCH_PARENT;
+                params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            }
+
+        }
+        // Call super onResume after resizing
+        super.onResume();
+    }
 
     private void updateCheckBoxViews() {
         HelperSingleton.getInstance().setIsVisible(false);

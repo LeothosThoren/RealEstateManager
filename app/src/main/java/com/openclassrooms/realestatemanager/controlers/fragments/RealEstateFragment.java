@@ -120,8 +120,8 @@ public class RealEstateFragment extends Fragment implements RealEstateAdapter.Li
 //        RealEstate realEstate = mAdapter.getRealEstate(position);
         Log.d(TAG, "onClickCheckButton: case checked on position: "+ position);
         HelperSingleton.getInstance().setPosition(position);
-        this.openCustomDialog();
         mAdapter.notifyItemChanged(position);
+        this.openCustomDialog();
     }
 
     //Try to open fragment from item check box

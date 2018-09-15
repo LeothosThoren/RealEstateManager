@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rectangle"
     android:layout_margin="15dp"
     android:orientation="vertical"
     tools:context=".controlers.fragments.CustomCarouselDialog">
@@ -12,10 +11,12 @@
         android:id="@+id/carousel_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
+        android:padding="8dp"
         android:text="Add your pictures"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <include
         android:id="@+id/recycler_view_carousel"
@@ -36,9 +37,9 @@
             android:id="@+id/carousel_select_picture"
             android:layout_width="20dp"
             android:layout_height="50dp"
-            android:layout_weight="20"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_add_image"/>
+            android:layout_weight="20"
+            android:src="@drawable/ic_add_image" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/carousel_edit_text"
@@ -54,8 +55,8 @@
             android:id="@+id/carousel_button_add"
             android:layout_width="20dp"
             android:layout_height="42dp"
-            android:layout_weight="20"
             android:layout_gravity="center_vertical|bottom"
+            android:layout_weight="20"
             android:background="@null"
             android:src="@drawable/ic_add"
             android:text="@string/add" />
@@ -66,7 +67,7 @@
     <include
         layout="@layout/action_button_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

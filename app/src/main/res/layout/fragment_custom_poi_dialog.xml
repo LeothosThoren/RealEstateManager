@@ -3,20 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15dp"
     android:layout_gravity="center"
-    android:background="@drawable/rectangle"
+    android:layout_margin="15dp"
     android:orientation="vertical"
     tools:context=".controlers.fragments.CustomPoiDialog">
 
-    <!--<TextView-->
-    <!--android:id="@+id/poi_heading"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:text="Select your point of interest"-->
-    <!--android:textColor="@color/black"-->
-    <!--android:textSize="20sp" />-->
+    <TextView
+        android:id="@+id/poi_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:textAlignment="center"
+        android:padding="8dp"
+        android:text="Select your point of interest"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <include
         android:id="@+id/recycler_view_object"
@@ -58,7 +59,7 @@
         layout="@layout/action_button_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp" />
 
 
 </LinearLayout>
