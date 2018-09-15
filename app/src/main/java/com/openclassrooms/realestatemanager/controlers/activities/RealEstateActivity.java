@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.controlers.activities;
 
 import android.app.DialogFragment;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,7 +9,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.base.BaseActivity;
 import com.openclassrooms.realestatemanager.controlers.fragments.CustomDialogForm;
@@ -24,16 +26,21 @@ import com.openclassrooms.realestatemanager.controlers.fragments.CustomSearchDia
 import com.openclassrooms.realestatemanager.controlers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controlers.fragments.RealEstateFragment;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
+import com.openclassrooms.realestatemanager.entities.User;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.utils.HelperSingleton;
+import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
 import butterknife.BindView;
 
 public class RealEstateActivity extends BaseActivity implements RealEstateFragment.OnItemClickListenerCustom,
-        NavigationView.OnNavigationItemSelectedListener{
+        NavigationView.OnNavigationItemSelectedListener {
 
     public static final String FRAGMENT_FORM_TAG = "CustomDialogForm";
     public static final String FRAGMENT_SEARCH_TAG = "CustomSearchDialog";
     private static final String TAG = RealEstateActivity.class.getSimpleName();
+    public static final int USER_ID = 1;
     // WIDGET
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
@@ -47,6 +54,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     private RealEstateFragment mRealEstateFragment;
     private DetailFragment mDetailFragment;
     //DATA
+    private RealEstateViewModel mRealEstateViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,8 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         this.configureNavHeader();
         this.configureAndShowRealEstateFragment();
         this.configureAndShowDetailFragment();
+        this.configureViewModel();
+        this.getCurrentUser(USER_ID);
     }
 
     @Override
@@ -118,13 +128,14 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_drawer_map:
-               this.launchMapActivity();
+                this.launchMapActivity();
                 break;
             case R.id.nav_drawer_settings:
                 Toast.makeText(this, "No settings for now...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_drawer_logout:
-                Toast.makeText(this, "Can't logout for now...", Toast.LENGTH_SHORT).show();                break;
+                Toast.makeText(this, "Can't logout for now...", Toast.LENGTH_SHORT).show();
+                break;
             default:
                 break;
         }
@@ -155,6 +166,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
 
     // Configure NavigationView
     private void configureNavigationView() {
+        this.mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -164,6 +176,30 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         View headView = mNavigationView.getHeaderView(0);
         mTextViewUser = (TextView) headView.findViewById(R.id.menu_drawer_username);
         mImageViewProfile = (ImageView) headView.findViewById(R.id.menu_drawer_picture);
+    }
+
+    // --------------
+    // UI
+    // --------------
+
+    // Configuring ViewModel
+    private void configureViewModel(){
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
+        this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
+        this.mRealEstateViewModel.init(USER_ID);
+    }
+
+    // Get Current User
+    private void getCurrentUser(int userId){
+        this.mRealEstateViewModel
+                .getUser(userId).observe(this, this::updateHeader);
+    }
+
+    // Update header (username & picture)
+    private void updateHeader(User user){
+        this.mTextViewUser.setText(user.getUsername());
+        Glide.with(this).load(user.getUrlPicture())
+                .apply(RequestOptions.circleCropTransform()).into(this.mImageViewProfile);
     }
 
     // --------------

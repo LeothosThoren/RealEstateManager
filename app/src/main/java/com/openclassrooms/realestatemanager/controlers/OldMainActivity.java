@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.controlers.activities;
+package com.openclassrooms.realestatemanager.controlers;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -11,15 +11,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controlers.activities.RealEstateActivity;
 import com.openclassrooms.realestatemanager.entities.User;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 
-public class MainActivity extends AppCompatActivity {
+public class OldMainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = OldMainActivity.class.getSimpleName();
     private TextView textViewMain;
     private TextView textViewQuantity;
     private Button buttonGoToActivity;
