@@ -162,6 +162,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         }
         // Call super onResume after resizing
         super.onResume();
+        this.clickOnDateWidget();
     }
 
     private void updateCheckBoxViews() {
@@ -259,6 +260,36 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         }
     }
 
+    private void clickOnDateWidget() {
+        //Handle the click of the date picker dialog
+        mEntryDateSetListener = (view, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
+            //For displaying in the view
+            mEntryDateText.setText(date);
+            // Set to database
+            try {
+                entryDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        };
+
+        //Handle the click of the date picker dialog
+        mSoldDateSetListener = (view, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
+            //For displaying in the view
+            mSoldDateText.setText(date);
+            // Set to database
+            try {
+                soldDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        };
+    }
+
     // --------------
     // Config
     // --------------
@@ -275,20 +306,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             entryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
         entryDialog.show();
-        //Handle the click of the date picker dialog
-        mEntryDateSetListener = (view, year1, month1, dayOfMonth) -> {
-            month1 = month1 + 1;
-            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
-            //For displaying in the view
-            mEntryDateText.setText(date);
-            // Set to database
-            try {
-                entryDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        };
     }
 
     private void configSoldDatePickerDialog(Context context) {
@@ -303,19 +321,6 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             entryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
         entryDialog.show();
-        //Handle the click of the date picker dialog
-        mSoldDateSetListener = (view, year1, month1, dayOfMonth) -> {
-            month1 = month1 + 1;
-            String date = Utils.checkDigit(month1) + "/" + Utils.checkDigit(dayOfMonth) + "/" + year1;
-            //For displaying in the view
-            mSoldDateText.setText(date);
-            // Set to database
-            try {
-                soldDate = Utils.getDateFromDatePicker(dayOfMonth, month1, year1);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        };
     }
 
     private void configureSpinner() {
