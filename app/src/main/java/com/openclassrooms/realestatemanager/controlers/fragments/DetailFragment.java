@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +21,7 @@ import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.adapters.DetailAdapter;
 import com.openclassrooms.realestatemanager.controlers.activities.MapsActivity;
+import com.openclassrooms.realestatemanager.controlers.activities.VideoActivity;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
@@ -38,11 +38,9 @@ import butterknife.ButterKnife;
  */
 public class DetailFragment extends Fragment {
 
-    public static final String CUSTOM_VIDEO_DALOG = "com.openclassrooms.realestatemanager.controlers.fragments.CustomVideoDialog";
     private static final String TAG = "DetailFragment";
     public static int USER_ID = 1; // ASk
     public int position;
-    public OnVideoUrlSelected mVideoUrlSelected;
     //WIDGET
     @BindView(R.id.recycler_view_fragment)
     RecyclerView mDetailRecyclerView;
@@ -102,7 +100,7 @@ public class DetailFragment extends Fragment {
         this.getRealEstateItems(USER_ID);
         this.configureRecyclerView();
         this.mMapView.setOnClickListener(v -> this.launchMapActivity());
-        this.mShowVideo.setOnClickListener(v -> this.launchVideo());
+        this.mShowVideo.setOnClickListener(v -> this.launchVideoActivity());
 
     }
 
@@ -194,32 +192,14 @@ public class DetailFragment extends Fragment {
 
     }
 
-    public void launchVideo() {
-        CustomVideoDialog dialog = new CustomVideoDialog();
-//        dialog.setStyle(android.app.DialogFragment.STYLE_NO_TITLE, R.style.Theme_AppCompat_Dialog);
-        if (getFragmentManager() != null) {
-            dialog.show(getFragmentManager(), CUSTOM_VIDEO_DALOG);
-        }
-    }
-
     private void launchMapActivity() {
         Intent i = new Intent(getContext(), MapsActivity.class);
         startActivity(i);
     }
 
-    // Callback
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mVideoUrlSelected = (DetailFragment.OnVideoUrlSelected) getTargetFragment();
-        } catch (ClassCastException e) {
-            Log.e(TAG, "onAttach: ClassCastException : " + e.getMessage());
-        }
-    }
-
-    public interface OnVideoUrlSelected {
-        void sendUrl(String urlPath);
+    private void launchVideoActivity() {
+        Intent i = new Intent(getContext(), VideoActivity.class);
+        startActivity(i);
     }
 
 }
