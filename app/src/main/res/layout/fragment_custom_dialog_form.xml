@@ -5,23 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/custom_dialog_scrollview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".controlers.fragments.CustomDialogForm">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <!--Type-->
-        <!--<android.support.v7.widget.AppCompatEditText-->
-        <!--android:id="@+id/edit_text_type"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="8dp"-->
-        <!--android:background="@drawable/custom_edit_text"-->
-        <!--android:hint="Type"-->
-        <!--android:padding="10dp">-->
-
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/edit_text_type"
@@ -29,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-
             android:padding="10dp" />
 
 
@@ -133,7 +121,7 @@
 
         <!--Address-->
         <include
-            android:id="@+id/include"
+            android:id="@+id/include_address"
             layout="@layout/custom_address_displayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,27 +129,34 @@
 
         <!--Date-->
         <include
-            android:id="@+id/include2"
+            android:id="@+id/include_date"
             layout="@layout/real_estate_status_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/button" />
+            android:layout_below="@id/include_button" />
 
         <!--Action button list-->
 
         <include
-            android:id="@+id/button"
+            android:id="@+id/include_button"
             layout="@layout/button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/include" />
+            android:layout_below="@id/include_address" />
+
+        <include
+            android:id="@+id/video_include"
+            layout="@layout/button_video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/include_date" />
 
         <!--Action button-->
         <include
             layout="@layout/action_button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/include2" />
+            android:layout_below="@id/video_include" />
 
     </RelativeLayout>
 </ScrollView>

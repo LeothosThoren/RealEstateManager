@@ -1,13 +1,17 @@
 package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -18,10 +22,13 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.entities.Address;
 import com.openclassrooms.realestatemanager.entities.RealEstate;
@@ -39,6 +46,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.app.Activity.RESULT_OK;
 
 public class CustomDialogForm extends DialogFragment implements View.OnClickListener,
         CustomPoiDialog.OnInputSelected, CustomCarouselDialog.OnInputsSelected {
@@ -48,6 +58,10 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     public static final String CUSTOM_POI_DIALOG = "com.openclassrooms.realestatemanager.controlers.fragments.CustomPoiDialog";
     public static final String CUSTOM_CAROUSEL_DIALOG = "com.openclassrooms.realestatemanager.controlers.fragments.CustomCarouselDialog";
     private static final String TAG = CustomDialogForm.class.getSimpleName();
+    //bonus
+    private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final int RC_VIDEO_PERMS = 110;
+    private static final int RC_CHOOSE_VIDEO = 210;
     // Widget
     @BindView(R.id.action_cancel)
     TextView mActionCancel;
@@ -87,6 +101,10 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     Button mAddPoi;
     @BindView(R.id.button_add_picture)
     Button mAddPictures;
+    @BindView(R.id.video_place_holder)
+    ImageView mVideoPlaceHolder;
+    @BindView(R.id.button_add_video)
+    Button mAddVideo;
     // Data
     private RealEstateViewModel mViewModel;
     private int dataPosition = HelperSingleton.getInstance().getPosition();
@@ -101,6 +119,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
     private ArrayAdapter<CharSequence> adapter;
     private boolean isCreateMode = HelperSingleton.getInstance().getMode() == R.id.menu_add;
     private boolean isUpdateMode = HelperSingleton.getInstance().getMode() == R.id.menu_update;
+    private Uri uriVideoSelected;
 
 
     @Override
@@ -137,6 +156,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         mSoldDateText.setOnClickListener(this);
         mAddPoi.setOnClickListener(this);
         mAddPictures.setOnClickListener(this);
+        mAddVideo.setOnClickListener(this);
     }
 
     // --------------
@@ -196,12 +216,51 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         mAddressCity.setText(realEstateList.get(dataPosition).getAddress().city);
         mAddressState.setText(realEstateList.get(dataPosition).getAddress().state);
         mAddressZip.setText(realEstateList.get(dataPosition).getAddress().zip);
+        //bonus
+        Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                .load(realEstateList.get(dataPosition).getUrlVideo())
+                .apply(RequestOptions.centerCropTransform())
+                .into(this.mVideoPlaceHolder);
 
         //Fulfill data inside new arrayList easy to retrieve data
         mRealEstateList.addAll(realEstateList);
         Log.d(TAG, "updateRealEstateUI: show the size of the array list " + mRealEstateList.size());
 
     }
+
+    // --------------
+    // Permission
+    // --------------
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // 2 - Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Calling the appropriate method after activity result
+        this.handleResponse(requestCode, resultCode, data);
+    }
+
+
+    private void handleResponse(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RC_CHOOSE_VIDEO) {
+            if (resultCode == RESULT_OK) { //SUCCESS
+                this.uriVideoSelected = data.getData();
+                Glide.with(this) //SHOWING PREVIEW OF VIDEO
+                        .load(this.uriVideoSelected)
+                        .apply(RequestOptions.centerCropTransform())
+                        .into(this.mVideoPlaceHolder);
+            } else {
+                Toast.makeText(getContext(), getString(R.string.toast_title_no_video_chosen), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     // --------------
     // Action
@@ -227,6 +286,10 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 Log.d(TAG, "onClick: open picture list");
                 this.openCarouselDialog();
                 break;
+            case R.id.button_add_video:
+                Log.d(TAG, "onClick: open video list");
+                this.selectVideoOnDevice();
+                break;
             case R.id.action_cancel:
                 Log.d(TAG, "onClick: cancel and closing dialog");
                 getDialog().cancel();
@@ -240,6 +303,16 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                 }
         }
 
+    }
+
+    private void selectVideoOnDevice() {
+        if (getContext() != null)
+            if (!EasyPermissions.hasPermissions(getContext(), PERMS)) {
+                EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_files_access), RC_VIDEO_PERMS, PERMS);
+                return;
+            }
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RC_CHOOSE_VIDEO);
     }
 
     private void openPoiDialog() {
@@ -355,9 +428,10 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
                     mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
                     Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()),
                     Integer.valueOf(mBathroomNb.getText().toString()), Integer.valueOf(mBedroomNb.getText().toString()),
-                    mUrlPicture, mTitle, populateAddressObject(), entryDate, mPoiList, USER_ID);
+                    mUrlPicture, mTitle, populateAddressObject(), entryDate, mPoiList, uriVideoSelected.toString(), USER_ID);
             //Creation on DB
             mViewModel.createRealEstate(realEstate);
+            Log.d(TAG, "saveOperation: show uri "+ uriVideoSelected);
             //Confirmation
             Toast.makeText(getContext(), "Data saved!", Toast.LENGTH_SHORT).show();
             getDialog().dismiss();
@@ -390,6 +464,8 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
             mRealEstateList.get(dataPosition).setTitle(mTitle);
         if (mUrlPicture.size() > 0)
             mRealEstateList.get(dataPosition).setPictureUrl(mUrlPicture);
+        //Bonus
+        mRealEstateList.get(dataPosition).setUrlVideo(uriVideoSelected.toString());
         //View Model update method
         mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
         Toast.makeText(getContext(), "Data updated!", Toast.LENGTH_SHORT).show();

@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_main_scrollview_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
@@ -16,12 +17,14 @@
         <!--MEDIA-->
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_video"
             android:padding="8dp"
             android:text="@string/detail_media"
             android:textColor="@color/colorPrimary"
             android:textSize="22sp" />
+
 
         <Space
             android:layout_width="match_parent"
@@ -55,8 +58,8 @@
                 android:id="@+id/detail_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:maxLines="7"
+                android:padding="8dp"
                 android:text="Long description in here"
                 android:textAlignment="gravity"
                 android:textColor="@color/colorPrimaryDark"

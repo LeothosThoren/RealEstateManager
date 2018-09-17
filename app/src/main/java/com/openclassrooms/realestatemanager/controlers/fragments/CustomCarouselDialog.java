@@ -76,8 +76,6 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
     private List<RealEstate> mRealEstateList = new ArrayList<>();
     private RealEstateViewModel mViewModel;
     private Uri uriImageSelected;
-    private boolean mIsLargeLayout;
-
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
@@ -85,32 +83,10 @@ public class CustomCarouselDialog extends DialogFragment implements View.OnClick
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_carousel_dialog, container, false);
         ButterKnife.bind(this, view);
-//        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
 
         this.init();
         return view;
     }
-
-//    @Override
-//    public void onResume() {
-//        // Get existing layout params for the window
-//        if (getDialog().getWindow() != null) {
-//            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
-//            // Assign window properties to fill the parent
-//            if (mIsLargeLayout) {
-//                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-//                params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-//            } else {
-//                params.width = WindowManager.LayoutParams.MATCH_PARENT;
-//                params.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-//            }
-//
-//        }
-//        // Call super onResume after resizing
-//        super.onResume();
-//    }
 
     // ----------------
     // init

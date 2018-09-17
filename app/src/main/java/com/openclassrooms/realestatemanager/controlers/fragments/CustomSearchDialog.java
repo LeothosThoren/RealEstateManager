@@ -126,6 +126,6 @@ public class CustomSearchDialog extends DialogFragment {
 
         getDialog().dismiss();
     }
-    
+
 
 }

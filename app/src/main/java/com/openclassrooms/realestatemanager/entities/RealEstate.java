@@ -37,6 +37,7 @@ public class RealEstate {
     @Nullable
     private List<String> pictureUrl;
     private List<String> title;
+    private String urlVideo;
 
 
     public RealEstate() {
@@ -44,7 +45,7 @@ public class RealEstate {
 
     public RealEstate(String type, String area, String description, long price, int surface, int room,
                       int bathroom, int bedroom, @Nullable List<String> pictureUrl, List<String> title,
-                      Address address, Date entryDate, List<String> poiList, long userId) {
+                      Address address, Date entryDate, List<String> poiList, String urlVideo, long userId) {
         this.type = type;
         this.area = area;
         this.description = description;
@@ -61,6 +62,7 @@ public class RealEstate {
         this.poi = poiList;
         this.entryDate = entryDate;
         this.soldDate = null;
+        this.urlVideo = urlVideo;
     }
 
 
@@ -214,6 +216,11 @@ public class RealEstate {
         this.soldDate = soldDate;
     }
 
+    public String getUrlVideo() {return urlVideo;
+    }
+
+    public void setUrlVideo(String urlVideo) {this.urlVideo = urlVideo;}
+
     // --- Utils ---
 
     public static RealEstate fromContentValues(ContentValues contentValues) {
@@ -233,6 +240,7 @@ public class RealEstate {
         if (contentValues.containsKey("entryDate")) realEstate.setEntryDate((Date) contentValues.get("entryDate"));//Risk
         if (contentValues.containsKey("soldDate")) realEstate.setSoldDate((Date) contentValues.get("soldDate"));//Risk
         if (contentValues.containsKey("poi")) realEstate.setPoi((List<String>) contentValues.get("poi"));//Risk
+        if (contentValues.containsKey("urlVideo")) realEstate.setUrlVideo(contentValues.getAsString("urlVideo"));
         if (contentValues.containsKey("userId")) realEstate.setUserId(contentValues.getAsLong("userId"));
         return realEstate;
     }

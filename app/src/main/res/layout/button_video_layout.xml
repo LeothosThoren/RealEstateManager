@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:weightSum="100">
+
+    <Button
+        android:id="@+id/button_add_video"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:drawableStart="@drawable/ic_camera"
+        android:layout_weight="80"
+        android:background="@drawable/custom_edit_text"
+        android:text="Add video"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/video_place_holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:src="@drawable/ic_video"
+        android:layout_weight="20"/>
+
+
+
+</LinearLayout>

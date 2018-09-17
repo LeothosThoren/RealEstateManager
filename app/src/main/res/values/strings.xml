@@ -53,6 +53,7 @@
     <string name="add">ADD</string>
     <string name="popup_title_permission_files_access">Permission file access</string>
     <string name="toast_title_no_image_chosen">No image chosen!</string>
+    <string name="toast_title_no_video_chosen">No video chosen!</string>
     <string name="button_ok">Ok</string>
     <string name="map">Map</string>
     <string name="navigation_drawer_open">Navigation drawer open</string>

@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,9 +38,11 @@ import butterknife.ButterKnife;
  */
 public class DetailFragment extends Fragment {
 
+    public static final String CUSTOM_VIDEO_DALOG = "com.openclassrooms.realestatemanager.controlers.fragments.CustomVideoDialog";
     private static final String TAG = "DetailFragment";
     public static int USER_ID = 1; // ASk
     public int position;
+    public OnVideoUrlSelected mVideoUrlSelected;
     //WIDGET
     @BindView(R.id.recycler_view_fragment)
     RecyclerView mDetailRecyclerView;
@@ -65,6 +68,8 @@ public class DetailFragment extends Fragment {
     TextView mTextViewDescription;
     @BindView(R.id.detail_map_view)
     ImageView mMapView;
+    @BindView(R.id.textView)
+    TextView mShowVideo;
     //VAR
     private DetailAdapter mDetailAdapter;
     private RealEstateViewModel mRealEstateViewModel;
@@ -87,19 +92,19 @@ public class DetailFragment extends Fragment {
     }
 
 
+    // ------------
+    // DATA
+    // ------------
+
     private void init() {
         //methods
         this.configureViewModel();
         this.getRealEstateItems(USER_ID);
         this.configureRecyclerView();
         this.mMapView.setOnClickListener(v -> this.launchMapActivity());
+        this.mShowVideo.setOnClickListener(v -> this.launchVideo());
 
     }
-
-
-    // ------------
-    // DATA
-    // ------------
 
     // Configure ViewModel
     private void configureViewModel() {
@@ -107,15 +112,15 @@ public class DetailFragment extends Fragment {
         this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
     }
 
+    // ------------
+    // UI
+    // ------------
+
     // Get all items for a user
     private void getRealEstateItems(int userId) {
         this.mRealEstateViewModel.getRealEstate(userId).observe(this, this::updateViewOnMobile);
         Log.d(TAG, "getRealEstateItems: ");
     }
-
-    // ------------
-    // UI
-    // ------------
 
     // RecyclerView
     private void configureRecyclerView() {
@@ -156,39 +161,65 @@ public class DetailFragment extends Fragment {
 
     }
 
-    public void updateViewOnTablet(RealEstate realEstate) {
-        mTextViewDescription.setText(realEstate.getDescription());
-        mSurfaceQty.setText(getString(R.string.surface_size, realEstate.getSurface()));
-        mRoomsQty.setText(getString(R.string.room_quantity, realEstate.getRoom()));
-        mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstate.getBathroom()));
-        mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstate.getBedroom()));
-        mAddress.setText(getString(R.string.address, realEstate.getAddress().line1));
-        if (realEstate.getAddress().line2 != null && (!realEstate.getAddress().line2.equals(""))) {
-            mLine2.setText(realEstate.getAddress().line2);
-            mLine2.setVisibility(View.VISIBLE);
-        }
-        mCity.setText(realEstate.getAddress().city);
-        mState.setText(realEstate.getAddress().state);
-        mZipCode.setText(realEstate.getAddress().zip);
-
-        Glide.with(this)
-                .load(mApiUri + Utils.formatAddress(
-                        realEstate.getAddress().line1,
-                        realEstate.getAddress().city,
-                        realEstate.getAddress().state,
-                        realEstate.getAddress().zip) + mApiKey)
-                .apply(RequestOptions.centerCropTransform())
-                .into(mMapView);
-        mDetailAdapter.updateData(realEstate.getPictureUrl(), realEstate.getTitle());
-    }
-
     // ------------
     // ACTION
     // ------------
 
+    public void updateViewOnTablet(RealEstate realEstate) {
+        if (realEstate != null) {
+            mTextViewDescription.setText(realEstate.getDescription());
+            mSurfaceQty.setText(getString(R.string.surface_size, realEstate.getSurface()));
+            mRoomsQty.setText(getString(R.string.room_quantity, realEstate.getRoom()));
+            mBathroomsQty.setText(getString(R.string.bathroom_quantity, realEstate.getBathroom()));
+            mBedroomsQty.setText(getString(R.string.bedroom_quantity, realEstate.getBedroom()));
+            mAddress.setText(getString(R.string.address, realEstate.getAddress().line1));
+            if (realEstate.getAddress().line2 != null && (!realEstate.getAddress().line2.equals(""))) {
+                mLine2.setText(realEstate.getAddress().line2);
+                mLine2.setVisibility(View.VISIBLE);
+            }
+            mCity.setText(realEstate.getAddress().city);
+            mState.setText(realEstate.getAddress().state);
+            mZipCode.setText(realEstate.getAddress().zip);
+
+            Glide.with(this)
+                    .load(mApiUri + Utils.formatAddress(
+                            realEstate.getAddress().line1,
+                            realEstate.getAddress().city,
+                            realEstate.getAddress().state,
+                            realEstate.getAddress().zip) + mApiKey)
+                    .apply(RequestOptions.centerCropTransform())
+                    .into(mMapView);
+            mDetailAdapter.updateData(realEstate.getPictureUrl(), realEstate.getTitle());
+        }
+
+    }
+
+    public void launchVideo() {
+        CustomVideoDialog dialog = new CustomVideoDialog();
+//        dialog.setStyle(android.app.DialogFragment.STYLE_NO_TITLE, R.style.Theme_AppCompat_Dialog);
+        if (getFragmentManager() != null) {
+            dialog.show(getFragmentManager(), CUSTOM_VIDEO_DALOG);
+        }
+    }
+
     private void launchMapActivity() {
         Intent i = new Intent(getContext(), MapsActivity.class);
         startActivity(i);
+    }
+
+    // Callback
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mVideoUrlSelected = (DetailFragment.OnVideoUrlSelected) getTargetFragment();
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException : " + e.getMessage());
+        }
+    }
+
+    public interface OnVideoUrlSelected {
+        void sendUrl(String urlPath);
     }
 
 }
