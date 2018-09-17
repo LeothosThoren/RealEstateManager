@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.controlers.fragments;
 
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -59,6 +60,7 @@ public class CustomSearchDialog extends DialogFragment {
     ImageButton mSearch;
     //Data
     private RealEstateViewModel mViewModel;
+    private List<RealEstate> mRealEstateList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -97,8 +99,11 @@ public class CustomSearchDialog extends DialogFragment {
 
     // Update the list of Real Estate item
     private void updateRealEstateItemsList(List<RealEstate> realEstates) {
+        mRealEstateList.clear();
         RealEstateFragment.mAdapter.updateData(realEstates);
-        Log.d(TAG, "search features real estate size: "+ realEstates.size());
+        mRealEstateList.addAll(realEstates);
+        Log.d(TAG, "updateRealEstateItemsList: data size = "+ mRealEstateList.size());
+
     }
 
     // --------------
@@ -121,5 +126,6 @@ public class CustomSearchDialog extends DialogFragment {
 
         getDialog().dismiss();
     }
+    
 
 }

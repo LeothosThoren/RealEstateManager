@@ -141,7 +141,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
         this.mPoiAdapter.updateData(realEstateList.get(dataPosition).getPoi());
         this.mRealEstateList.addAll(realEstateList);
     }
-    
+
 
     // --------------
     // Action
@@ -196,7 +196,7 @@ public class CustomPoiDialog extends DialogFragment implements View.OnClickListe
 
 
     //--------------
-    // Interface
+    // Callback
     // -------------
 
     @Override

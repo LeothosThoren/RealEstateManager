@@ -35,12 +35,12 @@ import com.openclassrooms.realestatemanager.viewmodels.RealEstateViewModel;
 import butterknife.BindView;
 
 public class RealEstateActivity extends BaseActivity implements RealEstateFragment.OnItemClickListenerCustom,
-        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener{
 
     public static final String FRAGMENT_FORM_TAG = "CustomDialogForm";
     public static final String FRAGMENT_SEARCH_TAG = "CustomSearchDialog";
-    private static final String TAG = RealEstateActivity.class.getSimpleName();
     public static final int USER_ID = 1;
+    private static final String TAG = RealEstateActivity.class.getSimpleName();
     // WIDGET
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
@@ -183,20 +183,20 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
     // --------------
 
     // Configuring ViewModel
-    private void configureViewModel(){
+    private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
         this.mRealEstateViewModel = ViewModelProviders.of(this, viewModelFactory).get(RealEstateViewModel.class);
         this.mRealEstateViewModel.init(USER_ID);
     }
 
     // Get Current User
-    private void getCurrentUser(int userId){
+    private void getCurrentUser(int userId) {
         this.mRealEstateViewModel
                 .getUser(userId).observe(this, this::updateHeader);
     }
 
     // Update header (username & picture)
-    private void updateHeader(User user){
+    private void updateHeader(User user) {
         this.mTextViewUser.setText(user.getUsername());
         Glide.with(this).load(user.getUrlPicture())
                 .apply(RequestOptions.circleCropTransform()).into(this.mImageViewProfile);
@@ -249,6 +249,7 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         }
     }
 
+
     // --------------
     // Action
     // --------------
@@ -274,4 +275,6 @@ public class RealEstateActivity extends BaseActivity implements RealEstateFragme
         Intent i = new Intent(this, MapsActivity.class);
         startActivity(i);
     }
+
+
 }
