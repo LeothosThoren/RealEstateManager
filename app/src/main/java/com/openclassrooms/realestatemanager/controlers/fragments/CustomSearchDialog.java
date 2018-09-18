@@ -120,7 +120,7 @@ public class CustomSearchDialog extends DialogFragment {
         String roomMin = !mRoomMin.getText().toString().equals("") ? mRoomMin.getText().toString() : "0";
         String roomMax = !mRoomMax.getText().toString().equals("") ? mRoomMax.getText().toString() : "100";
 
-        this.mViewModel.searchRealEstate(area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin), Long.valueOf(priceMax),
+        this.mViewModel.searchRealEstate(type, area, Integer.valueOf(surfaceMin), Integer.valueOf(surfaceMax), Long.valueOf(priceMin), Long.valueOf(priceMax),
                 Integer.valueOf(roomMin), Integer.valueOf(roomMax), USER_ID)
                 .observe(this, this::updateRealEstateItemsList);
 

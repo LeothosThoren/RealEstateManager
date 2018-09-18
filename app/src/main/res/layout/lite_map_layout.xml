@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/detail_map_view"
-        android:layout_width="235dp"
-        android:layout_height="235dp"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
         android:layout_gravity="center"
         android:contentDescription="@string/map_view"
         android:src="@drawable/ic_map_view" />

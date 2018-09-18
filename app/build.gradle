@@ -12,16 +12,16 @@ android {
     }
     buildTypes {
         debug {
-            // Map Api
-            buildConfigField 'String', "MapApiKey", RealEstate_SdkMapApiKey
-            resValue 'string', "map_api_key", RealEstate_SdkMapApiKey
+//            // Map Api
+//            buildConfigField 'String', "MapApiKey", RealEstate_SdkMapApiKey
+//            resValue 'string', "map_api_key", RealEstate_SdkMapApiKey
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // Map Api
-            buildConfigField 'String', "MapApiKey", RealEstate_SdkMapApiKey
-            resValue 'string', "map_api_key", RealEstate_SdkMapApiKey
+//            // Map Api
+//            buildConfigField 'String', "MapApiKey", RealEstate_SdkMapApiKey
+//            resValue 'string', "map_api_key", RealEstate_SdkMapApiKey
         }
     }
 

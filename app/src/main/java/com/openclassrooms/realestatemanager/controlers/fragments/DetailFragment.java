@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.controlers.fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -71,8 +72,8 @@ public class DetailFragment extends Fragment {
     //VAR
     private DetailAdapter mDetailAdapter;
     private RealEstateViewModel mRealEstateViewModel;
-    private String mApiKey = "&key=" + BuildConfig.MapApiKey;
-    private String mApiUri = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&zoom=17&markers=size:mid%7Ccolor:red%7C";
+    private String mApiKey = "&key=";
+    private String mApiUri = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&scale=2&zoom=16&markers=size:mid%7Ccolor:blue%7C";
 
     public DetailFragment() {
         // Required empty public constructor
@@ -151,7 +152,7 @@ public class DetailFragment extends Fragment {
                             realEstateList.get(position).getAddress().line1,
                             realEstateList.get(position).getAddress().city,
                             realEstateList.get(position).getAddress().state,
-                            realEstateList.get(position).getAddress().zip) + mApiKey)
+                            realEstateList.get(position).getAddress().zip) + mApiKey + getString(R.string.google_maps_key))
                     .apply(RequestOptions.centerCropTransform())
                     .into(mMapView);
             mDetailAdapter.updateData(realEstateList.get(position).getPictureUrl(), realEstateList.get(position).getTitle());
@@ -184,7 +185,7 @@ public class DetailFragment extends Fragment {
                             realEstate.getAddress().line1,
                             realEstate.getAddress().city,
                             realEstate.getAddress().state,
-                            realEstate.getAddress().zip) + mApiKey)
+                            realEstate.getAddress().zip) + mApiKey + getString(R.string.google_maps_key))
                     .apply(RequestOptions.centerCropTransform())
                     .into(mMapView);
             mDetailAdapter.updateData(realEstate.getPictureUrl(), realEstate.getTitle());

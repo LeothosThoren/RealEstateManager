@@ -12,6 +12,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:drawableEnd="@drawable/ic_video"
         android:padding="8dp"
@@ -45,19 +46,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_view_fragment" />
 
-    <TextView
-        android:id="@+id/detail_description"
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:maxLines="5"
-        android:padding="8dp"
-        android:text="@string/no_description_to_display"
-        android:textAlignment="gravity"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/description">
+
+        <TextView
+            android:id="@+id/detail_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:maxLines="6"
+            android:padding="8dp"
+            android:text="@string/no_description_to_display"
+            android:textAlignment="gravity"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </ScrollView>
+
 
     <!--Linear Layouts-->
     <LinearLayout
@@ -69,7 +78,7 @@
         android:baselineAligned="false"
         android:orientation="horizontal"
         android:weightSum="100"
-        app:layout_constraintTop_toBottomOf="@+id/detail_description">
+        app:layout_constraintTop_toBottomOf="@+id/scroll_view">
 
         <!--Rooms-->
         <LinearLayout

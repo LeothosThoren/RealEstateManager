@@ -52,7 +52,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.openclassrooms.realestatemanager.controlers.activities.RealEstateActivity" />
         </activity>
-        <activity android:name=".controlers.activities.VideoActivity"></activity>
+        <activity android:name=".controlers.activities.VideoActivity"/>
     </application>
 
 </manifest>

@@ -423,7 +423,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         if (mType.getSelectedItem() != null && mArea.getText() != null && mDescription.getText() != null
                 && mPrice.getText() != null && mSurface.getText() != null && mRoomNb.getText() != null
                 && mBathroomNb.getText() != null && mBedroomNb.getText() != null && entryDate != null && mPoiList.size() > 0
-                && mUrlPicture.size() > 0 && mTitle.size() > 0) {
+                && mUrlPicture.size() > 0 && mTitle.size() > 0 && uriVideoSelected != null) {
             RealEstate realEstate = new RealEstate(mType.getSelectedItem().toString(), mArea.getText().toString(),
                     mDescription.getText().toString(), Long.valueOf(mPrice.getText().toString()),
                     Integer.valueOf(mSurface.getText().toString()), Integer.valueOf(mRoomNb.getText().toString()),
@@ -465,6 +465,7 @@ public class CustomDialogForm extends DialogFragment implements View.OnClickList
         if (mUrlPicture.size() > 0)
             mRealEstateList.get(dataPosition).setPictureUrl(mUrlPicture);
         //Bonus
+        if (uriVideoSelected != null)
         mRealEstateList.get(dataPosition).setUrlVideo(uriVideoSelected.toString());
         //View Model update method
         mViewModel.updateRealEstate(mRealEstateList.get(dataPosition));
