@@ -8,12 +8,12 @@ Realtors are always on the move, sometimes in areas not covered by a cellular ne
 
 ## Screenshots
 <div align="center">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/Vue tablette.png">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/customviewperson.png" height="360" width="240">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/modif.png" height="360" width="240">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/map.png" height="360" width="240">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/recherche.png" height="360" width="240">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/menu drawer.png" height="360" width="240">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/Vue tablette.png" height="360" width="600">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/customviewperson.png" height="360" width="360">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/modif.png" height="360" width="360">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/map.png" height="360" width="360">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/recherche.png" height="360" width="360">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/menu drawer.png" height="360" width="360">
 </div>
 
 ## Prerequisites
