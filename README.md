@@ -8,11 +8,11 @@ Realtors are always on the move, sometimes in areas not covered by a cellular ne
 
 ## Screenshots
 <div align="center">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/Vue tablette1.png" height="500" width="900">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/customviewperson.png" height="330" width="450">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/modif.png" height="330" width="450">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/map.png" height="330" width="450">
-<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/recherche.png" height="330" width="450">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/Vue tablette1.png" height="500" width="850">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/customviewperson.png" height="500" width="850">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/modif.png" height="500" width="850">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/map.png" height="500" width="850">
+<img src="https://github.com/LeothosThoren/RealEstateManager/blob/master/img/recherche.png" height="500" width="850">
 </div>
 
 ## Prerequisites
