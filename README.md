@@ -35,7 +35,7 @@ Realtors are always on the move, sometimes in areas not covered by a cellular ne
  - [x] Google Play services [Maps](https://developers.google.com/maps/documentation/android-sdk/intro) & [Locations](https://developer.android.com/training/location/)
 
 ## How to use ?
-If you want to try this app, you can click on this [link](https://github.com/LeothosThoren/RealEstateManager/blob/master/app/build/outputs/apk/debug/app-debug.apk) to download the .apk file.
+If you want to try this app, you can click on this [link](https://github.com/LeothosThoren/RealEstateManager/blob/master/app/build/outputs/apk/debug/) to download the .apk file.
 
 ## Author
 **Sofiane M.** - *Alias LeothosThoren* - [LeothosThoren](https://github.com/LeothosThoren) :v:
