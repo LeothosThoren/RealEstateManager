@@ -63,7 +63,8 @@ public class Utils {
      */
     public static Boolean isInternetAvailable(Context context, String TAG) {
         // Instead of WifiManager only we check both wifi and mobile connectivity with connectivity manager
-        ConnectivityManager connMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) context.getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeInfo = null;
         boolean wifiConnected = false;
         boolean mobileConnected = false;

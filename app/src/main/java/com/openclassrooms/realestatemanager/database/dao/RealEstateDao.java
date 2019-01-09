@@ -9,7 +9,6 @@ import android.database.Cursor;
 
 import com.openclassrooms.realestatemanager.entities.RealEstate;
 
-import java.util.Date;
 import java.util.List;
 
 @Dao
